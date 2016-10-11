@@ -1,0 +1,384 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="/theme/css/foundation.css" />
+		<link rel="stylesheet" href="/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="/theme/css/alt-fonts.css" />
+
+
+		<script src="/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="/category/books.html">Books</a></li>
+							<li ><a href="/category/coding.html">Coding</a></li>
+							<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+							<li ><a href="/category/data-science.html">Data Science</a></li>
+							<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="/category/ideas.html">Ideas</a></li>
+							<li ><a href="/category/machine-learning.html">Machine Learning</a></li>
+							<li class="active"><a href="/category/maths.html">Maths</a></li>
+							<li ><a href="/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="/category/books.html">Books</a></li>
+								<li ><a href="/category/coding.html">Coding</a></li>
+								<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+								<li ><a href="/category/data-science.html">Data Science</a></li>
+								<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="/category/ideas.html">Ideas</a></li>
+								<li ><a href="/category/machine-learning.html">Machine Learning</a></li>
+								<li class="active"><a href="/category/maths.html">Maths</a></li>
+								<li ><a href="/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Some Counting Problems</h2>
+	<p>I have been looking over some elementary probability recently, and spent some time thinking about a couple of questions that I think have pretty neat solutions.</p>
+<p><strong>1. Birthday Problem</strong></p>
+<p>The problem is very simply stated, but the answer is counterintuitive to most people.</p>
+<p>What is the smallest number of people that you need in a room (or some type of gathering) for there to be a better than even chance that two people share the same birthday?</p>
+<p>What seems to throw people off here is that they immediately try and answer a different question: What is the probability that someone else shares my birthday (or some other specific birthday)?.</p>
+<p>In fact, we can quite quickly estimate a rough value for what this number of people should be (n). If we do not concern ourselves with a specific day, then what we are looking for is any pair of people who share the same birthday.</p>
+<p>For some small values of n, the number of possible pairings are:</p>
+<p>n = 18, 153 pairings (153/365 = 0.419)</p>
+<p>n = 19, 171 pairings (171/365 = 0.468)</p>
+<p>n = 20, 190 pairing (190/365 = 0.521)</p>
+<p>So intuitively, we think that the answer should be somewhere around 20.</p>
+<p>The actual calculation follows standard combinatorial reasoning:</p>
+<p>Suppose n = 2. It turns out that it is simpler to think about the probability of the people not sharing a birthday, and then take the complement.</p>
+<p>We can see that there are 365×365 total possible birthday combinations (365 for each person), and 365×364 combinations for them not sharing a birthday (365 possibilities for the first person, and 364 for the second as one day is now “out of the question”).</p>
+<p>So for 2 people, the probability that they don’t share a birthday is</p>
+<div class="math">
+\begin{equation*}
+\frac{365 \times ~364}{365 \times ~365} \approx 0.997
+\end{equation*}
+</div>
+<p>For n = 3, similarly we can see that</p>
+<div class="math">
+\begin{equation*}
+P = \frac{365 \times ~364 \times 363}{365 \times ~365 \times ~365} \approx 0.992
+\end{equation*}
+</div>
+<p>In fact, for general n, by similar reasoning we can see that the probability that none of them share a birthday is:</p>
+<div class="math">
+\begin{equation*}
+P = \frac{365 \times ~364 \times ... \times (365-n+1))}{365 \times ~365 \times ~... \times 365} = \frac{365!}{(365-n)! \times 365^{n}}
+\end{equation*}
+</div>
+<p>(in the numerator, each person removes a possibility for the number of allowed birthdays).</p>
+<p>Using Stirling’s approximation, we can show that this is:</p>
+<div class="math">
+\begin{equation*}
+\sim e^{-n} \left (\frac{365}{365-n} ~\right)^{365-n+0.5}
+\end{equation*}
+</div>
+<p>Once this probability drops below 0.5, then we have a better than 50-50 chance of two people sharing a birthday.</p>
+<p>For values of n around 20, we can see that:</p>
+<p>n = 20, P = 0.589</p>
+<p>n = 21, P = 0.556</p>
+<p>n = 22, P = 0.524</p>
+<p>n = 23, P = 0.493</p>
+<p>So we see that with only 23 people, the probability that two people share the same birthday is 0.51.</p>
+<p><strong>2. Boxes and balls</strong></p>
+<p>Suppose we have n balls that are tossed independently into n boxes. What is the probability that exactly one box is empty?</p>
+<p>Once again let’s start by thinking about some small values of n.</p>
+<p>If n=2, the total number of possibilities is two boxes for ball 1 x two boxes for ball 2 = 4 in total.</p>
+<p>For one box to be empty, we only want to consider those arrangements where both balls are in one box, of which there are 2 (both in box 1 or both in box 2), so</p>
+<div class="math">
+\begin{equation*}
+P = \frac{2}{4} = \frac{1}{2}
+\end{equation*}
+</div>
+<p>If n=3, suppose box 1 is empty, then we can either have two balls in box 2 and one in box 3 or one ball in box 2 and two in box 3.</p>
+<p>So for our numerator we need three possibilities for the empty box x three ways of choosing 2 out of 3 balls x two possibilities for the box with 2 balls.</p>
+<p>And in the denominator we have three possible boxes for each ball.</p>
+<div class="math">
+\begin{equation*}
+P = \frac{3 \times 3 \times 2}{3 \times 3 \times 3} = \frac{2}{3}
+\end{equation*}
+</div>
+<p>For general n, we can use similar reasoning.</p>
+<p>The key is seeing that with exactly one empty box, all of the remaining n-1 boxes must have exactly one ball except for one box which will have two balls.</p>
+<p>What might this look like:</p>
+<p><img alt="boxes-and-balls" src="/images/counting_problems.png" /></p>
+<p>There are n choices for the empty box.
+The two balls can be chosen ways.
+There are n-1 choices for the box with 2 balls.
+The remaining n-2 balls have (n-2)! arrangements among
+the n-2 boxes.</p>
+<p>So the numerator is <span class="math">\(n \times (n-1) \times (n-2)! \times {n \choose 2}\)</span>, and the denominator is <span class="math">\(n^{n}\)</span> and</p>
+<div class="math">
+\begin{equation*}
+\frac{n!}{n^{n}} \times {n \choose 2} = \frac{n! \times n \times (n-1)}{2n^{n}}
+\end{equation*}
+</div>
+<p>What does this look like for small values of n?</p>
+<p>n = 2, P = 0.5</p>
+<p>n = 3, P = 0.667</p>
+<p>n = 4, P = 0.563</p>
+<p>n = 5, P = 0.384</p>
+<p>n = 6, P = 0.231</p>
+<p>n = 7, P = 0.129</p>
+<p>n = 8, P = 0.067</p>
+<p>n = 9, P = 0.0337</p>
+<p>n = 10, P = 0.0163</p>
+<p>In fact we can see that P reaches a maximum when n=3, and then decreases for higher values of n. This is because as the number of boxes increases, the number of possible outcomes with exactly one empty box becomes overwhelmed by all of the other possible outcomes.</p>
+<script type='text/javascript'>if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+	<hr/>
+	<h6>Written by <a href="/author/simon-bedford.html">Simon Bedford</a> in <a href="/category/maths.html">Maths</a> on Tue 11 August 2015. Tags: <a href="/tag/maths.html">maths</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/visualization.html" class="tag-4">visualization</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/maths.html" class="tag-1">maths</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/data-science.html" class="tag-2">data-science</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-4">neural-network</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-1">deep-learning</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-1">customer-experience</a></li>
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="/theme/js/jquery.js"></script>
+		<script src="/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+	</body>
+</html>

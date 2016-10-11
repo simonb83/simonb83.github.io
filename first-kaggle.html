@@ -1,0 +1,372 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="/theme/css/foundation.css" />
+		<link rel="stylesheet" href="/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="/theme/css/alt-fonts.css" />
+
+
+		<script src="/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="/category/books.html">Books</a></li>
+							<li ><a href="/category/coding.html">Coding</a></li>
+							<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+							<li ><a href="/category/data-science.html">Data Science</a></li>
+							<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="/category/ideas.html">Ideas</a></li>
+							<li class="active"><a href="/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="/category/maths.html">Maths</a></li>
+							<li ><a href="/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="/category/books.html">Books</a></li>
+								<li ><a href="/category/coding.html">Coding</a></li>
+								<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+								<li ><a href="/category/data-science.html">Data Science</a></li>
+								<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="/category/ideas.html">Ideas</a></li>
+								<li class="active"><a href="/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="/category/maths.html">Maths</a></li>
+								<li ><a href="/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>First Kaggle</h2>
+	<p>This is a brief summary of my first experience with a Kaggle
+competition. I entered for the learning experience, and because I wanted
+to play around with a real problem in machine learning.</p>
+<p><strong>The Problem: Crime In San Francisco</strong></p>
+<p>I chose the Crime Classification in San Francisco as it seemed like a
+fairly well-defined problem, and it is also in the Playground section of
+Kaggle so is probably more of a gentle introduction.</p>
+<p>You are given a training data set of 878,049 crimes from the past 12
+years, each with the following information:</p>
+<ul class="simple">
+<li>Date Crime Occurred</li>
+<li>Day of Week</li>
+<li>Police District</li>
+<li>Street Address</li>
+<li>X and Y coordinates</li>
+<li>Type of Crime</li>
+<li>Description</li>
+<li>Resolution</li>
+</ul>
+<p>The challenge is to develop an algorithm which can then correctly
+classify other crimes using only the date and location features
+mentioned above.</p>
+<p>Given a test data set of another 884,262 crimes, for each instance the
+algorithm needs to assign probabilities to 39 different crime
+categories.</p>
+<p>The output is evaluated using the Multi-Class Logarithmic Loss function
+(more in another post), where each predicted probability is compared to
+the true probability. The idea is to make the loss function as small as
+possible.</p>
+<p><strong>Submission 1</strong></p>
+<p>Being very eager to jump in and try something out, I very naively threw
+something together using the Python Sklearn Random Forest algorithm
+(chosen as I had read that it is one of the algorithms that most
+frequently wins Kaggle competitions), with the following features:</p>
+<ul class="simple">
+<li>Time of day (based on number of second in the day)</li>
+<li>X &amp; Y coordinates</li>
+</ul>
+<p><em>Results:</em></p>
+<p>Score of 26.85, ranked 1,150 on leaderboard.</p>
+<p><strong>Submission 2</strong></p>
+<p>My second submission was the result of randomly playing around. I cut
+down the features to only:</p>
+<ul class="simple">
+<li>Police precinct</li>
+<li>Time of Day</li>
+</ul>
+<p>However I think the biggest improvement was using the predict_proba
+instead of predict method. Whereas predict gives effectively a binary
+classification for the most likely class (i.e. 1 or 0), predict_proba
+assigns a probability to every single class.</p>
+<p>It turns out that Logarithmic Loss penalizes confident but wrong answers
+very heavily, so it is better to “spread your bets” as it were rather
+than predicting a single category.</p>
+<p><em>Results:</em></p>
+<p>Big improvement to score of 4.9, moved up 172 places.</p>
+<p><strong>Submission 3</strong></p>
+<p>Around this point, I started to test locally prior to submitting by
+splitting the train data set approximately 80%/20% into training and
+test data in order to better measure whether my changes were improving
+my score or not.</p>
+<p>For the third submission, I used only two categorical features:</p>
+<ul class="simple">
+<li>Hour of day</li>
+<li>Police precinct</li>
+</ul>
+<p>However the biggest improvement came from specifying a max depth of 10
+for the Random Forest.</p>
+<p><em>Results:</em></p>
+<p>Improved score to 2.59, moved up 426 places.</p>
+<p><strong>Submission 4</strong></p>
+<p>Submission 4 was when I realized that pretty much all of my success up
+until this point had been beginner’s luck, and I needed a more
+systematic approach. So, after reading quite a bit about feature
+engineering, I used the following variables:</p>
+<ul class="simple">
+<li>Precinct</li>
+<li>Day of Week</li>
+<li>Time of Day</li>
+<li>X and Y (scaled to 0,1)</li>
+</ul>
+<p>For Precinct, Day of Week and Time of Day I finally began treating them
+as categorical variables (using pandas get_dummies).</p>
+<p><em>Results:</em></p>
+<p>Improved score to 2.49, moved up 267 places.</p>
+<p><strong>Submission 5</strong></p>
+<p>For submission 5 I got some inspiration from comments on the competition
+forum (thanks papadopc and SatendraKumar).</p>
+<p>In particular I did additional feature engineering on the X and Y
+coordinates to:</p>
+<ul class="simple">
+<li>Rotate coordinate frames through 30, 45, 60 and 90 degrees</li>
+<li>Convert to polar coordinates and calculate R for each point</li>
+</ul>
+<p>I was also inspired by a comment from papdopc to create a crime count
+per address, that is to say, using the training data:</p>
+<ul class="simple">
+<li>Get a list of unique street names</li>
+<li>For each street name count the instances of each crime category</li>
+<li>Use these counts as new categorical variables</li>
+</ul>
+<p>(Note: I have already seen some issues with this approach so will
+revisit later on).</p>
+<p><em>Results:</em></p>
+<p>Improved score to 2.44, and moved up to current position of 277 on
+leaderboard.</p>
+<p><strong>Submission 6</strong></p>
+<p>It would only be honest to note that I have made an additional
+submission with an approach pretty similar to Submission 5, but
+filtering for outliers in the training data, however this did not
+improve on my current best score.</p>
+<p><strong>Summary and Next steps</strong></p>
+<p>So far it has been a really fun and interesting experience and it is
+pretty cool that there are so many tools out there that enable you to
+make headway so quickly with complex problems.</p>
+<p>In some respects this can also be a disadvantage because it also makes
+it very easy to implement algorithms when you have very little idea of
+what you are doing, or how they work. However, on balance, I think it is
+also very useful not to have to get bogged down in the detail of
+creating efficient implementations of algorithms and enables far faster
+learning of some difficult concepts.</p>
+<p>I am already working on my newest model including:</p>
+<ul class="simple">
+<li>Some new categorical features: Season of Year, Daylight Saving Time
+Indicator, Whether the address is an Intersection or not</li>
+<li>Smarter featurization of the address data vs. crime counts (based on
+papdopc solution)</li>
+</ul>
+<p>Some other approaches I want to try include:</p>
+<ul class="simple">
+<li>Using a Neural Network</li>
+<li>Combining predictions from multiple algorithms</li>
+<li>Probability smoothing</li>
+</ul>
+
+	<hr/>
+	<h6>Written by <a href="/author/simon-bedford.html">Simon Bedford</a> in <a href="/category/machine-learning.html">Machine Learning</a> on Wed 09 March 2016. Tags: <a href="/tag/machine-learning.html">machine-learning</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/visualization.html" class="tag-4">visualization</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/maths.html" class="tag-1">maths</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/data-science.html" class="tag-2">data-science</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-4">neural-network</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-1">deep-learning</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-1">customer-experience</a></li>
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="/theme/js/jquery.js"></script>
+		<script src="/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+	</body>
+</html>

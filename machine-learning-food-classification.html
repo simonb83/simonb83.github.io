@@ -1,0 +1,746 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="/theme/css/foundation.css" />
+		<link rel="stylesheet" href="/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="/theme/css/alt-fonts.css" />
+
+		<link rel="stylesheet" href="/css/capstone.css" type="text/css" />
+
+		<script src="/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="/category/books.html">Books</a></li>
+							<li ><a href="/category/coding.html">Coding</a></li>
+							<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+							<li ><a href="/category/data-science.html">Data Science</a></li>
+							<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="/category/ideas.html">Ideas</a></li>
+							<li class="active"><a href="/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="/category/maths.html">Maths</a></li>
+							<li ><a href="/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="/category/books.html">Books</a></li>
+								<li ><a href="/category/coding.html">Coding</a></li>
+								<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+								<li ><a href="/category/data-science.html">Data Science</a></li>
+								<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="/category/ideas.html">Ideas</a></li>
+								<li class="active"><a href="/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="/category/maths.html">Maths</a></li>
+								<li ><a href="/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Machine Learning & Food Classification</h2>
+	<p>Over the past few months I have been working on a project attempting to train a machine learning algorithm to correctly classify pictures of food dishes.</p>
+<p>The purpose of this blog post is to try and explain some of the underlying models and the results in a relatively non-technical way.</p>
+<p><a href="#motivation">1. Project motivation</a><br>
+<a href="#problem">2. The Problem and Definition of Success</a><br>
+<a href="#approach">3. General Approach and Data</a><br>
+<a href="#ml_algorithms">4. Traditional Machine Learning: Algorithms</a><br>
+<a href="#ml_features">5. Traditional Machine Learning: Features</a><br>
+<a href="#deep_learning">6. Deep Learning &amp; Neural Networks</a><br>
+<a href="#results">7. Results</a><br>
+<a href="#visual">8. Visualizing a Network</a><br>
+<a href="#summary">9. Summary</a></p>
+<h3 id="motivation">1. Motivation</h3>
+
+<p>Perhaps the first question might be, why do you care about food classification?</p>
+<p>The truth is that food classification is just a means to an end; I wanted to learn more about computer vision techniques, but in order to do this I needed a tangible problem to work on. I chose food classification because it let me apply what I was learning to one of my favourite hobbies: food and cooking.</p>
+<p>Having said that, this is not just a toy problem. There are many potential applications for a successful food classification algorithm. For example, when people are searching for recipes it is now quite common to turn to websites and apps to find food-related content. One very simple application could be for recipe search and retrieval using a picture of a dish, such as something you tried while traveling but whose name you have now forgotten.</p>
+<p>As another example, there are already researchers working on food classification tied-in with food calorie data in order to help people easily keep a daily food diary and calorie count, perhaps enabling them to better control their food intake and stick to a particular diet.</p>
+<p>However, that is all that I will say about applications, as the real aim is to develop a better understanding of the techniques behind machine learning, in particular when applied to image classification.</p>
+<h3 id="problem">2. The Problem and Definition of Success</h3>
+
+<p>I have already hinted at the problem that we hope to solve, however it will be useful to make this more formal.</p>
+<p>Specifically, we are faced with a classification problem. Given a set of images of different types of food, we hope to find an algorithm that can be 'shown' an image and correctly categorize it into one of the pre-defined categories.</p>
+<p>There are a couple of important points to note about this type of problem:</p>
+<ol>
+<li>The categories are pre-defined and fixed; the algorithm is only going to be capable of categorizing an image into a 'known' category or class. It will not be able to identify new food categories on the fly.</li>
+<li>We limit ourselves to single categories for each image, or in other words the algorithm must decide whether an image is of Pizza or Steak etc. There are computer vision techniques for identifying multiple objects in a single image, however these are beyond the scope of this project.</li>
+</ol>
+<p><strong>Definition of Success</strong></p>
+<p>Something else that should be defined in advance is the definition of success: how will we evaluate different algorithms' performance on this classification problem?</p>
+<p>One very simple measure could be the classification rate, that is the total number of correct predictions divided by the total number of predictions made.</p>
+<p>Whilst this is a measure of success, this metric does not quite capture all of the subtleties of classification. Instead we will use a metric called the F1-score, illustrated using the following simple example.</p>
+<p>Consider a reduced version of the problem looking at categorising images into Pizza or Not Pizza. Typically, when we show an image to an algorithm, instead of giving a definitive answer it will output probabilities for each of the two outcomes.</p>
+<p>For example, given a new image, the algorithm may output:</p>
+<ul>
+<li><strong>Pizza</strong>: Probability = 0.6</li>
+<li><strong>Not Pizza</strong>: Probability = 0.4</li>
+</ul>
+<p>In order to translate these probabilities into a definite prediction, we must set a probability cut-off or threshold for Pizza, whereby any score above that threshold will be translated into a prediction for Pizza, and any score below becomes Not Pizza. In this example, if we set the threshold at 0.5, then the image would be classified as Pizza (as 0.6 &gt; 0.5).</p>
+<p>Now imagine that we show 100 images to the classification algorithm, and we summarize the resulting predictions in a table (commonly called the confusion matrix).</p>
+<table class="tg">
+    <tr>
+        <th class="tg-yw4l"></th>
+        <th class="tg-yw4l"></th>
+        <th class="tg-baqh" colspan="2"><span class="bold">Predicted Category</span></th>
+    </tr>
+    <tr>
+        <td class="tg-yw4l col1"></td>
+        <td class="tg-yw4l col2"></td>
+        <td class="tg-yw4l col3"><span class="bold italic">Pizza</span></td>
+        <td class="tg-yw4l col4"><span class="bold italic">Not Pizza</span><br></td>
+    </tr>
+    <tr>
+        <td class="tg-031e" rowspan="2"><span class="bold">Actual Category</span></td>
+        <td class="tg-yw4l"><span class="bold italic">Pizza</span></td>
+        <td class="tg-yw4l">True Positive</td>
+        <td class="tg-yw4l">False Negative</td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"><span class="bold italic">Not Pizza</span><br></td>
+        <td class="tg-yw4l">False Positive</td>
+        <td class="tg-yw4l">True Negative</td>
+    </tr>
+</table>
+
+<p>The rows represent the True Category of the images, and the columns represent the Predicted Category. We can describe these outcomes in the following way:</p>
+<ul>
+<li>True Positives: Top-left corner; images of Pizza correctly classified as Pizza.</li>
+<li>False Negative: Top-right corner; images of Pizza incorrectly classified as Not Pizza.</li>
+<li>False Positives: Bottom-left corner; images that are not Pizza incorrectly classified as being Pizza.</li>
+<li>True Negatives: Bottom-right corner; images that are not Pizza correctly classified as being Not Pizza. </li>
+</ul>
+<p>Using these definitions, we can define two metrics.</p>
+<div class="math">$$Precision = \frac{True\ Positives}{True\ Positives + False\ Positives}$$</div>
+<div class="math">$$Recall = \frac{True\ Positives}{True\ Positives + False\ Negatives}$$</div>
+<p>One way to think about Precision is that it measures, out of all images predicted to be Pizza, what proportion actually are Pizza. In some senses this tells us how noisy our Pizza predictions are, or how much the algorithm confuses other types of food with Pizza.</p>
+<p>Similarly, Recall asks, out of all true Pizza images, what proportion were correctly identified as being Pizza. This is a measure of how good our algorithm is at correctly identifying pizza images and placing them in the correct category.</p>
+<p>It turns out that by varying the probability classification threshold mentioned above, we can tune the Precision and Recall scores for the classification algorithm. </p>
+<p>For example, if we decide that we want to maximize Precision, this means that we need to minimize the False Positives or, in other words, we want the algorithm to output Pizza only when it is really confident that the image is of Pizza. In order to achieve this, we can increase our threshold probability thus ensuring that Pizza predictions are only made when the probability is quite high for Pizza.</p>
+<p>Similarly, by decreasing the probability threshold, we can get the algorithm to classify images as Pizza, even when its confidence is low, thus minimising the False Negatives and resulting in higher Recall. This might be important in other applications, for example using Machine Learning to detect cancerous cells, where the cost of False Negatives is higher than the cost of False Positives.</p>
+<p>Although we could use either Precision or Recall as a way of measuring algorithm performance, ultimately we care about both. Thus we define the F1 score to be:</p>
+<div class="math">$$F1 = \frac{2\ *\ Precision\ * Recall}{Precision + Recall}$$</div>
+<p>This particular definition gives equal weighting to both Precision and Recall, however it is possible to adapt the formula to give more weighting to one or the other. F1 is measured on a scale from 0 to 1, with 1 being the best possible score.</p>
+<h3 id="approach">3. General Approach and Data</h3>
+
+<p>We now have a definition of our problem:</p>
+<blockquote>
+<p>Find an algorithm that can take an image as input, and output a prediction for the category of food contained in the image</p>
+</blockquote>
+<p>as well as a measure of success, the F1 score.</p>
+<p>One way to approach this problem could be to try and manually create a list of rules in order to distinguish between different kinds of food. For example, if we were trying to distinguish between pictures of apples and bananas, we could attempt to program in rules looking at shape, size, colour etc.</p>
+<p>However, as we know from experience, apples can come in a wide variety of colours, bananas in very different shapes etc., so coming up with an exhaustive set of rules could become overwhelming quite quickly. The problem is even worse when we move onto more complex food dishes rather than single ingredients.</p>
+<p>For this reason, rather than using this rule-based approach, we turn to a field called Machine Learning.</p>
+<p><strong>Machine Learning</strong></p>
+<p>Arthur Samuel, a pioneer of the field, <a href="https://en.wikipedia.org/wiki/Machine_learning">defined</a> Machine Learning as as:</p>
+<blockquote>
+<p>"Field of study that gives computers the ability to learn without being explicitly programmed”</p>
+</blockquote>
+<p>At the heart of Machine Learning are algorithms that are able to build an internal representation or model of data, <span class="bold italic">without us having to explicitly program the model ourselves</span>.</p>
+<p>Such algorithms can then use this internal model in order to make predictions about new data points. We will specifically focus on a particular type of machine learning called Supervised Learning.</p>
+<p><strong>Supervised Learning</strong></p>
+<p>In supervised learning, we start with a relevant set of data that has already been classified into the different categories of interest to us. In our case this would mean that someone has looked at every single image in the dataset and manually attached a label to each image.</p>
+<p>We then use this data for a period of training in which we "show" each image to the algorithm along with the answer or prediction we expect, and the algorithm attempts to use this information to build a generalized model that can accurately map inputs (the training image data) to outputs (predictions of food categories).</p>
+<p>As will be seen in later sections, the types internal models vary greatly between algorithms. Furthermore, when we "show" images to the algorithm for training, some algorithms use the entire image, pixel by pixel, whereas others use other types of data extracted from the each image.</p>
+<p>The key to supervised learning is in having data where you know the categories, or answers, in advance, and using these answers to teach the algorithm how to make predictions about new data.</p>
+<p><strong>The Dataset</strong></p>
+<p>For this particular problem we need a set of training data that consists of a large number of pre-categorized pictures of different types of food. The dataset that we will work with comes from the ETH Zurich Computer Vision Laboratory, and is called the <a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/">Food 101 Dataset</a>.</p>
+<p>This dataset consists of 101 different food categories, with 1,000 images per category, for a total of 101,000 images. However the total dataset is too large for practical experimentation on a laptop, and so in order to reduce the complexity, we will focus on 12 categories out of the whole list:</p>
+<table class="tg food_cats">
+ <tr>
+   <td class="tg-yw4l">Pork Chop<br></th>
+   <td class="tg-yw4l">Lasagna</th>
+   <td class="tg-baqh">French Toast<br></th>
+ </tr>
+ <tr>
+   <td class="tg-yw4l">Guacamole</td>
+   <td class="tg-yw4l">Apple Pie<br></td>
+   <td class="tg-yw4l">Cheesecake</td>
+ </tr>
+ <tr>
+   <td class="tg-031e">Hamburger</td>
+   <td class="tg-yw4l">Fried Rice<br></td>
+   <td class="tg-yw4l">Carrot Cake<br></td>
+ </tr>
+ <tr>
+   <td class="tg-yw4l">Chocolate Cake<br></td>
+   <td class="tg-yw4l">Steak</td>
+   <td class="tg-yw4l">Pizza</td>
+ </tr>
+</table>
+
+<p>The images in the Food-101 dataset are of mixed quality. Some are very clear, well-lit and framed on the food item in question. Others, however, are more noisy, poorly lit, contain irrelevant items and, in some cases, are even mislabeled. Some examples of both high and low-quality pictures are shown below:</p>
+<p><img alt="alt food_images" src="/images/capstone_food_examples_sm.jpg" /></p>
+<p>In some respects this 'noise' in the data makes the problem harder, as the algorithm will need to differentiate between types of food that are not so easy to distinguish, as well as correctly identify food categories from images that vary significantly in terms of lighting and image quality. At the same time, this also means that if we are able to train a classifier to a sufficient level of accuracy, then we might expect its predictions to be more robust when used on real-world, equally-noisy data.</p>
+<p><strong>Using Data</strong></p>
+<p>Before we move on to looking at different types of algorithms, it is important to note the general methodology for using data in Supervised Machine Learning problems.</p>
+<p>As mentioned, we are starting with a set of 12,000 images, equally divided into 12 categories, however we will not use all of the pictures for training purposes.</p>
+<p>Instead, before doing anything else, we will split the dataset into two random subsets for training and testing purposes. The training data is what we will show the algorithm along with the relevant answers during the training phase. The testing data is used exclusively for evaluating how well a given algorithm works in practice.</p>
+<p><img alt="alt test_training_split" src="/images/capstone_data_split.png" /></p>
+<p>This is a general pattern for data usage that applies to any supervised approach. It is absolutely key that the test data is not used at all during algorithm training, otherwise any predictions made on that data could be considered 'cheating', and ultimately we will not know how well the algorithm could perform in the real world on previously unseen data.</p>
+<p>In an ideal world, when working on a supervised learning problem, one would be able to ring-fence somewhere around 15 to 20% of the data for testing purposes. In reality, the exact strategy and percentage used will depend on the nature of the problem as well as the actual available date.</p>
+<h3 id="ml_algorithms">4. Traditional Machine Learning: Algorithms</h3>
+
+<p>We start by exploring techniques from a traditional machine learning approach, where we must make two key choices:</p>
+<ol>
+<li>The type of algorithm to use</li>
+<li>The type of data to use for during training</li>
+</ol>
+<p>There are a wide variety of machine learning algorithms that we could use, and we will briefly explore three examples below.</p>
+<p><strong>k-Nearest Neighbours</strong></p>
+<p>k-Nearest Neighbours (kNN) is one of the simplest supervised learning algorithms, and has the benefit of being very easy to use, visualize and understand.</p>
+<p>The basic methodology for making a prediction is:</p>
+<ol>
+<li>Find the k 'closest' neighbouring images within the training dataset</li>
+<li>Look at the category for each of these neighbours</li>
+<li>Combine the category for each neighbour into an overall prediction</li>
+</ol>
+<p>In the example below we have two categories, Red and Blue. Given a new data point (the green triangle) we look at the 4 nearest neighbours of which three are Red and only one is Blue, and so we would classify the new point as being Red.</p>
+<p><img alt="alt k_nearest_neighbours" src="/images/capstone_knn.png" /></p>
+<p>Some specific parameters we can define for the algorithm are:</p>
+<ul>
+<li>How many neighbours to take into consideration (the value of k)</li>
+<li>How to define distance between neighbours, and hence how to define "closest"</li>
+<li>How to aggregate the categories for each neighbour into an overall prediction</li>
+</ul>
+<p>One of the biggest drawbacks of the kNN algorithm is that testing takes a long time, especially if we have a large dataset. This is because, in order to make a prediction, we have to make a comparison with every single element of the training data in order to find the k-closest neighbours.</p>
+<p><strong>Random Forest</strong></p>
+<p>In order to understand the Random Forest, we will start with a slightly simpler model called a Decision Tree.</p>
+<p>Decision Trees are probably familiar to many people in other contexts, and most would likely recognise the general branching structure based upon different conditions. In supervised learning the underlying concept is the same, that is to try and construct a tree where the branches enable us to differentiate between different categories.</p>
+<p>For example, suppose that we are trying to differentiate between Oranges, Apples and Bananas; one very simple decision tree might look something like:</p>
+<p><img alt="alt decision_tree" src="/images/capstone_decision_tree.png" /></p>
+<p>For certain types of problems, Decision Trees can be very powerful and they have the benefit of being fast to train and test.  However, one issue is that they tend to “overfit” the data. This means that the model they construct tends to be far too specific to the exact training data provided, and the model is not able to generalise very well when making predictions on new examples.</p>
+<p>One way to combat this overfitting is to construct a large number of different Decision Trees and combine the output of all of the trees when making predictions. Each tree is 'grown' using a slightly different version of the training data, and the hope is that each tree will create a slightly different model and thus we can capture more of the nuances of the underlying problem and better generalise to new data.</p>
+<p>This combination of decision trees is called a Random Forest, and is an example of what is know as an 'ensemble' method. Random Forests are a very powerful classifier and find applications in many types of problems. </p>
+<p><img alt="alt random_forest_1" src="/images/capstone_rf.png" /></p>
+<p><img alt="alt random_forest_1" src="/images/capstone_rf2.png" /></p>
+<p><strong>Support Vector Machine</strong></p>
+<p>The final model we will briefly explore is the Support Vector Machine. </p>
+<p>Very informally, a Support Vector Machine attempts to build a model by finding a line (or lines) that separates the different categories in such a way that the data points are divided by a gap that is as large as possible. Once this line has been identified, prediction is simply a matter of identifying on which side of the line a new data point falls.</p>
+<p><img alt="alt support_vector_machine" src="/images/capstone_svm.png" /></p>
+<p>For a slightly more technical explanation we turn to linear algebra (feel free to skip the next few paragraphs). Suppose we are given training data whereby each example is represented by <span class="bold italic">p</span> different values; in this case we can consider our training data to be points in <span class="bold italic">p</span>-dimensional space.</p>
+<p>The Support Vector Machine attempts to find a <span class="bold italic">p-1</span> dimensional hyperplane (basically a generalisation of a straight line to <span class="bold italic">p-1</span>-dimensions) that separates and also maximises the gap between the categories.</p>
+<p>The model described so far is called a Linear Support Vector Machine.  One common problem with this approach is that is often not possible to find a separating straight-line or plane given only the existing data points.</p>
+<p>Consider the following example in one dimension:</p>
+<p><img alt="alt support_vector_machine" src="/images/capstone_svm_2.png" /></p>
+<p>Here it is impossible to find a straight line that separates these data points.</p>
+<p>Look at what happens, however, when we project the data into two dimensions, say by plotting $ x^{2} $ against $ x $.</p>
+<p><img alt="alt support_vector_machine" src="/images/capstone_svm_3.png" /></p>
+<p>In this higher-dimensional space it is now possible to find a straight-line that separates the two classes. </p>
+<p>This is an example of non-linear classification using Suport Vector Machines. Some common transformations to higher dimensions are Polynomial (such as the example above where the data is transformed to some power of itself), as well as using what is called the <a href="https://en.wikipedia.org/wiki/Radial_basis_function_kernel">RBF</a> kernel.</p>
+<p>In practice these transformations are calculated using what is called the <a href="https://en.wikipedia.org/wiki/Kernel_method">"<span class="italic">kernel trick"</span></a>.</p>
+<p><strong>Algorithm Optimisation</strong></p>
+<p>Before moving on we must say something about the need for optimisation in supervised learning. For each of the models mentioned above, there are specific choices we must make at the start when we initialise the model prior to training.</p>
+<p>For example for the k-Nearest Neighbour algorithm we must decide on the value of k and the definition of ‘closeness’. For Random Forests, among other things, we need to specify the number of decision trees to have in the forest. Similarly, for Support Vector Machines, there are a number of parameters we must specify.   </p>
+<p>These parameters are called hyper-parameters, and in general different choices for the parameters can result in different outcomes for the model in terms of predictive performance. For instance, a kNN algorithm may make very different predictions based upon whether it is looking at the nearest 3 vs. 10 neighbours.</p>
+<p>Thus one key task when ‘training’ a machine-learning algorithm is to identify the values for the hyper-parameters which give the best results for the problem under consideration. This is called hyper-parameter tuning, and one of the most common approaches is called a grid search.</p>
+<p>In a grid-search we specify up-front a range of values for each hyper-parameter, and then train and test a model using every possible combination of the parameters. The values that give us the best result during training (importantly not using the ring-fenced testing data), are then said to be the optimal parameters.</p>
+<h3 id="ml_features">5. Traditional Machine Learning: Features</h3>
+
+<p>We have now looked at some examples of common machine learning algorithms that can be used in classification problems. However, for each of these algorithms, we must also decide what data to use during training in the hope of creating the best predictive model.</p>
+<p>Ultimately what we are looking for is the best possible representation of each of our different data points (in this case images), subject to a number of considerations, including:</p>
+<ol>
+<li>We want the representation to have sufficient information to be able to group together examples from the same category, but also to differentiate between different categories.</li>
+<li>At the same time, we want to avoid as much as possible the overfitting problem we mentioned earlier, that is we don’t want to provide so much detail that the model is not able to generalise well when used on new data.</li>
+</ol>
+<p>The representations of the data that we use are typically called features.</p>
+<p>For our problem of image classification we need to begin by understanding the way images are represented digitally. Although we see images visually, a computer just sees them as a series of numbers. To illustrate this, let us look at the following picture consisting of a grid of 16 x 16 squares :</p>
+<p><img alt="alt grey_pixels" src="/images/capstone_pixels_grey.png" /></p>
+<p>Each square represents one pixel in the image. We can think of a pixel as being the basic building block of an image, where each pixel has a particular shade of grey associated with it. By laying out pixels of different shades next to each other we can build up more and more complex patterns and shapes.</p>
+<p>Furthermore, we can specify the particular shade of grey of a given pixel using a single number and so the image above can be represented using a matrix of 16 x 16 = 256 numbers.</p>
+<p>Now let us take a look at a similar image in colour:</p>
+<p><img alt="alt rgb_pixels" src="/images/capstone_pixels_rgb.png" /></p>
+<p>Here the principle is the same, with each pixel having a specific colour, however in this case we need three numbers rather than just one in order to specify the colour. These three numbers specify the shades of Red, Green and Blue which are combined to produce any colour we wish. (Note: there are alternative representations of colour, however this RGB representation is one of the most common).</p>
+<p>For example, the pixels with this colour:</p>
+<p><img alt="alt green_pixel" src="/images/capstone_green_pixel.png" /></p>
+<p>can be specified by (Red = 0, Green = 128, Blue = 0), while these pixels:</p>
+<p><img alt="alt pink_pixel" src="/images/capstone_pink_pixel.png" /></p>
+<p>can be specified by (Red = 242, Green = 128, Blue = 88).</p>
+<p>Thus the colour image can be represented by a matrix of 16 x 16 x 3 = 768 separate numbers, and this is how a computer 'sees' images.</p>
+<p>For machine learning, one approach could be to use these Red, Green and Blue pixel colour values as the features, however we might imagine that this is not necessarily the best approach:</p>
+<ol>
+<li>The number of individual features can become very large very quickly; for example our images have 512 x 512 pixels, meaning each individual image requires 786,432 different numbers to represent them</li>
+<li>Very large feature vectors can lead to problems of overfitting and,</li>
+<li>There is no reason to assume that the pixel-based representation will be the best possible representation</li>
+</ol>
+<p>Instead we will use a number of different approaches to extract different types of features from the images, and see what works best when training different algorithms.</p>
+<p><strong>RGB Histograms</strong></p>
+<p>One of the simplest types of features we can look at are histograms of the different Red, Green and Blue pixel values in the images, that is we are comparing the relative frequencies of different colour intensities. Perhaps these differences will enable our classifier to distinguish between the different food categories.</p>
+<p>In fact, if we look at such histograms for three food categories, we can immediately see that the colour distributions are very different:</p>
+<p><img alt="alt rgb_histograms" src="/images/capstone_histograms.png" /></p>
+<p><strong>Edges</strong></p>
+<p>Another fairly simple type of feature we consider are called Edges. An edge is defined by a discontinuity between pixels, which is basically an area where there is sufficient difference between pixels of one colour and another that an edge appears in the image.</p>
+<div class="image" id="edge-image">
+    <img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/edges.png"><br>
+    <span class="small">Image by <a href="https://en.wikipedia.org/wiki/User:JonMcLoone" class="extiw" title="wikipedia:User:JonMcLoone">JonMcLoone</a> at <a href="https://en.wikipedia.org/wiki/" class="extiw" title="wikipedia:">English Wikipedia</a>, <a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=44894482">https://commons.wikimedia.org/w/index.php?curid=44894482</a></span>
+</div>
+
+<p>Typically we count the number of edges within a given image or sub-region of an image, although in the field of computer vision there are other ways of using edges, for example looking at the orientation of different edges (i.e., how many are vertical vs. horizontal etc.)</p>
+<p><strong>Corners</strong></p>
+<p>Finally, during our machine learning attempts, we also consider the number of corners within an image or image-region, where a corner is defined as the meeting point of two edges.</p>
+<p><strong>Meta-Approaches</strong></p>
+<p>It is important to note that features are typically not used in isolation, but are combined together to try and come up with richer representations of the underlying examples.</p>
+<p>For example we might use a set of features that is a combination of RGB Histogram values, plus the number of edges, plus the number of corners.</p>
+<p>Another way we can combine features for a given image is by splitting the image into sub-regions, extracting features for each of the sub-regions, and then aggregating them all together into a complete representation of the overall image.</p>
+<p><img alt="alt features" src="/images/capstone_features.png" /></p>
+<h3 id="deep_learning">6. Deep Learning &amp; Neural Networks </h3>
+
+<p>The general machine learning techniques we have discussed so far form the basis of what was the standard approach to computer vision for a long time. However in the past few years these techniques have been replaced by new approaches based on Deep Learning, and in particular models called Convolutional Neural Networks.</p>
+<p>Convolutional Neural Networks, or CNNs for short, are currently considered to be "state of the art" in computer vision, and have also achieved success in many other areas and applications. In fact, in some very specific problems, Convolutional Neural Networks are able to achieve greater accuracy than humans.</p>
+<p>We will give a very brief introduction to Convolutional Neural Networks in order to motivate our approach.</p>
+<p><strong>Neurons</strong></p>
+<p>We start with the idea of a 'neuron', which is fundamentally nothing more than a very simple function that takes an input and produces an output dependent on two parameters that are intrinsic to that neuron, called its weight and bias:</p>
+<p><img alt="alt neuron_1" src="/images/capstone_neuron_1.png" /></p>
+<p>Thus, in the example above, if X is 3, w is 1.2 and b is -6, the neuron would return an output of 3 x 1.2 - 6 = -2.4</p>
+<p>This particular neuron is not that interesting as all it gives us is a simple linear function. Thus we introduce the concept of 'Activation', which is a way of ensuring that neurons do not produce output all of the time, only some of the time based on certain conditions:</p>
+<p><img alt="alt neuron_2" src="/images/capstone_neuron_2.png" /></p>
+<p>In the diagram above:</p>
+<ol>
+<li>The neuron receives input X</li>
+<li>The linear transform wX + b is calculated</li>
+<li>The result is passed through an activation function, &sum;</li>
+<li>The final output depends on the nature of the activation function.</li>
+</ol>
+<p>Probably the simplest choice for the activation function is what is called the Step function:</p>
+<p><img alt="alt step_function" src="/images/capstone_step.png" /></p>
+<p>If the Step function receives a negative input (x &lt; 0), then it returns an output of 0, while for inputs greater than or equal to 0, it returns an output of 1.</p>
+<p>In practice this function does not behave in a mathematically nice way, and so typically the activation functions used will look more like these:</p>
+<p><img alt="alt activation_functions" src="/images/capstone_activation.png" /></p>
+<p>This concept of activation is where the name neuron comes from, as these functions behave similar to biological neurons that 'fire' or don't 'fire' depending on the inputs they receive.</p>
+<p><strong>Networks</strong></p>
+<p>A single neuron on its own cannot do very much, however we can build up more and more complexity by combining many of these neurons into layers, and then connecting the layers together, for example as in the diagram below:</p>
+<div class="image" id="net-image">
+    <img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/nn.svg">
+    <br>
+    <span class="small">Image by <a href="//commons.wikimedia.org/wiki/User_talk:Glosser.ca" title="User talk:Glosser.ca">Glosser.ca</a> - <span class="int-own-work" lang="en">Own work</span>, Derivative of <a href="//commons.wikimedia.org/wiki/File:Artificial_neural_network.svg" title="File:Artificial neural network.svg">File:Artificial neural network.svg</a>, <a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=24913461">https://commons.wikimedia.org/w/index.php?curid=24913461</a></span>
+</div>
+
+<p>Ultimately this is just a pictorial representation of a complicated function, which</p>
+<ul>
+<li>Receives an input or inputs</li>
+<li>"Propagates" it through each neuron in each layer of the network, by which the output of one layer becomes the input to the next layer</li>
+<li>At each neuron, the simple function above is applied, using the relevant weight, bias and activation</li>
+<li>Returns an output which is dependent on the value of all of the different parameters of all of the neurons in the network</li>
+</ul>
+<p>In fact it can be shown that, with appropriate choices for each of the parameters, this sort of model can approximate any arbitrary function (as long as it is mathematically 'nice'), which means that it has the potential to be very powerful.</p>
+<p>In the specific example above, there is one 'hidden' layer which sits between the input and output layers. Networks which have many hidden layers are called deep networks, and for this reason we talk about Deep Learning.</p>
+<p><strong>Training a Network</strong></p>
+<p>Once again we return to the idea of training a model using our inputs as well as the output we want from the model. In this case the model is a network of connected neurons, and training involves adjusting the parameters of each neuron in order to maximize the total number of correct predictions emerging from the model.</p>
+<p>Although the model looks very complex, the key ideas behind the training procedure turn out to be relatively simple. There is just one missing ingredient we need which is some sort of cost or loss function to measure how wrong the network outputs, or predictions, are.</p>
+<p>When the predictions are very different from what they should be, then this loss should be high, and as the predictions get closer to reality, then the loss should decrease toward 0. We can then use this loss function during training to understand how to tweak the parameters in order to lead to better predictions.</p>
+<p>To illustrate the training procedure, we use a very simple toy example for a single neuron with only weight and no bias. During training, the procedure is:</p>
+<ol>
+<li>Start with an input <strong>X</strong>, which is fixed</li>
+<li>Pass <strong>X</strong> through the neuron, and calculate its output <strong>wX</strong></li>
+<li>Compare the output to the desired result (in this case 1.00) and calculate the loss associated with the current output</li>
+<li>Slightly modify the neuron parameter <strong>w</strong> in such a way as to decrease the loss on the next pass</li>
+<li>Repeat until there do not seem to be any improvements.</li>
+</ol>
+<p>This procedure is demonstrated in the animation below. Click on the button to start the training procedure and watch how the weight parameter, output and associated loss evolve.</p>
+<p><button class="myButton" id="button-3">Train</button>
+<div class="training"></div></p>
+<p>For the mathematically inclined, this problem is nothing more than standard optimisation where we have a function <span class="bold italic">F</span> that takes an input <span class="bold italic">x</span> and, by using parameters <span class="bold italic">W</span> and <span class="bold italic">B</span>, returns an output <span class="bold italic">C</span>. We wish to find the values of <span class="bold italic">W</span> and <span class="bold italic">B</span> that minimize <span class="bold italic">C</span> for a given input <span class="bold italic">x</span>.</p>
+<p>As such, we can use calculus to find the gradient of this function at <span class="bold italic">x</span>, and when we tweak the parameters, we do it <span class="bold italic">in the direction of decreasing gradient</span> of the function.</p>
+<p>Although we have only illustrated training for a single neuron, we can use the same procedure to train very large and complex networks by taking advantage of two key ideas.</p>
+<p>The first technique, called backpropagation, enables us to calculate the gradient for many different types of networks and neurons connected together in different ways.</p>
+<p>The second is the use of very efficient computer-based implementations of linear algebra and in particular vector and matrix multiplication, which lets us quickly perform the relevant calculations on very large inputs, or even to process multiple inputs at the same time.</p>
+<p><strong>Predictions</strong></p>
+<p>In any network, the last layer typically corresponds to the categories that are being used for classification, where one neuron corresponds to a particular category. Then, when we make a prediction, it is based upon the neuron in the last layer with the highest activation, or output.</p>
+<p><img alt="alt prediction" src="/images/capstone_predict.png" /></p>
+<p><strong>Convolutions</strong></p>
+<p>Although neural networks like the ones mentioned above are powerful, it turns out that for problems like computer vision we obtain even better results by using a number of innovations. Thus far we have only looked at neurons that are "fully connected", that is in each layer (except the input and output layers) every neuron is connected to every other neuron in the preceding and following layers.</p>
+<p>One key challenge associated with fully-connected networks, especially when using very high-dimensional data such as images, is that the number of required parameters can become too large to feasibly carry out the required computations, especially when using readily-available hardware.</p>
+<p>For example, if we were to use 256 x 256 colour images as inputs, and supposing the first hidden layer has 1000 neurons, then just the initial weights to the input layer would require nearly 200 million parameters.</p>
+<p>Furthermore, this "fully-connected" model is not always sufficient to capture all of the underlying complexities and nuances of the data, such as complex patterns that can appear in many different locations in an image. </p>
+<p>However there are other types of layers we can use that are connected in different ways or even perform different roles, which we can combine strategically, resulting in greater prediction accuracy, while using less overall parameters.</p>
+<p>One of the key types of layers used in state-of-the-art models is called a convolution layer.</p>
+<p><img alt="alt convolution_layer" src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/conv.png" /></p>
+<p><br>
+<span class="small">Image by <a href="//commons.wikimedia.org/w/index.php?title=User:Aphex34&amp;action=edit&amp;redlink=1" class="new" title="User:Aphex34 (page does not exist)">Aphex34</a> - <span class="int-own-work" lang="en">Own work</span>, <a title="Creative Commons Attribution-Share Alike 4.0" href="http://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=45659236">https://commons.wikimedia.org/w/index.php?curid=45659236</a></span></p>
+<p>Unlike a fully connected layer, a convolutional layer does not "look at" the whole image in one go, but instead can be thought of as scanning across the image one piece at a time. During training the parameters of the convolution layer are modified as it attempts to detect underlying patterns that can be used for identifying different types of images.</p>
+<p>These convolution layers can be stacked up, one after the other, and we typically find that the earlier layers are used to identify very basic patterns, while later layers become tuned to identify more complex shapes made up of these simpler patterns.</p>
+<p>This innovative architecture is also far more efficient in terms of parameters and calculations: single convolution layers used in practice can have only tens of thousands of parameters, and the best neural network used in this project has a total of 60 million parameters.</p>
+<p>While this is still a large number, it is far smaller than what could be required for a deep network consisting only of fully-connected layers.</p>
+<p><strong>Deep Learning in Practice</strong></p>
+<p>This basic introduction to Neural Networks and Deep Learning is not intended as a rigorous explanation, but more to give a brief overview of the core ideas behind this approach.</p>
+<p>Before moving on to the results, it is worth noting two practical aspects of Deep Learning with CNNs:</p>
+<p><strong>1. Image Features</strong></p>
+<p>While using traditional machine learning models, we had to choose which types of features to feed into the model. Although in many cases the features were obtained using algorithms or other types of machine learning models, ultimately we were making a conscious decision in selecting the features ourselves.</p>
+<p>In the case of CNNs, we simply feed in the raw images and then let the network itself identify and extract the key features. Not only is this less labour-intensive for the user, but the generated features tend to be superior and more useful.</p>
+<p><strong>2. Resources</strong></p>
+<p>CNNs can get very complex very quickly. Every single neuron has two parameters to optimize, its weight and bias, and CNNs typically have many thousands of neurons, resulting in hundreds of thousands or even millions of parameters to be optimised during training.</p>
+<p>The result of this is that training a CNN from scratch can take a long time and require a lot of training data. For example, for competition-winning CNNs, training is performed on more than a million images and is said to take three weeks or more.</p>
+<p>All is not lost though, as there are techniques whereby we can take advantage of other people’s hard work, and instead of starting from scratch, work with networks that have been pre-trained on some other dataset.</p>
+<p><strong>Transfer Learning</strong></p>
+<p>There are two main approaches when it comes to working with pre-trained networks.</p>
+<p>The first, <span class="bold italic">Feature Extraction</span>, is based on using the network to generate some features which we can then use to train a standard machine learning algorithm. Here we are taking advantage of the fact that CNNs are remarkably good at detecting the important features on their own and so we can save ourselves the trouble of trying to figure out the right sorts of features to use.</p>
+<p>Here all we need to do is feed all of our training images into the network, and use the output from some layer as a set of features to use while training one of the algorithms we have previously mentioned, say a Support Vector Machine or a Random Forest.</p>
+<p><img alt="alt feature_extraction" src="/images/capstone_extract.png" /></p>
+<p>An alternative approach is called parameter <span class="bold italic">Fine-tuning</span>. Here we rely on the fact that the parameters of the network will already have been painstakingly optimised over many weeks, and so should already be pretty good at detecting image-based features.</p>
+<p>As was previously mentioned, the initial layers of a CNN become tuned to detect very basic features, patterns and colours that are likely to exist in many different types of images. So rather than trying to train a network from scratch, we can start with a model that is already successful at classification in one domain, and simply spend some time tweaking the parameters very slightly in order to better adapt the network to our specific problem.</p>
+<h3 id ="results">7. Results</h3>
+
+<p>When we look at results, we will visualize performance in a couple of different ways:</p>
+<ol>
+<li>The overall accuracy of each model</li>
+<li>The performance on each food category</li>
+<li>The categories for which the models had most trouble</li>
+</ol>
+<p><strong>Overall Results</strong></p>
+<p>The chart below shows the overall classifier accuracy (more specifically the F1 score) for each of the different models that were tested. The results are plotted in order of performance from worst to best. You can move your mouse over each bar to see more details about the specific Algorithm, Data Features and Score for each attempt.</p>
+<p>Looking at the chart, two things are clear.</p>
+<p>First of all, progress using traditional machine learning approaches (models + pre-selected features) was slow and painful. Although the results did gradually improve, it took quite a long time to achieve an accuracy of 0.30 or above.</p>
+<p>Secondly, the superiority of Deep Learning with CNNs is clear: all of the deep learning models (orange bars) performed better than traditional machine learning, and accuracy jumped significantly once we switched to deep learning approaches.</p>
+<div class="overall_results"></div>
+
+<p><strong>Per Class Results</strong></p>
+<p>On this chart we plot the evolution of the F1 score for each different food category. In this case, the results are plotted in the order they were obtained, that is attempt 1, followed by attempt 2, attempt 3 etc. Each line represents a different food category, and you can move the mouse over each line to see the relevant class and its final F1 score.</p>
+<p>The first observation is that there is quite a wide range of performance for different categories, even when using the more powerful CNN-based models. For example, for the best classifier, the range of scores was as low as 0.61 for Steak, and as high as 0.91 for Guacamole.</p>
+<p>[Note that this chart has 46 different values on the $ x $-axis compared to 54 in the previous chart. This is because I did not obtain full per-class results for all of the initial attempts.]</p>
+<p>From looking at this chart we can also say something about the overall process, notably that progress was not linear. At each attempt, both for traditional machine learning as well as CNNs, we tested different methodologies in the hope of improving on past results. In some cases this worked out, but in other cases these new combinations ended up giving worse scores than previous attempts.</p>
+<div class="per_class_results"></div>
+
+<p><strong>Confusion Matrix</strong></p>
+<p>Now we turn our attention to the Confusion Matrix. Here we plot the predictions for each different category, where the rows represent the true class, and the columns represented the predicted class. For example, the top left hand cell corresponds to pictures of Pork Chop correctly classified, and the next cell along on the same row corresponds to pictures of Pork Chop classified as being Lasagna etc.</p>
+<p>The cell colour is indicative of the proportion of predictions that fall into a given cell, with darker shading corresponding to a higher proportion. A perfect classifier would, for each category, place 100% of the predictions for that class into the cells on the diagonal line that goes from the top-left to bottom-right corners.</p>
+<p>Thus, what we are looking for in the confusion matrix is for the cells on this diagonal line to be shaded very dark blue, with all other cells being shaded very light grey.</p>
+<p>The initial starting point for the matrix is the results of a purely random model, that is to say a model where each prediction is based upon drawing food categories out of a hat. To explore the confusion matrix for different attempts you can either use the slider at the top, or press the Run Simulation button to cycle through the results of each of the different models. You can also hover over individual cells to see the exact proportions of predictions.</p>
+<div class="confusion_matrix">
+    <div id="tooltip" class="hidden">
+        <span id="value"></span>
+        </div>
+    <div id="slider"></div>
+        <button class="myButton run-button">Run Simulation</button>
+        <button class="myButton" id="stop-1">Stop</button>
+</div>
+
+<p>If we look at the confusion matrix for the <a class="best_confusion" href="" onclick="return false;">best performing model</a>, overall the picture looks very good, with a good amount of dark shading on the diagonal, and generally lighter cells everywhere else. However there are a couple of outliers that stand out:</p>
+<ol>
+<li><a class="confusion_2" href="" onclick="return false;">18% of Steak images are classified as being Pork Chop</a></li>
+<li><a class="confusion_1" href="" onclick="return false;">10% of Pork Chop pictures are classified as being Steak</a></li>
+</ol>
+<p>What we are seeing is that the model has a particularly hard time distinguishing between these two categories, perhaps understandably as a cooked pork chop can look quite similar to a cooked piece of steak, particularly in a low-quality image.</p>
+<p><strong>Class Predictions</strong></p>
+<p>We saw above how different food categories can be "confused" for each other by the classifier. In this final chart we look more closely at how this confusion changes for each particular category using the different models.</p>
+<p>The chart shows, for a given category of test images, what % of images are predicted as belonging to each class. The bar for the true category is shown in blue, and all incorrect categories are shown in green.</p>
+<p>For example, the initial picture shows that for Pork Chops, just under 10% are correctly classified, and in general the predictions are distributed fairly evenly across all categories.</p>
+<p>For any category, you can see how its predictions are distributed as the classifiers evolve either by dragging the slider to a particular attempt, or by pressing the Run All button. Once again the order of the models is based upon the order that they were created and tested.</p>
+<p><div class="class_predictions">
+    <select id="selector" class="class_selector">
+      <option value="pork_chop">Pork Chop</option>
+      <option value="lasagna">Lasagna</option>
+      <option value="french_toast">French Toast</option>
+      <option value="guacamole">Guacamole</option>
+      <option value="apple_pie">Apple Pie</option>
+      <option value="cheesecake">Cheesecake</option>
+      <option value="hamburger">Hamburger</option>
+      <option value="fried_rice">Fried Rice</option>
+      <option value="carrot_cake">Carrot Cake</option>
+      <option value="chocolate_cake">Chocolate Cake</option>
+      <option value="steak">Steak</option>
+      <option value="pizza">Pizza</option>
+    </select>
+    <div id="slider-2"></div>
+  <button class="myButton" id="button-1">Run All</button>
+  <button class="myButton" id="stop-2">Stop</button>
+  </div></p>
+<p>In general, for any given category, what we see is that early on the predictions are all over the place with the true class sometimes dominating and sometimes not, and then we we reach the CNN-based models around attempt number 40, all of a sudden the true class dominates the model's predictions.</p>
+<h3 id ="visual">8. Visualizing a Convolutional Neural Network</h3>
+
+<p>One benefit of many of the 'simpler' machine learning algorithms is that it is easier to visualize conceptually how they are working 'under the hood'.</p>
+<p>For example, a <strong>k-Nearest Neighbours</strong> classifier is simply finding the 'closest' data points and making a prediction based upon the categories of these neighbours.</p>
+<p>The maths behind a <strong>Support Vector Machine</strong> is more complicated, however we can at least imagine a series of straight lines separating different data points of different classes.</p>
+<p><strong>Random Forests</strong> can seem more like a black box, but we can still try and picture a large number of different decision trees, each taking slightly different features into account, and then combining predictions from each one into an overall prediction.</p>
+<p>[Note that this refers to conceptual rather than actual visualization. In practice most non-trivial examples will consist of high-dimensional data which is much harder to visualize in practice.]</p>
+<p><strong>Convolutional Neural Networks</strong> however are so complex, with many different types of neurons stacked into tens or even hundreds of layers, that is is much harder to come up with a simple explanation for how they are working. Having said that, there are a few tricks for visualizing what these networks are doing which can start to shed some light on the underlying model.</p>
+<p><strong>Convolutions and Patterns</strong></p>
+<p>We saw earlier how one of the key elements behind the CNN is the convolution layer, which we can think of as scanning across the image, looking for particular patterns in each part of the picture. One of the first things we can visualize is what some of these patterns might look like. This makes the most sense for the very first convolution layer which is applied directly to the raw image.</p>
+<p>Here we can see very basic patterns such as straight edges of different orientations as well as simple blobs of different colours.</p>
+<p><img alt="alt conv_layer_1" src="/images/capstone_conv_layer.png" /></p>
+<p><strong>High Activation Images</strong></p>
+<p>An alternative approach to visualizing what is happening in each layer is through looking at images that maximally activate a given neuron. Over the next few paragraphs we will look at what this means.</p>
+<p>Recall the concept of activation which we introduced for individual neurons whereby, depending on the input, the neuron's output can very from being very low to very high. This means that when a particular neuron is activated in the network, there must be some combination of pixels in the input image which is causing this activation.</p>
+<p>What we can do is to try and artificially create a combination of pixels which results in the highest possible activation for this neuron, thus getting a sense of what sort of patterns, shapes or colours are causing different neurons to 'fire'.</p>
+<p>Mathematically we take advantage of the fact that we already have a well-behaved function that we optimised to find the set of parameters resulting in the best overall predictions. Now we take a similar optimisation approach, however this time rather than leaving the image fixed and varying the weights, we will instead leave the weights fixed and vary the image pixel values in order to maximize the activation, or output, of a given neuron.</p>
+<p>For example, below we show synthetically generated images for two neurons in the prediction layer:</p>
+<p><img alt="alt synthetic_images" src="/images/capstone_synthetic_2.png" /></p>
+<p>Although we don't get pictures that look exactly like Hamburgers or Guacamole, it is certainly possible to discern certain structure, texture and colour in these images.</p>
+<p>We can do the same for the different convolutional layers in the network which, you will remember, are theoretically detecting different patterns at varying scales.</p>
+<p><img alt="alt synthetic_images_2" src="/images/capstone_synthetic_1.png" /></p>
+<p>Here we can see two things quite clearly. First, as expected, the initial layers are activated by simple patterns, whereas later layers look for more complexity. Secondly, the field of vision of each layer increases as we go deeper into the network. For example the first layer look at very small sub-regions of the image, whereas by the last layer, the convolutional 'filters' are receiving input from a much larger area.</p>
+<p>In reality most of the food items that we are classifying do not have very distinctive shapes or colours, and so it is quite hard to interpret some of these patterns being detected by the different layers. The visualizations become a lot clearer if we look at similar synthetic images for the original network prior to fine-tuning on our food dataset.</p>
+<p><img alt="alt synthetic_images_3" src="/images/capstone_synthetic_3.png" /></p>
+<h3 id="summary">9. Summary</h3>
+
+<p>Overall this was a fantastic learning experience that gave me the opportunity to work with both traditional machine learning as well as deep learning models. Working on a tangible, and at times messy, problem has definitely been the best way for learning about how some of these models are applied in the real world, and the associated challenges.</p>
+<p>In terms of computer vision, it is clear why Convolutional Neural Networks are the current state-of-the-art approach, given the relative ease of obtaining good results in a relatively short space of time.</p>
+<p>There is still a lot of work that could be done to achieve even better results for classifying food pictures, including:</p>
+<ol>
+<li>Expanding the approach to use all 101 food categories from the dataset</li>
+<li>Fine-tuning a more recent network that has achieved better results (i.e., GoogleNet, ResNet etc.)</li>
+<li>Investing more time in optimising parameters during fine-tuning</li>
+<li>Training multiple models and aggregating the predictions (an ensemble approach)</li>
+<li>Expanding the methods to include object detection for identifying multiple food types in one image.</li>
+</ol>
+<h3>References</h3>
+
+<p>The code for the final CNN-based model along with a full report and presentation can be found on <a href="https://github.com/simonb83/food_classification/tree/draft">GitHub</a>.</p>
+<p>An excellent introduction to Convolutional Neural Networks for Computer Vision is the Stanford <a href="http://cs231n.stanford.edu/">CS231n</a> course.</p>
+<p>The network visualizations were created using the <a href="https://github.com/yosinski/deep-visualization-toolbox">Deep Visualization Toolbox</a>.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+	<hr/>
+	<h6>Written by <a href="/author/simon-bedford.html">Simon Bedford</a> in <a href="/category/machine-learning.html">Machine Learning</a> on Sun 09 October 2016. Tags: <a href="/tag/machine-learning.html">machine-learning</a>, <a href="/tag/deep-learning.html">deep-learning</a>, <a href="/tag/data-science.html">data-science</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/visualization.html" class="tag-4">visualization</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/maths.html" class="tag-1">maths</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/data-science.html" class="tag-2">data-science</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-4">neural-network</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-1">deep-learning</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-1">customer-experience</a></li>
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="/theme/js/jquery.js"></script>
+		<script src="/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="/js/compressed.js"></script>
+
+	</body>
+</html>

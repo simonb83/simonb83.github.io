@@ -1,0 +1,443 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="/theme/css/foundation.css" />
+		<link rel="stylesheet" href="/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="/theme/css/alt-fonts.css" />
+
+
+		<script src="/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="/category/books.html">Books</a></li>
+							<li class="active"><a href="/category/coding.html">Coding</a></li>
+							<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+							<li ><a href="/category/data-science.html">Data Science</a></li>
+							<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="/category/ideas.html">Ideas</a></li>
+							<li ><a href="/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="/category/maths.html">Maths</a></li>
+							<li ><a href="/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="/category/books.html">Books</a></li>
+								<li class="active"><a href="/category/coding.html">Coding</a></li>
+								<li ><a href="/category/customer-experience.html">Customer Experience</a></li>
+								<li ><a href="/category/data-science.html">Data Science</a></li>
+								<li ><a href="/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="/category/ideas.html">Ideas</a></li>
+								<li ><a href="/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="/category/maths.html">Maths</a></li>
+								<li ><a href="/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Traffic Modeling Part I</h2>
+	<p>One of my personal projects for the beginning of this year was to get
+more comfortable with Python in preparation for (maybe) doing a Data
+Science course of some kind. However I knew that just trying to work
+through theory wouldn’t be very effective, and instead wanted to play
+around with an actual problem as a learning device.</p>
+<p>So, a few weeks ago when I was stuck waiting at a particularly bad set
+of traffic lights near my house and thinking about how bad the timing
+seemed to be, I hit upon an idea for doing something in Python: modeling
+the behavior of traffic at a traffic light.</p>
+<p><em>Quick disclaimer:</em> the only thing I really wanted to achieve was to
+improve in Python, so I make no claim as to the accuracy of any models,
+assumptions or results when it comes to actual traffic.</p>
+<p><strong>Model 1: Single Car arriving per interval</strong></p>
+<p>The first version of my model was a very-simple one, looking at single
+cars arriving at a light during 1-minute intervals and calculating the
+average car waiting time.</p>
+<p>I created a simple TrafficLight class with two basic properties:</p>
+<ul class="simple">
+<li>greenTime being the number of seconds the light is green</li>
+<li>redTime the number of seconds the light is red</li>
+</ul>
+<p>and for simplicity I assumed that greenTime + redTime = 60</p>
+<p>I modeled car arrival time as a Uniform random variable on [0,60] (i.e.,
+each individual car is equally likely to arrive at any time during the
+minute interval.)</p>
+<p>I ran simulations for greenTime starting at 0.6 seconds, and in
+increments of 0.2 seconds (up to 59.4), and for each greenTime
+calculated the average for 20 independent car arrival times.</p>
+<p><img alt="image1" src="/images/traffic_model_1.png" /></p>
+<p>The results are not that surprising. When the greenTime % is low, then
+the average wait time is around 30 seconds. We would expect this because
+the total redTime is approximately 60 seconds, and the expected car
+arrival time is at 30 seconds, so on average each car would be likely to
+wait 30 seconds before the light turns green again.</p>
+<p>Similarly, we can see that when the green/red proportion is 50-50, the
+average waiting time is somewhere between 5 and 10 seconds. In this
+case, we would expect half the cars to arrive between 0-30 with a wait
+time of 0, and half to arrive between 30-60 with an average wait time of
+15 seconds, leading to a global average of 7.5s.</p>
+<p>Finally, when the light is green nearly all of the time, the average
+wait time is around 0 seconds, again as we would expect.</p>
+<p><strong>Model 2: Multiple cars arriving per interval</strong></p>
+<p>Here I move on to a more complex case where multiple cars can arrive in
+a given 60-second interval.</p>
+<p>I model cars arriving as a Poisson Random Variable, and again look at
+average car waiting time based on three variables:</p>
+<ol class="arabic simple">
+<li>Car arrival rate: Between 2 and 38 per minute</li>
+<li>Green time proportion: % of 60-second interval traffic light is green</li>
+<li>Car pass rate: the number of cars that can pass the light per second
+when it is green</li>
+</ol>
+<p>First we plot car arrival rate vs. average waiting time, for different
+values of the greenTime percentage.</p>
+<p><img alt="image2" src="/images/traffic_model_2A.png" /></p>
+<p>Again the results are not so surprising. As the car arrival rate
+increases, the average wait time increases, with the gradient determined
+by the % of the interval for which the light is green.</p>
+<p>The picture is pretty similar if we vary the value of car pass rate
+instead of greenTime %, although with different gradient values.</p>
+<p><img alt="image3" src="/images/traffic_model_2B.png" /></p>
+<p><strong>Model 3: Multiple cars arriving per interval + blocked junction</strong></p>
+<p>For the next iteration, I took Model 2 and added in an extra factor:
+junction blocking.</p>
+<p>From personal experience (where I live), I have seen that in heavy
+traffic (i.e. high car arrival rate), traffic junctions can often become
+blocked as cars either remain stationary across the junction when their
+light turns red, or continue to pass after the light turns red and hence
+end up blocking the oncoming traffic.</p>
+<p>I model this using a blocking probability, p, so when cars arrive at the
+light then with probability p, the junction is blocked and so even if
+the light is green, then all cars must wait for the full 60 seconds
+(greenTime + redTime) before they have the possibility of advancing (or
+again being blocked with probability p).</p>
+<p>In this example I assume that if the junction is blocked, then the block
+lasts for the full greenTime.</p>
+<p>[Note: in both Models 2 and 3, I am assuming that all the cars arrive at
+the start of the 60 second interval.]</p>
+<p><img alt="image4" src="/images/traffic_model_3_30.png" /></p>
+<p>Here we plot Average car waiting time vs. Car arrival rate for different
+values of p, the blocking probability, all for the case where the light
+is green for 30 seconds.</p>
+<p>As we would expect, average waiting time increases substantially as the
+probability of the intersection being clocked increases, but also
+variability in waiting time (around the best fit line) also increases
+quite dramatically.</p>
+<p><strong>Model 4 Part I: Minute-by-minute simulation</strong></p>
+<p>In the next iteration, I looked at a minute-by-minute simulation over
+the course of a one-hour period.</p>
+<p>The rough procedure for each one-minute interval is:</p>
+<ol class="arabic simple">
+<li>Simulate new number of cars, X, that arrive and join the queue by
+drawing from a Poisson distribution</li>
+<li>Calculate the number, Y, of cars that pass the traffic light based
+upon traffic conditions</li>
+<li>Calculate the average wait time for the cars passing in that period</li>
+<li>Update the ‘new’ queue of cars to reflect the situation after that
+period.</li>
+</ol>
+<p>I also modified some of my assumptions regarding the traffic flow:</p>
+<ol class="arabic simple">
+<li>The rate at which cars can pass a green light decreases as the
+traffic gets heavier – based on personal observation, what I see is
+that the heavier the traffic, the more people try and do things like
+cut across lanes at the last second to turn etc., and so overall
+everyone advances more slowly</li>
+<li>The probability that other cars block the junction on a green light
+also increases with traffic density: again in heavier traffic, it is
+more likely that cars will end up blocking when their corresponding
+light turns red</li>
+<li>If cars do block the junction, then it is not for the whole of the
+green-light period, but for a varying proportion of time</li>
+</ol>
+<p>In this model we use a new model, Car, with a waitTime property to keep
+track of how long each cars waits before it passes.</p>
+<p>I defined three types of traffic conditions, Light, Medium &amp; Heavy as
+follows:</p>
+<p><strong>Light Traffic:</strong></p>
+<ul class="simple">
+<li>Car arrival rate: 8 cars per minute</li>
+<li>Car pass rate: 1 car per second when the traffic light is green</li>
+<li>Blocking probability: 0.05</li>
+<li>Blocking time: 5% of the green light period</li>
+</ul>
+<p><strong>Medium Traffic:</strong></p>
+<ul class="simple">
+<li>Car arrival rate: 12 cars per minute</li>
+<li>Car pass rate: 0.9 car per second when the traffic light is green
+(90% of normal rate)</li>
+<li>Blocking probability: 0.2</li>
+<li>Blocking time: 20% of the green light period</li>
+</ul>
+<p><strong>Heavy Traffic:</strong></p>
+<ul class="simple">
+<li>Car arrival rate: 20 cars per minute</li>
+<li>Car pass rate: 0.72 car per second when the traffic light is green
+(72% of normal rate)</li>
+<li>Blocking probability: 0.45</li>
+<li>Blocking time: 50% of the green light period</li>
+</ul>
+<p>I divided the 60 minute period into five different sub-periods:</p>
+<ol class="arabic simple">
+<li>5 mins of Light traffic</li>
+<li>15 mins of Heavy traffic</li>
+<li>20 mins of Medium traffic</li>
+<li>15 mins of Heavy traffic</li>
+<li>5 mins of Light traffic</li>
+</ol>
+<p>For each 1-minute period the program adds a new number of cars to the
+waiting queue, based upon the arrival rate, and uses a runTraffic
+function to:</p>
+<ul class="simple">
+<li>Model the probability that the intersection is blocked</li>
+<li>Calculate the number of cars that can pass</li>
+<li>Update the wait time for each car that passes</li>
+<li>Calculate the average wait time for the cars that passed in that
+period</li>
+<li>Remove the passed cars from the queue</li>
+<li>Update the wait time for each of the cars still in the queue</li>
+</ul>
+<p><strong>Note regarding waiting times:</strong></p>
+<p>For each minute interval, for the cars that do not pass the light, we
+add 60 seconds to their total wait time.</p>
+<p>For cars that do pass the light in a given interval, I originally added
+0 seconds to their wait time, effectively assuming that once the light
+turns green all cars that are going to pass do so immediately.</p>
+<p>However this assumption is not realistic, and so I changed this by
+dividing the light greenTime by the number of cars that pass, taking
+into account any blocking time, and assuming that these cars pass
+uniformly in that interval.</p>
+<p>Finally, I run the simulation 1000 times and look at average results per
+minute for</p>
+<ul class="simple">
+<li>Number of cars still waiting in the queue</li>
+<li>Number of cars passing per minute</li>
+<li>Average car waiting time</li>
+</ul>
+<p><img alt="image5" src="/images/traffic_model4_numCars.png" /></p>
+<p>Regarding the size of the traffic queue, unsurprisingly we see the
+number of waiting cars around 0 when the traffic is Light or Medium and
+pretty much all cars are able to pass in the given time, and the size of
+the queue steadily increases to a maximum of around 12 or 13 cars in
+heavier traffic.</p>
+<p>In terms of passing cars, we see fairly steady (but different) pass
+rates in each of the traffic conditions, plus a little bit of noise
+being generated by the blocking probabilities.</p>
+<p><img alt="image6" src="/images/traffic_model4_avgTime.png" /></p>
+<p>If we look at the average waiting time per period, defined to be the
+average wait time for the cars that make it past the traffic light in
+the minute, we see large variability. In Heavy traffic conditions, in
+some of the simulations, the average waiting time reached nearly 600
+seconds, whereas the average and median statistics across all of the
+simulations are much lower at around 50 seconds.</p>
+<p>We can get a better picture of what is going on by looking at the
+distribution of waiting times across all cars, and it turns out that
+about 75% of cars wait for less than 50 seconds, 20% wait for between 50
+and 100 seconds and less than 5% wait for more than 100 seconds.</p>
+<p><img alt="image7" src="/images/traffic_model4_hist.png" /></p>
+<p><img alt="image8" src="/images/traffic_model4_hist_cum.png" /></p>
+<p>In a subsequent post I will explore two further improvements:</p>
+<ul class="simple">
+<li>Simplifying the structure of Model 4 by introducing new classes</li>
+<li>Creating a second-by-second simulation</li>
+</ul>
+<p>Code is at: <a class="reference external" href="https://github.com/simonb83/traffic">https://github.com/simonb83/traffic</a></p>
+
+	<hr/>
+	<h6>Written by <a href="/author/simon-bedford.html">Simon Bedford</a> in <a href="/category/coding.html">Coding</a> on Sat 07 February 2015. Tags: <a href="/tag/python.html">python</a>, <a href="/tag/coding.html">coding</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/visualization.html" class="tag-4">visualization</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/maths.html" class="tag-1">maths</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/data-science.html" class="tag-2">data-science</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-4">neural-network</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-1">deep-learning</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-1">customer-experience</a></li>
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/10/index.html">October 2016 (3)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="/theme/js/jquery.js"></script>
+		<script src="/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+	</body>
+</html>
