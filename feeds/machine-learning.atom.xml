@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/machine-learning.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-10-09T15:20:00-05:00</updated><entry><title>Machine Learning &amp; Food Classification</title><link href="https://simonb83.github.io/machine-learning-food-classification.html" rel="alternate"></link><published>2016-10-09T15:20:00-05:00</published><updated>2016-10-09T15:20:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-09:machine-learning-food-classification.html</id><summary type="html">&lt;p&gt;Over the past few months I have been working on a project attempting to train a machine learning algorithm to correctly classify pictures of food dishes.&lt;/p&gt;
+&lt;p&gt;The purpose of this blog post is to try and explain some of the underlying models and the results in a relatively non-technical way.&lt;/p&gt;
+&lt;p&gt;&lt;a href="#motivation"&gt;1. Project motivation&lt;/a&gt;&lt;br&gt;
+&lt;a href="#problem"&gt;2. The Problem and Definition of Success&lt;/a&gt;&lt;br&gt;
+&lt;a href="#approach"&gt;3. General Approach and Data&lt;/a&gt;&lt;br&gt;
+&lt;a href="#ml_algorithms"&gt;4. Traditional Machine Learning: Algorithms&lt;/a&gt;&lt;br&gt;
+&lt;a href="#ml_features"&gt;5. Traditional Machine Learning: Features&lt;/a&gt;&lt;br&gt;
+&lt;a href="#deep_learning"&gt;6. Deep Learning &amp;amp; Neural Networks&lt;/a&gt;&lt;br&gt;
+&lt;a href="#results"&gt;7. Results&lt;/a&gt;&lt;br&gt;
+&lt;a href="#visual"&gt;8. Visualizing a Network&lt;/a&gt;&lt;br&gt;
+&lt;a href="#summary"&gt;9. Summary&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="motivation"&gt;1. Motivation&lt;/h3&gt;
+
+&lt;p&gt;Perhaps the first question might be, why do you care about food classification?&lt;/p&gt;
+&lt;p&gt;The truth is that food classification is just a means to an end; I wanted to learn more about computer vision techniques, but in order to do this I needed a tangible problem to work on. I chose food classification because it let me apply what I was learning to one of my favourite hobbies: food and cooking.&lt;/p&gt;
+&lt;p&gt;Having said that, this is not just a toy problem. There are many potential applications for a successful food classification algorithm. For example, when people are searching for recipes it is now quite common to turn to websites and apps to find food-related content. One very simple application could be for recipe search and retrieval using a picture of a dish, such as something you tried while traveling but whose name you have now forgotten.&lt;/p&gt;
+&lt;p&gt;As another example, there are already researchers working on food classification tied-in with food calorie data in order to help people easily keep a daily food diary and calorie count, perhaps enabling them to better control their food intake and stick to a particular diet.&lt;/p&gt;
+&lt;p&gt;However, that is all that I will say about applications, as the real aim is to develop a better understanding of the techniques behind machine learning, in particular when applied to image classification.&lt;/p&gt;
+&lt;h3 id="problem"&gt;2. The Problem and Definition of Success&lt;/h3&gt;
+
+&lt;p&gt;I have already hinted at the problem that we hope to solve, however it will be useful to make this more formal.&lt;/p&gt;
+&lt;p&gt;Specifically, we are faced with a classification problem. Given a set of images of different types of food, we hope to find an algorithm that can be 'shown' an image and correctly categorize it into one of the pre-defined categories.&lt;/p&gt;
+&lt;p&gt;There are a couple of important points to note about this type of problem:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The categories are pre-defined and fixed; the algorithm is only going to be capable of categorizing an image into a 'known' category or class. It will not be able to identify new food categories on the fly.&lt;/li&gt;
+&lt;li&gt;We limit ourselves to single categories for each image, or in other words the algorithm must decide whether an image is of Pizza or Steak etc. There are computer vision techniques for identifying multiple objects in a single image, however these are beyond the scope of this project.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Definition of Success&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Something else that should be defined in advance is the definition of success: how will we evaluate different algorithms' performance on this classification problem?&lt;/p&gt;
+&lt;p&gt;One very simple measure could be the classification rate, that is the total number of correct predictions divided by the total number of predictions made.&lt;/p&gt;
+&lt;p&gt;Whilst this is a measure of success, this metric does not quite capture all of the subtleties of classification. Instead we will use a metric called the F1-score, illustrated using the following simple example.&lt;/p&gt;
+&lt;p&gt;Consider a reduced version of the problem looking at categorising images into Pizza or Not Pizza. Typically, when we show an image to an algorithm, instead of giving a definitive answer it will output probabilities for each of the two outcomes.&lt;/p&gt;
+&lt;p&gt;For example, given a new image, the algorithm may output:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pizza&lt;/strong&gt;: Probability = 0.6&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Not Pizza&lt;/strong&gt;: Probability = 0.4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In order to translate these probabilities into a definite prediction, we must set a probability cut-off or threshold for Pizza, whereby any score above that threshold will be translated into a prediction for Pizza, and any score below becomes Not Pizza. In this example, if we set the threshold at 0.5, then the image would be classified as Pizza (as 0.6 &amp;gt; 0.5).&lt;/p&gt;
+&lt;p&gt;Now imagine that we show 100 images to the classification algorithm, and we summarize the resulting predictions in a table (commonly called the confusion matrix).&lt;/p&gt;
+&lt;table class="tg"&gt;
+    &lt;tr&gt;
+        &lt;th class="tg-yw4l"&gt;&lt;/th&gt;
+        &lt;th class="tg-yw4l"&gt;&lt;/th&gt;
+        &lt;th class="tg-baqh" colspan="2"&gt;&lt;span class="bold"&gt;Predicted Category&lt;/span&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-yw4l col1"&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col2"&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col3"&gt;&lt;span class="bold italic"&gt;Pizza&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col4"&gt;&lt;span class="bold italic"&gt;Not Pizza&lt;/span&gt;&lt;br&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-031e" rowspan="2"&gt;&lt;span class="bold"&gt;Actual Category&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;&lt;span class="bold italic"&gt;Pizza&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;True Positive&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;False Negative&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-yw4l"&gt;&lt;span class="bold italic"&gt;Not Pizza&lt;/span&gt;&lt;br&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;False Positive&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;True Negative&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The rows represent the True Category of the images, and the columns represent the Predicted Category. We can describe these outcomes in the following way:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;True Positives: Top-left corner; images of Pizza correctly classified as Pizza.&lt;/li&gt;
+&lt;li&gt;False Negative: Top-right corner; images of Pizza incorrectly classified as Not Pizza.&lt;/li&gt;
+&lt;li&gt;False Positives: Bottom-left corner; images that are not Pizza incorrectly classified as being Pizza.&lt;/li&gt;
+&lt;li&gt;True Negatives: Bottom-right corner; images that are not Pizza correctly classified as being Not Pizza. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using these definitions, we can define two metrics.&lt;/p&gt;
+&lt;div class="math"&gt;$$Precision = \frac{True\ Positives}{True\ Positives + False\ Positives}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$Recall = \frac{True\ Positives}{True\ Positives + False\ Negatives}$$&lt;/div&gt;
+&lt;p&gt;One way to think about Precision is that it measures, out of all images predicted to be Pizza, what proportion actually are Pizza. In some senses this tells us how noisy our Pizza predictions are, or how much the algorithm confuses other types of food with Pizza.&lt;/p&gt;
+&lt;p&gt;Similarly, Recall asks, out of all true Pizza images, what proportion were correctly identified as being Pizza. This is a measure of how good our algorithm is at correctly identifying pizza images and placing them in the correct category.&lt;/p&gt;
+&lt;p&gt;It turns out that by varying the probability classification threshold mentioned above, we can tune the Precision and Recall scores for the classification algorithm. &lt;/p&gt;
+&lt;p&gt;For example, if we decide that we want to maximize Precision, this means that we need to minimize the False Positives or, in other words, we want the algorithm to output Pizza only when it is really confident that the image is of Pizza. In order to achieve this, we can increase our threshold probability thus ensuring that Pizza predictions are only made when the probability is quite high for Pizza.&lt;/p&gt;
+&lt;p&gt;Similarly, by decreasing the probability threshold, we can get the algorithm to classify images as Pizza, even when its confidence is low, thus minimising the False Negatives and resulting in higher Recall. This might be important in other applications, for example using Machine Learning to detect cancerous cells, where the cost of False Negatives is higher than the cost of False Positives.&lt;/p&gt;
+&lt;p&gt;Although we could use either Precision or Recall as a way of measuring algorithm performance, ultimately we care about both. Thus we define the F1 score to be:&lt;/p&gt;
+&lt;div class="math"&gt;$$F1 = \frac{2\ *\ Precision\ * Recall}{Precision + Recall}$$&lt;/div&gt;
+&lt;p&gt;This particular definition gives equal weighting to both Precision and Recall, however it is possible to adapt the formula to give more weighting to one or the other. F1 is measured on a scale from 0 to 1, with 1 being the best possible score.&lt;/p&gt;
+&lt;h3 id="approach"&gt;3. General Approach and Data&lt;/h3&gt;
+
+&lt;p&gt;We now have a definition of our problem:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Find an algorithm that can take an image as input, and output a prediction for the category of food contained in the image&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;as well as a measure of success, the F1 score.&lt;/p&gt;
+&lt;p&gt;One way to approach this problem could be to try and manually create a list of rules in order to distinguish between different kinds of food. For example, if we were trying to distinguish between pictures of apples and bananas, we could attempt to program in rules looking at shape, size, colour etc.&lt;/p&gt;
+&lt;p&gt;However, as we know from experience, apples can come in a wide variety of colours, bananas in very different shapes etc., so coming up with an exhaustive set of rules could become overwhelming quite quickly. The problem is even worse when we move onto more complex food dishes rather than single ingredients.&lt;/p&gt;
+&lt;p&gt;For this reason, rather than using this rule-based approach, we turn to a field called Machine Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Machine Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Arthur Samuel, a pioneer of the field, &lt;a href="https://en.wikipedia.org/wiki/Machine_learning"&gt;defined&lt;/a&gt; Machine Learning as as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"Field of study that gives computers the ability to learn without being explicitly programmed”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;At the heart of Machine Learning are algorithms that are able to build an internal representation or model of data, &lt;span class="bold italic"&gt;without us having to explicitly program the model ourselves&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Such algorithms can then use this internal model in order to make predictions about new data points. We will specifically focus on a particular type of machine learning called Supervised Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Supervised Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In supervised learning, we start with a relevant set of data that has already been classified into the different categories of interest to us. In our case this would mean that someone has looked at every single image in the dataset and manually attached a label to each image.&lt;/p&gt;
+&lt;p&gt;We then use this data for a period of training in which we "show" each image to the algorithm along with the answer or prediction we expect, and the algorithm attempts to use this information to build a generalized model that can accurately map inputs (the training image data) to outputs (predictions of food categories).&lt;/p&gt;
+&lt;p&gt;As will be seen in later sections, the types internal models vary greatly between algorithms. Furthermore, when we "show" images to the algorithm for training, some algorithms use the entire image, pixel by pixel, whereas others use other types of data extracted from the each image.&lt;/p&gt;
+&lt;p&gt;The key to supervised learning is in having data where you know the categories, or answers, in advance, and using these answers to teach the algorithm how to make predictions about new data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Dataset&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For this particular problem we need a set of training data that consists of a large number of pre-categorized pictures of different types of food. The dataset that we will work with comes from the ETH Zurich Computer Vision Laboratory, and is called the &lt;a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/"&gt;Food 101 Dataset&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This dataset consists of 101 different food categories, with 1,000 images per category, for a total of 101,000 images. However the total dataset is too large for practical experimentation on a laptop, and so in order to reduce the complexity, we will focus on 12 categories out of the whole list:&lt;/p&gt;
+&lt;table class="tg food_cats"&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Pork Chop&lt;br&gt;&lt;/th&gt;
+   &lt;td class="tg-yw4l"&gt;Lasagna&lt;/th&gt;
+   &lt;td class="tg-baqh"&gt;French Toast&lt;br&gt;&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Guacamole&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Apple Pie&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Cheesecake&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-031e"&gt;Hamburger&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Fried Rice&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Carrot Cake&lt;br&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Chocolate Cake&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Steak&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Pizza&lt;/td&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The images in the Food-101 dataset are of mixed quality. Some are very clear, well-lit and framed on the food item in question. Others, however, are more noisy, poorly lit, contain irrelevant items and, in some cases, are even mislabeled. Some examples of both high and low-quality pictures are shown below:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt food_images" src="/images/capstone_food_examples_sm.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;In some respects this 'noise' in the data makes the problem harder, as the algorithm will need to differentiate between types of food that are not so easy to distinguish, as well as correctly identify food categories from images that vary significantly in terms of lighting and image quality. At the same time, this also means that if we are able to train a classifier to a sufficient level of accuracy, then we might expect its predictions to be more robust when used on real-world, equally-noisy data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Using Data&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before we move on to looking at different types of algorithms, it is important to note the general methodology for using data in Supervised Machine Learning problems.&lt;/p&gt;
+&lt;p&gt;As mentioned, we are starting with a set of 12,000 images, equally divided into 12 categories, however we will not use all of the pictures for training purposes.&lt;/p&gt;
+&lt;p&gt;Instead, before doing anything else, we will split the dataset into two random subsets for training and testing purposes. The training data is what we will show the algorithm along with the relevant answers during the training phase. The testing data is used exclusively for evaluating how well a given algorithm works in practice.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt test_training_split" src="/images/capstone_data_split.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This is a general pattern for data usage that applies to any supervised approach. It is absolutely key that the test data is not used at all during algorithm training, otherwise any predictions made on that data could be considered 'cheating', and ultimately we will not know how well the algorithm could perform in the real world on previously unseen data.&lt;/p&gt;
+&lt;p&gt;In an ideal world, when working on a supervised learning problem, one would be able to ring-fence somewhere around 15 to 20% of the data for testing purposes. In reality, the exact strategy and percentage used will depend on the nature of the problem as well as the actual available date.&lt;/p&gt;
+&lt;h3 id="ml_algorithms"&gt;4. Traditional Machine Learning: Algorithms&lt;/h3&gt;
+
+&lt;p&gt;We start by exploring techniques from a traditional machine learning approach, where we must make two key choices:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The type of algorithm to use&lt;/li&gt;
+&lt;li&gt;The type of data to use for during training&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There are a wide variety of machine learning algorithms that we could use, and we will briefly explore three examples below.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;k-Nearest Neighbours&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;k-Nearest Neighbours (kNN) is one of the simplest supervised learning algorithms, and has the benefit of being very easy to use, visualize and understand.&lt;/p&gt;
+&lt;p&gt;The basic methodology for making a prediction is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Find the k 'closest' neighbouring images within the training dataset&lt;/li&gt;
+&lt;li&gt;Look at the category for each of these neighbours&lt;/li&gt;
+&lt;li&gt;Combine the category for each neighbour into an overall prediction&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In the example below we have two categories, Red and Blue. Given a new data point (the green triangle) we look at the 4 nearest neighbours of which three are Red and only one is Blue, and so we would classify the new point as being Red.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt k_nearest_neighbours" src="/images/capstone_knn.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Some specific parameters we can define for the algorithm are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;How many neighbours to take into consideration (the value of k)&lt;/li&gt;
+&lt;li&gt;How to define distance between neighbours, and hence how to define "closest"&lt;/li&gt;
+&lt;li&gt;How to aggregate the categories for each neighbour into an overall prediction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One of the biggest drawbacks of the kNN algorithm is that testing takes a long time, especially if we have a large dataset. This is because, in order to make a prediction, we have to make a comparison with every single element of the training data in order to find the k-closest neighbours.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Random Forest&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In order to understand the Random Forest, we will start with a slightly simpler model called a Decision Tree.&lt;/p&gt;
+&lt;p&gt;Decision Trees are probably familiar to many people in other contexts, and most would likely recognise the general branching structure based upon different conditions. In supervised learning the underlying concept is the same, that is to try and construct a tree where the branches enable us to differentiate between different categories.&lt;/p&gt;
+&lt;p&gt;For example, suppose that we are trying to differentiate between Oranges, Apples and Bananas; one very simple decision tree might look something like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt decision_tree" src="/images/capstone_decision_tree.png" /&gt;&lt;/p&gt;
+&lt;p&gt;For certain types of problems, Decision Trees can be very powerful and they have the benefit of being fast to train and test.  However, one issue is that they tend to “overfit” the data. This means that the model they construct tends to be far too specific to the exact training data provided, and the model is not able to generalise very well when making predictions on new examples.&lt;/p&gt;
+&lt;p&gt;One way to combat this overfitting is to construct a large number of different Decision Trees and combine the output of all of the trees when making predictions. Each tree is 'grown' using a slightly different version of the training data, and the hope is that each tree will create a slightly different model and thus we can capture more of the nuances of the underlying problem and better generalise to new data.&lt;/p&gt;
+&lt;p&gt;This combination of decision trees is called a Random Forest, and is an example of what is know as an 'ensemble' method. Random Forests are a very powerful classifier and find applications in many types of problems. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt random_forest_1" src="/images/capstone_rf.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt random_forest_1" src="/images/capstone_rf2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Support Vector Machine&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The final model we will briefly explore is the Support Vector Machine. &lt;/p&gt;
+&lt;p&gt;Very informally, a Support Vector Machine attempts to build a model by finding a line (or lines) that separates the different categories in such a way that the data points are divided by a gap that is as large as possible. Once this line has been identified, prediction is simply a matter of identifying on which side of the line a new data point falls.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm.png" /&gt;&lt;/p&gt;
+&lt;p&gt;For a slightly more technical explanation we turn to linear algebra (feel free to skip the next few paragraphs). Suppose we are given training data whereby each example is represented by &lt;span class="bold italic"&gt;p&lt;/span&gt; different values; in this case we can consider our training data to be points in &lt;span class="bold italic"&gt;p&lt;/span&gt;-dimensional space.&lt;/p&gt;
+&lt;p&gt;The Support Vector Machine attempts to find a &lt;span class="bold italic"&gt;p-1&lt;/span&gt; dimensional hyperplane (basically a generalisation of a straight line to &lt;span class="bold italic"&gt;p-1&lt;/span&gt;-dimensions) that separates and also maximises the gap between the categories.&lt;/p&gt;
+&lt;p&gt;The model described so far is called a Linear Support Vector Machine.  One common problem with this approach is that is often not possible to find a separating straight-line or plane given only the existing data points.&lt;/p&gt;
+&lt;p&gt;Consider the following example in one dimension:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here it is impossible to find a straight line that separates these data points.&lt;/p&gt;
+&lt;p&gt;Look at what happens, however, when we project the data into two dimensions, say by plotting $ x^{2} $ against $ x $.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In this higher-dimensional space it is now possible to find a straight-line that separates the two classes. &lt;/p&gt;
+&lt;p&gt;This is an example of non-linear classification using Suport Vector Machines. Some common transformations to higher dimensions are Polynomial (such as the example above where the data is transformed to some power of itself), as well as using what is called the &lt;a href="https://en.wikipedia.org/wiki/Radial_basis_function_kernel"&gt;RBF&lt;/a&gt; kernel.&lt;/p&gt;
+&lt;p&gt;In practice these transformations are calculated using what is called the &lt;a href="https://en.wikipedia.org/wiki/Kernel_method"&gt;"&lt;span class="italic"&gt;kernel trick"&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Algorithm Optimisation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before moving on we must say something about the need for optimisation in supervised learning. For each of the models mentioned above, there are specific choices we must make at the start when we initialise the model prior to training.&lt;/p&gt;
+&lt;p&gt;For example for the k-Nearest Neighbour algorithm we must decide on the value of k and the definition of ‘closeness’. For Random Forests, among other things, we need to specify the number of decision trees to have in the forest. Similarly, for Support Vector Machines, there are a number of parameters we must specify.   &lt;/p&gt;
+&lt;p&gt;These parameters are called hyper-parameters, and in general different choices for the parameters can result in different outcomes for the model in terms of predictive performance. For instance, a kNN algorithm may make very different predictions based upon whether it is looking at the nearest 3 vs. 10 neighbours.&lt;/p&gt;
+&lt;p&gt;Thus one key task when ‘training’ a machine-learning algorithm is to identify the values for the hyper-parameters which give the best results for the problem under consideration. This is called hyper-parameter tuning, and one of the most common approaches is called a grid search.&lt;/p&gt;
+&lt;p&gt;In a grid-search we specify up-front a range of values for each hyper-parameter, and then train and test a model using every possible combination of the parameters. The values that give us the best result during training (importantly not using the ring-fenced testing data), are then said to be the optimal parameters.&lt;/p&gt;
+&lt;h3 id="ml_features"&gt;5. Traditional Machine Learning: Features&lt;/h3&gt;
+
+&lt;p&gt;We have now looked at some examples of common machine learning algorithms that can be used in classification problems. However, for each of these algorithms, we must also decide what data to use during training in the hope of creating the best predictive model.&lt;/p&gt;
+&lt;p&gt;Ultimately what we are looking for is the best possible representation of each of our different data points (in this case images), subject to a number of considerations, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We want the representation to have sufficient information to be able to group together examples from the same category, but also to differentiate between different categories.&lt;/li&gt;
+&lt;li&gt;At the same time, we want to avoid as much as possible the overfitting problem we mentioned earlier, that is we don’t want to provide so much detail that the model is not able to generalise well when used on new data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The representations of the data that we use are typically called features.&lt;/p&gt;
+&lt;p&gt;For our problem of image classification we need to begin by understanding the way images are represented digitally. Although we see images visually, a computer just sees them as a series of numbers. To illustrate this, let us look at the following picture consisting of a grid of 16 x 16 squares :&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt grey_pixels" src="/images/capstone_pixels_grey.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Each square represents one pixel in the image. We can think of a pixel as being the basic building block of an image, where each pixel has a particular shade of grey associated with it. By laying out pixels of different shades next to each other we can build up more and more complex patterns and shapes.&lt;/p&gt;
+&lt;p&gt;Furthermore, we can specify the particular shade of grey of a given pixel using a single number and so the image above can be represented using a matrix of 16 x 16 = 256 numbers.&lt;/p&gt;
+&lt;p&gt;Now let us take a look at a similar image in colour:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt rgb_pixels" src="/images/capstone_pixels_rgb.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here the principle is the same, with each pixel having a specific colour, however in this case we need three numbers rather than just one in order to specify the colour. These three numbers specify the shades of Red, Green and Blue which are combined to produce any colour we wish. (Note: there are alternative representations of colour, however this RGB representation is one of the most common).&lt;/p&gt;
+&lt;p&gt;For example, the pixels with this colour:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt green_pixel" src="/images/capstone_green_pixel.png" /&gt;&lt;/p&gt;
+&lt;p&gt;can be specified by (Red = 0, Green = 128, Blue = 0), while these pixels:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt pink_pixel" src="/images/capstone_pink_pixel.png" /&gt;&lt;/p&gt;
+&lt;p&gt;can be specified by (Red = 242, Green = 128, Blue = 88).&lt;/p&gt;
+&lt;p&gt;Thus the colour image can be represented by a matrix of 16 x 16 x 3 = 768 separate numbers, and this is how a computer 'sees' images.&lt;/p&gt;
+&lt;p&gt;For machine learning, one approach could be to use these Red, Green and Blue pixel colour values as the features, however we might imagine that this is not necessarily the best approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The number of individual features can become very large very quickly; for example our images have 512 x 512 pixels, meaning each individual image requires 786,432 different numbers to represent them&lt;/li&gt;
+&lt;li&gt;Very large feature vectors can lead to problems of overfitting and,&lt;/li&gt;
+&lt;li&gt;There is no reason to assume that the pixel-based representation will be the best possible representation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Instead we will use a number of different approaches to extract different types of features from the images, and see what works best when training different algorithms.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RGB Histograms&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;One of the simplest types of features we can look at are histograms of the different Red, Green and Blue pixel values in the images, that is we are comparing the relative frequencies of different colour intensities. Perhaps these differences will enable our classifier to distinguish between the different food categories.&lt;/p&gt;
+&lt;p&gt;In fact, if we look at such histograms for three food categories, we can immediately see that the colour distributions are very different:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt rgb_histograms" src="/images/capstone_histograms.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edges&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Another fairly simple type of feature we consider are called Edges. An edge is defined by a discontinuity between pixels, which is basically an area where there is sufficient difference between pixels of one colour and another that an edge appears in the image.&lt;/p&gt;
+&lt;div class="image" id="edge-image"&gt;
+    &lt;img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/edges.png"&gt;&lt;br&gt;
+    &lt;span class="small"&gt;Image by &lt;a href="https://en.wikipedia.org/wiki/User:JonMcLoone" class="extiw" title="wikipedia:User:JonMcLoone"&gt;JonMcLoone&lt;/a&gt; at &lt;a href="https://en.wikipedia.org/wiki/" class="extiw" title="wikipedia:"&gt;English Wikipedia&lt;/a&gt;, &lt;a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=44894482"&gt;https://commons.wikimedia.org/w/index.php?curid=44894482&lt;/a&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Typically we count the number of edges within a given image or sub-region of an image, although in the field of computer vision there are other ways of using edges, for example looking at the orientation of different edges (i.e., how many are vertical vs. horizontal etc.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Corners&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Finally, during our machine learning attempts, we also consider the number of corners within an image or image-region, where a corner is defined as the meeting point of two edges.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Meta-Approaches&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It is important to note that features are typically not used in isolation, but are combined together to try and come up with richer representations of the underlying examples.&lt;/p&gt;
+&lt;p&gt;For example we might use a set of features that is a combination of RGB Histogram values, plus the number of edges, plus the number of corners.&lt;/p&gt;
+&lt;p&gt;Another way we can combine features for a given image is by splitting the image into sub-regions, extracting features for each of the sub-regions, and then aggregating them all together into a complete representation of the overall image.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt features" src="/images/capstone_features.png" /&gt;&lt;/p&gt;
+&lt;h3 id="deep_learning"&gt;6. Deep Learning &amp;amp; Neural Networks &lt;/h3&gt;
+
+&lt;p&gt;The general machine learning techniques we have discussed so far form the basis of what was the standard approach to computer vision for a long time. However in the past few years these techniques have been replaced by new approaches based on Deep Learning, and in particular models called Convolutional Neural Networks.&lt;/p&gt;
+&lt;p&gt;Convolutional Neural Networks, or CNNs for short, are currently considered to be "state of the art" in computer vision, and have also achieved success in many other areas and applications. In fact, in some very specific problems, Convolutional Neural Networks are able to achieve greater accuracy than humans.&lt;/p&gt;
+&lt;p&gt;We will give a very brief introduction to Convolutional Neural Networks in order to motivate our approach.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Neurons&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We start with the idea of a 'neuron', which is fundamentally nothing more than a very simple function that takes an input and produces an output dependent on two parameters that are intrinsic to that neuron, called its weight and bias:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt neuron_1" src="/images/capstone_neuron_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Thus, in the example above, if X is 3, w is 1.2 and b is -6, the neuron would return an output of 3 x 1.2 - 6 = -2.4&lt;/p&gt;
+&lt;p&gt;This particular neuron is not that interesting as all it gives us is a simple linear function. Thus we introduce the concept of 'Activation', which is a way of ensuring that neurons do not produce output all of the time, only some of the time based on certain conditions:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt neuron_2" src="/images/capstone_neuron_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In the diagram above:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The neuron receives input X&lt;/li&gt;
+&lt;li&gt;The linear transform wX + b is calculated&lt;/li&gt;
+&lt;li&gt;The result is passed through an activation function, &amp;sum;&lt;/li&gt;
+&lt;li&gt;The final output depends on the nature of the activation function.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Probably the simplest choice for the activation function is what is called the Step function:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt step_function" src="/images/capstone_step.png" /&gt;&lt;/p&gt;
+&lt;p&gt;If the Step function receives a negative input (x &amp;lt; 0), then it returns an output of 0, while for inputs greater than or equal to 0, it returns an output of 1.&lt;/p&gt;
+&lt;p&gt;In practice this function does not behave in a mathematically nice way, and so typically the activation functions used will look more like these:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt activation_functions" src="/images/capstone_activation.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This concept of activation is where the name neuron comes from, as these functions behave similar to biological neurons that 'fire' or don't 'fire' depending on the inputs they receive.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Networks&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A single neuron on its own cannot do very much, however we can build up more and more complexity by combining many of these neurons into layers, and then connecting the layers together, for example as in the diagram below:&lt;/p&gt;
+&lt;div class="image" id="net-image"&gt;
+    &lt;img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/nn.svg"&gt;
+    &lt;br&gt;
+    &lt;span class="small"&gt;Image by &lt;a href="//commons.wikimedia.org/wiki/User_talk:Glosser.ca" title="User talk:Glosser.ca"&gt;Glosser.ca&lt;/a&gt; - &lt;span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, Derivative of &lt;a href="//commons.wikimedia.org/wiki/File:Artificial_neural_network.svg" title="File:Artificial neural network.svg"&gt;File:Artificial neural network.svg&lt;/a&gt;, &lt;a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=24913461"&gt;https://commons.wikimedia.org/w/index.php?curid=24913461&lt;/a&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ultimately this is just a pictorial representation of a complicated function, which&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Receives an input or inputs&lt;/li&gt;
+&lt;li&gt;"Propagates" it through each neuron in each layer of the network, by which the output of one layer becomes the input to the next layer&lt;/li&gt;
+&lt;li&gt;At each neuron, the simple function above is applied, using the relevant weight, bias and activation&lt;/li&gt;
+&lt;li&gt;Returns an output which is dependent on the value of all of the different parameters of all of the neurons in the network&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In fact it can be shown that, with appropriate choices for each of the parameters, this sort of model can approximate any arbitrary function (as long as it is mathematically 'nice'), which means that it has the potential to be very powerful.&lt;/p&gt;
+&lt;p&gt;In the specific example above, there is one 'hidden' layer which sits between the input and output layers. Networks which have many hidden layers are called deep networks, and for this reason we talk about Deep Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Training a Network&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once again we return to the idea of training a model using our inputs as well as the output we want from the model. In this case the model is a network of connected neurons, and training involves adjusting the parameters of each neuron in order to maximize the total number of correct predictions emerging from the model.&lt;/p&gt;
+&lt;p&gt;Although the model looks very complex, the key ideas behind the training procedure turn out to be relatively simple. There is just one missing ingredient we need which is some sort of cost or loss function to measure how wrong the network outputs, or predictions, are.&lt;/p&gt;
+&lt;p&gt;When the predictions are very different from what they should be, then this loss should be high, and as the predictions get closer to reality, then the loss should decrease toward 0. We can then use this loss function during training to understand how to tweak the parameters in order to lead to better predictions.&lt;/p&gt;
+&lt;p&gt;To illustrate the training procedure, we use a very simple toy example for a single neuron with only weight and no bias. During training, the procedure is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Start with an input &lt;strong&gt;X&lt;/strong&gt;, which is fixed&lt;/li&gt;
+&lt;li&gt;Pass &lt;strong&gt;X&lt;/strong&gt; through the neuron, and calculate its output &lt;strong&gt;wX&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Compare the output to the desired result (in this case 1.00) and calculate the loss associated with the current output&lt;/li&gt;
+&lt;li&gt;Slightly modify the neuron parameter &lt;strong&gt;w&lt;/strong&gt; in such a way as to decrease the loss on the next pass&lt;/li&gt;
+&lt;li&gt;Repeat until there do not seem to be any improvements.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This procedure is demonstrated in the animation below. Click on the button to start the training procedure and watch how the weight parameter, output and associated loss evolve.&lt;/p&gt;
+&lt;p&gt;&lt;button class="myButton" id="button-3"&gt;Train&lt;/button&gt;
+&lt;div class="training"&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;For the mathematically inclined, this problem is nothing more than standard optimisation where we have a function &lt;span class="bold italic"&gt;F&lt;/span&gt; that takes an input &lt;span class="bold italic"&gt;x&lt;/span&gt; and, by using parameters &lt;span class="bold italic"&gt;W&lt;/span&gt; and &lt;span class="bold italic"&gt;B&lt;/span&gt;, returns an output &lt;span class="bold italic"&gt;C&lt;/span&gt;. We wish to find the values of &lt;span class="bold italic"&gt;W&lt;/span&gt; and &lt;span class="bold italic"&gt;B&lt;/span&gt; that minimize &lt;span class="bold italic"&gt;C&lt;/span&gt; for a given input &lt;span class="bold italic"&gt;x&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;As such, we can use calculus to find the gradient of this function at &lt;span class="bold italic"&gt;x&lt;/span&gt;, and when we tweak the parameters, we do it &lt;span class="bold italic"&gt;in the direction of decreasing gradient&lt;/span&gt; of the function.&lt;/p&gt;
+&lt;p&gt;Although we have only illustrated training for a single neuron, we can use the same procedure to train very large and complex networks by taking advantage of two key ideas.&lt;/p&gt;
+&lt;p&gt;The first technique, called backpropagation, enables us to calculate the gradient for many different types of networks and neurons connected together in different ways.&lt;/p&gt;
+&lt;p&gt;The second is the use of very efficient computer-based implementations of linear algebra and in particular vector and matrix multiplication, which lets us quickly perform the relevant calculations on very large inputs, or even to process multiple inputs at the same time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Predictions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In any network, the last layer typically corresponds to the categories that are being used for classification, where one neuron corresponds to a particular category. Then, when we make a prediction, it is based upon the neuron in the last layer with the highest activation, or output.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt prediction" src="/images/capstone_predict.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Although neural networks like the ones mentioned above are powerful, it turns out that for problems like computer vision we obtain even better results by using a number of innovations. Thus far we have only looked at neurons that are "fully connected", that is in each layer (except the input and output layers) every neuron is connected to every other neuron in the preceding and following layers.&lt;/p&gt;
+&lt;p&gt;One key challenge associated with fully-connected networks, especially when using very high-dimensional data such as images, is that the number of required parameters can become too large to feasibly carry out the required computations, especially when using readily-available hardware.&lt;/p&gt;
+&lt;p&gt;For example, if we were to use 256 x 256 colour images as inputs, and supposing the first hidden layer has 1000 neurons, then just the initial weights to the input layer would require nearly 200 million parameters.&lt;/p&gt;
+&lt;p&gt;Furthermore, this "fully-connected" model is not always sufficient to capture all of the underlying complexities and nuances of the data, such as complex patterns that can appear in many different locations in an image. &lt;/p&gt;
+&lt;p&gt;However there are other types of layers we can use that are connected in different ways or even perform different roles, which we can combine strategically, resulting in greater prediction accuracy, while using less overall parameters.&lt;/p&gt;
+&lt;p&gt;One of the key types of layers used in state-of-the-art models is called a convolution layer.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt convolution_layer" src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/conv.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;
+&lt;span class="small"&gt;Image by &lt;a href="//commons.wikimedia.org/w/index.php?title=User:Aphex34&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Aphex34 (page does not exist)"&gt;Aphex34&lt;/a&gt; - &lt;span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, &lt;a title="Creative Commons Attribution-Share Alike 4.0" href="http://creativecommons.org/licenses/by-sa/4.0"&gt;CC BY-SA 4.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=45659236"&gt;https://commons.wikimedia.org/w/index.php?curid=45659236&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Unlike a fully connected layer, a convolutional layer does not "look at" the whole image in one go, but instead can be thought of as scanning across the image one piece at a time. During training the parameters of the convolution layer are modified as it attempts to detect underlying patterns that can be used for identifying different types of images.&lt;/p&gt;
+&lt;p&gt;These convolution layers can be stacked up, one after the other, and we typically find that the earlier layers are used to identify very basic patterns, while later layers become tuned to identify more complex shapes made up of these simpler patterns.&lt;/p&gt;
+&lt;p&gt;This innovative architecture is also far more efficient in terms of parameters and calculations: single convolution layers used in practice can have only tens of thousands of parameters, and the best neural network used in this project has a total of 60 million parameters.&lt;/p&gt;
+&lt;p&gt;While this is still a large number, it is far smaller than what could be required for a deep network consisting only of fully-connected layers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Deep Learning in Practice&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This basic introduction to Neural Networks and Deep Learning is not intended as a rigorous explanation, but more to give a brief overview of the core ideas behind this approach.&lt;/p&gt;
+&lt;p&gt;Before moving on to the results, it is worth noting two practical aspects of Deep Learning with CNNs:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Image Features&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;While using traditional machine learning models, we had to choose which types of features to feed into the model. Although in many cases the features were obtained using algorithms or other types of machine learning models, ultimately we were making a conscious decision in selecting the features ourselves.&lt;/p&gt;
+&lt;p&gt;In the case of CNNs, we simply feed in the raw images and then let the network itself identify and extract the key features. Not only is this less labour-intensive for the user, but the generated features tend to be superior and more useful.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Resources&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CNNs can get very complex very quickly. Every single neuron has two parameters to optimize, its weight and bias, and CNNs typically have many thousands of neurons, resulting in hundreds of thousands or even millions of parameters to be optimised during training.&lt;/p&gt;
+&lt;p&gt;The result of this is that training a CNN from scratch can take a long time and require a lot of training data. For example, for competition-winning CNNs, training is performed on more than a million images and is said to take three weeks or more.&lt;/p&gt;
+&lt;p&gt;All is not lost though, as there are techniques whereby we can take advantage of other people’s hard work, and instead of starting from scratch, work with networks that have been pre-trained on some other dataset.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Transfer Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There are two main approaches when it comes to working with pre-trained networks.&lt;/p&gt;
+&lt;p&gt;The first, &lt;span class="bold italic"&gt;Feature Extraction&lt;/span&gt;, is based on using the network to generate some features which we can then use to train a standard machine learning algorithm. Here we are taking advantage of the fact that CNNs are remarkably good at detecting the important features on their own and so we can save ourselves the trouble of trying to figure out the right sorts of features to use.&lt;/p&gt;
+&lt;p&gt;Here all we need to do is feed all of our training images into the network, and use the output from some layer as a set of features to use while training one of the algorithms we have previously mentioned, say a Support Vector Machine or a Random Forest.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt feature_extraction" src="/images/capstone_extract.png" /&gt;&lt;/p&gt;
+&lt;p&gt;An alternative approach is called parameter &lt;span class="bold italic"&gt;Fine-tuning&lt;/span&gt;. Here we rely on the fact that the parameters of the network will already have been painstakingly optimised over many weeks, and so should already be pretty good at detecting image-based features.&lt;/p&gt;
+&lt;p&gt;As was previously mentioned, the initial layers of a CNN become tuned to detect very basic features, patterns and colours that are likely to exist in many different types of images. So rather than trying to train a network from scratch, we can start with a model that is already successful at classification in one domain, and simply spend some time tweaking the parameters very slightly in order to better adapt the network to our specific problem.&lt;/p&gt;
+&lt;h3 id ="results"&gt;7. Results&lt;/h3&gt;
+
+&lt;p&gt;When we look at results, we will visualize performance in a couple of different ways:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The overall accuracy of each model&lt;/li&gt;
+&lt;li&gt;The performance on each food category&lt;/li&gt;
+&lt;li&gt;The categories for which the models had most trouble&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Overall Results&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The chart below shows the overall classifier accuracy (more specifically the F1 score) for each of the different models that were tested. The results are plotted in order of performance from worst to best. You can move your mouse over each bar to see more details about the specific Algorithm, Data Features and Score for each attempt.&lt;/p&gt;
+&lt;p&gt;Looking at the chart, two things are clear.&lt;/p&gt;
+&lt;p&gt;First of all, progress using traditional machine learning approaches (models + pre-selected features) was slow and painful. Although the results did gradually improve, it took quite a long time to achieve an accuracy of 0.30 or above.&lt;/p&gt;
+&lt;p&gt;Secondly, the superiority of Deep Learning with CNNs is clear: all of the deep learning models (orange bars) performed better than traditional machine learning, and accuracy jumped significantly once we switched to deep learning approaches.&lt;/p&gt;
+&lt;div class="overall_results"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Per Class Results&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;On this chart we plot the evolution of the F1 score for each different food category. In this case, the results are plotted in the order they were obtained, that is attempt 1, followed by attempt 2, attempt 3 etc. Each line represents a different food category, and you can move the mouse over each line to see the relevant class and its final F1 score.&lt;/p&gt;
+&lt;p&gt;The first observation is that there is quite a wide range of performance for different categories, even when using the more powerful CNN-based models. For example, for the best classifier, the range of scores was as low as 0.61 for Steak, and as high as 0.91 for Guacamole.&lt;/p&gt;
+&lt;p&gt;[Note that this chart has 46 different values on the $ x $-axis compared to 54 in the previous chart. This is because I did not obtain full per-class results for all of the initial attempts.]&lt;/p&gt;
+&lt;p&gt;From looking at this chart we can also say something about the overall process, notably that progress was not linear. At each attempt, both for traditional machine learning as well as CNNs, we tested different methodologies in the hope of improving on past results. In some cases this worked out, but in other cases these new combinations ended up giving worse scores than previous attempts.&lt;/p&gt;
+&lt;div class="per_class_results"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Confusion Matrix&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now we turn our attention to the Confusion Matrix. Here we plot the predictions for each different category, where the rows represent the true class, and the columns represented the predicted class. For example, the top left hand cell corresponds to pictures of Pork Chop correctly classified, and the next cell along on the same row corresponds to pictures of Pork Chop classified as being Lasagna etc.&lt;/p&gt;
+&lt;p&gt;The cell colour is indicative of the proportion of predictions that fall into a given cell, with darker shading corresponding to a higher proportion. A perfect classifier would, for each category, place 100% of the predictions for that class into the cells on the diagonal line that goes from the top-left to bottom-right corners.&lt;/p&gt;
+&lt;p&gt;Thus, what we are looking for in the confusion matrix is for the cells on this diagonal line to be shaded very dark blue, with all other cells being shaded very light grey.&lt;/p&gt;
+&lt;p&gt;The initial starting point for the matrix is the results of a purely random model, that is to say a model where each prediction is based upon drawing food categories out of a hat. To explore the confusion matrix for different attempts you can either use the slider at the top, or press the Run Simulation button to cycle through the results of each of the different models. You can also hover over individual cells to see the exact proportions of predictions.&lt;/p&gt;
+&lt;div class="confusion_matrix"&gt;
+    &lt;div id="tooltip" class="hidden"&gt;
+        &lt;span id="value"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;div id="slider"&gt;&lt;/div&gt;
+        &lt;button class="myButton run-button"&gt;Run Simulation&lt;/button&gt;
+        &lt;button class="myButton" id="stop-1"&gt;Stop&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If we look at the confusion matrix for the &lt;a class="best_confusion" href="" onclick="return false;"&gt;best performing model&lt;/a&gt;, overall the picture looks very good, with a good amount of dark shading on the diagonal, and generally lighter cells everywhere else. However there are a couple of outliers that stand out:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="confusion_2" href="" onclick="return false;"&gt;18% of Steak images are classified as being Pork Chop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="confusion_1" href="" onclick="return false;"&gt;10% of Pork Chop pictures are classified as being Steak&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;What we are seeing is that the model has a particularly hard time distinguishing between these two categories, perhaps understandably as a cooked pork chop can look quite similar to a cooked piece of steak, particularly in a low-quality image.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Class Predictions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We saw above how different food categories can be "confused" for each other by the classifier. In this final chart we look more closely at how this confusion changes for each particular category using the different models.&lt;/p&gt;
+&lt;p&gt;The chart shows, for a given category of test images, what % of images are predicted as belonging to each class. The bar for the true category is shown in blue, and all incorrect categories are shown in green.&lt;/p&gt;
+&lt;p&gt;For example, the initial picture shows that for Pork Chops, just under 10% are correctly classified, and in general the predictions are distributed fairly evenly across all categories.&lt;/p&gt;
+&lt;p&gt;For any category, you can see how its predictions are distributed as the classifiers evolve either by dragging the slider to a particular attempt, or by pressing the Run All button. Once again the order of the models is based upon the order that they were created and tested.&lt;/p&gt;
+&lt;p&gt;&lt;div class="class_predictions"&gt;
+    &lt;select id="selector" class="class_selector"&gt;
+      &lt;option value="pork_chop"&gt;Pork Chop&lt;/option&gt;
+      &lt;option value="lasagna"&gt;Lasagna&lt;/option&gt;
+      &lt;option value="french_toast"&gt;French Toast&lt;/option&gt;
+      &lt;option value="guacamole"&gt;Guacamole&lt;/option&gt;
+      &lt;option value="apple_pie"&gt;Apple Pie&lt;/option&gt;
+      &lt;option value="cheesecake"&gt;Cheesecake&lt;/option&gt;
+      &lt;option value="hamburger"&gt;Hamburger&lt;/option&gt;
+      &lt;option value="fried_rice"&gt;Fried Rice&lt;/option&gt;
+      &lt;option value="carrot_cake"&gt;Carrot Cake&lt;/option&gt;
+      &lt;option value="chocolate_cake"&gt;Chocolate Cake&lt;/option&gt;
+      &lt;option value="steak"&gt;Steak&lt;/option&gt;
+      &lt;option value="pizza"&gt;Pizza&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div id="slider-2"&gt;&lt;/div&gt;
+  &lt;button class="myButton" id="button-1"&gt;Run All&lt;/button&gt;
+  &lt;button class="myButton" id="stop-2"&gt;Stop&lt;/button&gt;
+  &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;In general, for any given category, what we see is that early on the predictions are all over the place with the true class sometimes dominating and sometimes not, and then we we reach the CNN-based models around attempt number 40, all of a sudden the true class dominates the model's predictions.&lt;/p&gt;
+&lt;h3 id ="visual"&gt;8. Visualizing a Convolutional Neural Network&lt;/h3&gt;
+
+&lt;p&gt;One benefit of many of the 'simpler' machine learning algorithms is that it is easier to visualize conceptually how they are working 'under the hood'.&lt;/p&gt;
+&lt;p&gt;For example, a &lt;strong&gt;k-Nearest Neighbours&lt;/strong&gt; classifier is simply finding the 'closest' data points and making a prediction based upon the categories of these neighbours.&lt;/p&gt;
+&lt;p&gt;The maths behind a &lt;strong&gt;Support Vector Machine&lt;/strong&gt; is more complicated, however we can at least imagine a series of straight lines separating different data points of different classes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Random Forests&lt;/strong&gt; can seem more like a black box, but we can still try and picture a large number of different decision trees, each taking slightly different features into account, and then combining predictions from each one into an overall prediction.&lt;/p&gt;
+&lt;p&gt;[Note that this refers to conceptual rather than actual visualization. In practice most non-trivial examples will consist of high-dimensional data which is much harder to visualize in practice.]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutional Neural Networks&lt;/strong&gt; however are so complex, with many different types of neurons stacked into tens or even hundreds of layers, that is is much harder to come up with a simple explanation for how they are working. Having said that, there are a few tricks for visualizing what these networks are doing which can start to shed some light on the underlying model.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutions and Patterns&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We saw earlier how one of the key elements behind the CNN is the convolution layer, which we can think of as scanning across the image, looking for particular patterns in each part of the picture. One of the first things we can visualize is what some of these patterns might look like. This makes the most sense for the very first convolution layer which is applied directly to the raw image.&lt;/p&gt;
+&lt;p&gt;Here we can see very basic patterns such as straight edges of different orientations as well as simple blobs of different colours.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt conv_layer_1" src="/images/capstone_conv_layer.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;High Activation Images&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;An alternative approach to visualizing what is happening in each layer is through looking at images that maximally activate a given neuron. Over the next few paragraphs we will look at what this means.&lt;/p&gt;
+&lt;p&gt;Recall the concept of activation which we introduced for individual neurons whereby, depending on the input, the neuron's output can very from being very low to very high. This means that when a particular neuron is activated in the network, there must be some combination of pixels in the input image which is causing this activation.&lt;/p&gt;
+&lt;p&gt;What we can do is to try and artificially create a combination of pixels which results in the highest possible activation for this neuron, thus getting a sense of what sort of patterns, shapes or colours are causing different neurons to 'fire'.&lt;/p&gt;
+&lt;p&gt;Mathematically we take advantage of the fact that we already have a well-behaved function that we optimised to find the set of parameters resulting in the best overall predictions. Now we take a similar optimisation approach, however this time rather than leaving the image fixed and varying the weights, we will instead leave the weights fixed and vary the image pixel values in order to maximize the activation, or output, of a given neuron.&lt;/p&gt;
+&lt;p&gt;For example, below we show synthetically generated images for two neurons in the prediction layer:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images" src="/images/capstone_synthetic_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Although we don't get pictures that look exactly like Hamburgers or Guacamole, it is certainly possible to discern certain structure, texture and colour in these images.&lt;/p&gt;
+&lt;p&gt;We can do the same for the different convolutional layers in the network which, you will remember, are theoretically detecting different patterns at varying scales.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images_2" src="/images/capstone_synthetic_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here we can see two things quite clearly. First, as expected, the initial layers are activated by simple patterns, whereas later layers look for more complexity. Secondly, the field of vision of each layer increases as we go deeper into the network. For example the first layer look at very small sub-regions of the image, whereas by the last layer, the convolutional 'filters' are receiving input from a much larger area.&lt;/p&gt;
+&lt;p&gt;In reality most of the food items that we are classifying do not have very distinctive shapes or colours, and so it is quite hard to interpret some of these patterns being detected by the different layers. The visualizations become a lot clearer if we look at similar synthetic images for the original network prior to fine-tuning on our food dataset.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images_3" src="/images/capstone_synthetic_3.png" /&gt;&lt;/p&gt;
+&lt;h3 id="summary"&gt;9. Summary&lt;/h3&gt;
+
+&lt;p&gt;Overall this was a fantastic learning experience that gave me the opportunity to work with both traditional machine learning as well as deep learning models. Working on a tangible, and at times messy, problem has definitely been the best way for learning about how some of these models are applied in the real world, and the associated challenges.&lt;/p&gt;
+&lt;p&gt;In terms of computer vision, it is clear why Convolutional Neural Networks are the current state-of-the-art approach, given the relative ease of obtaining good results in a relatively short space of time.&lt;/p&gt;
+&lt;p&gt;There is still a lot of work that could be done to achieve even better results for classifying food pictures, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Expanding the approach to use all 101 food categories from the dataset&lt;/li&gt;
+&lt;li&gt;Fine-tuning a more recent network that has achieved better results (i.e., GoogleNet, ResNet etc.)&lt;/li&gt;
+&lt;li&gt;Investing more time in optimising parameters during fine-tuning&lt;/li&gt;
+&lt;li&gt;Training multiple models and aggregating the predictions (an ensemble approach)&lt;/li&gt;
+&lt;li&gt;Expanding the methods to include object detection for identifying multiple food types in one image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+
+&lt;p&gt;The code for the final CNN-based model along with a full report and presentation can be found on &lt;a href="https://github.com/simonb83/food_classification/tree/draft"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;An excellent introduction to Convolutional Neural Networks for Computer Vision is the Stanford &lt;a href="http://cs231n.stanford.edu/"&gt;CS231n&lt;/a&gt; course.&lt;/p&gt;
+&lt;p&gt;The network visualizations were created using the &lt;a href="https://github.com/yosinski/deep-visualization-toolbox"&gt;Deep Visualization Toolbox&lt;/a&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="machine-learning"></category><category term="deep-learning"></category><category term="data-science"></category></entry><entry><title>First Kaggle</title><link href="https://simonb83.github.io/first-kaggle.html" rel="alternate"></link><published>2016-03-09T18:17:00-06:00</published><updated>2016-03-09T18:17:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-03-09:first-kaggle.html</id><summary type="html">&lt;p&gt;This is a brief summary of my first experience with a Kaggle
+competition. I entered for the learning experience, and because I wanted
+to play around with a real problem in machine learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Problem: Crime In San Francisco&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I chose the Crime Classification in San Francisco as it seemed like a
+fairly well-defined problem, and it is also in the Playground section of
+Kaggle so is probably more of a gentle introduction.&lt;/p&gt;
+&lt;p&gt;You are given a training data set of 878,049 crimes from the past 12
+years, each with the following information:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Date Crime Occurred&lt;/li&gt;
+&lt;li&gt;Day of Week&lt;/li&gt;
+&lt;li&gt;Police District&lt;/li&gt;
+&lt;li&gt;Street Address&lt;/li&gt;
+&lt;li&gt;X and Y coordinates&lt;/li&gt;
+&lt;li&gt;Type of Crime&lt;/li&gt;
+&lt;li&gt;Description&lt;/li&gt;
+&lt;li&gt;Resolution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The challenge is to develop an algorithm which can then correctly
+classify other crimes using only the date and location features
+mentioned above.&lt;/p&gt;
+&lt;p&gt;Given a test data set of another 884,262 crimes, for each instance the
+algorithm needs to assign probabilities to 39 different crime
+categories.&lt;/p&gt;
+&lt;p&gt;The output is evaluated using the Multi-Class Logarithmic Loss function
+(more in another post), where each predicted probability is compared to
+the true probability. The idea is to make the loss function as small as
+possible.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Being very eager to jump in and try something out, I very naively threw
+something together using the Python Sklearn Random Forest algorithm
+(chosen as I had read that it is one of the algorithms that most
+frequently wins Kaggle competitions), with the following features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Time of day (based on number of second in the day)&lt;/li&gt;
+&lt;li&gt;X &amp;amp; Y coordinates&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Score of 26.85, ranked 1,150 on leaderboard.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My second submission was the result of randomly playing around. I cut
+down the features to only:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Police precinct&lt;/li&gt;
+&lt;li&gt;Time of Day&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However I think the biggest improvement was using the predict_proba
+instead of predict method. Whereas predict gives effectively a binary
+classification for the most likely class (i.e. 1 or 0), predict_proba
+assigns a probability to every single class.&lt;/p&gt;
+&lt;p&gt;It turns out that Logarithmic Loss penalizes confident but wrong answers
+very heavily, so it is better to “spread your bets” as it were rather
+than predicting a single category.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Big improvement to score of 4.9, moved up 172 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Around this point, I started to test locally prior to submitting by
+splitting the train data set approximately 80%/20% into training and
+test data in order to better measure whether my changes were improving
+my score or not.&lt;/p&gt;
+&lt;p&gt;For the third submission, I used only two categorical features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Hour of day&lt;/li&gt;
+&lt;li&gt;Police precinct&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However the biggest improvement came from specifying a max depth of 10
+for the Random Forest.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.59, moved up 426 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Submission 4 was when I realized that pretty much all of my success up
+until this point had been beginner’s luck, and I needed a more
+systematic approach. So, after reading quite a bit about feature
+engineering, I used the following variables:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Precinct&lt;/li&gt;
+&lt;li&gt;Day of Week&lt;/li&gt;
+&lt;li&gt;Time of Day&lt;/li&gt;
+&lt;li&gt;X and Y (scaled to 0,1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For Precinct, Day of Week and Time of Day I finally began treating them
+as categorical variables (using pandas get_dummies).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.49, moved up 267 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 5&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For submission 5 I got some inspiration from comments on the competition
+forum (thanks papadopc and SatendraKumar).&lt;/p&gt;
+&lt;p&gt;In particular I did additional feature engineering on the X and Y
+coordinates to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Rotate coordinate frames through 30, 45, 60 and 90 degrees&lt;/li&gt;
+&lt;li&gt;Convert to polar coordinates and calculate R for each point&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I was also inspired by a comment from papdopc to create a crime count
+per address, that is to say, using the training data:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Get a list of unique street names&lt;/li&gt;
+&lt;li&gt;For each street name count the instances of each crime category&lt;/li&gt;
+&lt;li&gt;Use these counts as new categorical variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(Note: I have already seen some issues with this approach so will
+revisit later on).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.44, and moved up to current position of 277 on
+leaderboard.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It would only be honest to note that I have made an additional
+submission with an approach pretty similar to Submission 5, but
+filtering for outliers in the training data, however this did not
+improve on my current best score.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary and Next steps&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So far it has been a really fun and interesting experience and it is
+pretty cool that there are so many tools out there that enable you to
+make headway so quickly with complex problems.&lt;/p&gt;
+&lt;p&gt;In some respects this can also be a disadvantage because it also makes
+it very easy to implement algorithms when you have very little idea of
+what you are doing, or how they work. However, on balance, I think it is
+also very useful not to have to get bogged down in the detail of
+creating efficient implementations of algorithms and enables far faster
+learning of some difficult concepts.&lt;/p&gt;
+&lt;p&gt;I am already working on my newest model including:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Some new categorical features: Season of Year, Daylight Saving Time
+Indicator, Whether the address is an Intersection or not&lt;/li&gt;
+&lt;li&gt;Smarter featurization of the address data vs. crime counts (based on
+papdopc solution)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some other approaches I want to try include:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Using a Neural Network&lt;/li&gt;
+&lt;li&gt;Combining predictions from multiple algorithms&lt;/li&gt;
+&lt;li&gt;Probability smoothing&lt;/li&gt;
+&lt;/ul&gt;
+</summary><category term="machine-learning"></category></entry></feed>

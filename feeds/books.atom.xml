@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/books.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-01-14T17:46:00-06:00</updated><entry><title>My 2015 in Books</title><link href="https://simonb83.github.io/my-2015-in-books.html" rel="alternate"></link><published>2016-01-14T17:46:00-06:00</published><updated>2016-01-14T17:46:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-01-14:my-2015-in-books.html</id><summary type="html">&lt;p&gt;Over the past couple of years I found myself getting frustrated that I wasn’t reading enough, and so in 2015 when I saw friends signing up for
+Goodreads’ Reading challenge, I thought it might be a nice way to set a goal and try and stick to it.&lt;/p&gt;
+&lt;p&gt;I wanted to challenge myself so went for quite an aggressive goal of 52 books. This is how I fared.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Overall statistics:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;53 books in total&lt;/li&gt;
+&lt;li&gt;17,512 pages&lt;/li&gt;
+&lt;li&gt;343 page average book length&lt;/li&gt;
+&lt;li&gt;41 Non-Fiction (77%) vs. 12 Fiction&lt;/li&gt;
+&lt;li&gt;Month with most books finished - December (8)&lt;/li&gt;
+&lt;li&gt;Month with least books finished - January, September, October (2)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="the-list"&gt;
+&lt;h2&gt;&lt;strong&gt;The List&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Methodology:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I used a small Python script to download my books from 2015 via the
+Goodreads API.&lt;/p&gt;
+&lt;p&gt;I manually tagged the books into the following categories (which are not
+necessarily mutually exclusive), and also reevaluated the score that I
+originally gave when I saved the book in the Goodreads app.&lt;/p&gt;
+&lt;p&gt;For each book I have specified in brackets my original score followed by
+an updated score based upon my impressions 1-12 months after finishing.&lt;/p&gt;
+&lt;p&gt;In the case where I don’t remember much about the book (surprisingly
+often for the fiction books), I have left the score as the original.
+Also within the updated score I have included half points which are not
+currently allowed on Goodreads.&lt;/p&gt;
+&lt;p&gt;The numbers following the category titles are the average scores of my
+original reviews, followed by updated reviews.&lt;/p&gt;
+&lt;p&gt;Any thoughts or comments I think to be worth noting about a particular
+book are in italics.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some observations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;I was already sure I had a read a lot more non-fiction than fiction,
+but how much more actually surprised me a little (41 non-fiction vs
+12 fiction)&lt;/li&gt;
+&lt;li&gt;I hadn’t realized I had read so many biographies&lt;/li&gt;
+&lt;li&gt;In general I remember a lot more about the non-fiction rather than
+fiction books&lt;/li&gt;
+&lt;li&gt;Overall I think I was pretty consistent in my ratings between before
+and after - although I changed my rating for 25 books, this was
+mostly to be able to take advantage of half points (21 books)&lt;/li&gt;
+&lt;li&gt;I only change my mind by 1 point on 4 books (all increases)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Maths, Computing, Technology: (3.7, 3.8)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Naked Statistics (4, 3.5)&lt;/li&gt;
+&lt;li&gt;The Information: A History, a Theory, a Flood (4, 4) - &lt;em&gt;very
+interesting overview but quite dense in parts&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Theory That Would Not Die: How Bayes' Rule Cracked the Enigma
+Code, Hunted Down Russian &amp;nbsp;Submarines, and Emerged Triumphant from
+Two Centuries of Controversy (3, 4) - &lt;em&gt;very detailed overview of
+Bayes; I still remember a lot of the detailed examples&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Simpsons and Their Mathematical Secrets(3, 3)&lt;/li&gt;
+&lt;li&gt;A Mathematician's Apology (3, 3.5) - &lt;em&gt;felt more like a book that I
+had to read rather than wanted to read&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Signal and the Noise: Why So Many Predictions Fail - But Some
+Don't (5, 5) - &lt;em&gt;awesome, really enjoyable. Want to re-read.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;How Not to Be Wrong: The Power of Mathematical Thinking (4, 4) - &lt;em&gt;one
+of the best popular maths books I have read in a while; want to
+re-read.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Six Degrees: The Science of a Connected Age (3, 4) - &lt;em&gt;the maths is
+really fascinating; there are parts I want to look over in more
+detail&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Probability: A Very Short Introduction (3, 3)&lt;/li&gt;
+&lt;li&gt;Countdown to Zero Day: Stuxnet and the Launch of the World's First
+Digital Weapon (4, 4) - &lt;em&gt;really interesting and eye opening&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Shadow Factory: The Ultra-Secret NSA from 9/11 to the
+Eavesdropping on America (3, 3) - &lt;em&gt;while it was full of interesting
+tidbits, I thought it could have been more&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;No Place to Hide: Edward Snowden, the NSA, and the U.S. Surveillance
+State (5, 4.5) - &lt;em&gt;an absolute must read book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Dark Net: Inside the Digital Underworld (4, 4) - &lt;em&gt;very
+interesting, sightly scary&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Biographies: (4.2, 4.1)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Immortal Life of Henrietta Lacks (5, 5) - &lt;em&gt;amazing story, highly
+recommeneded, so important to modern science and medicine&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Alcatraz-1259 (4, 4) - &lt;em&gt;true story of someone who was incarcerated in
+Alcatraz (I have a copy signed by the author)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Thomas Cromwell: The Untold Story of Henry VIII's Most Faithful
+Servant (4, 4.5) - &lt;em&gt;I knew nothing about him beforehand; fascinating
+book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Not Much of an Engineer (3, 3) - &lt;em&gt;Some very interesting stories and
+engineering, but I wasn’t a big fan of the writing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Longitude: The True Story of a Lone Genius Who Solved the Greatest
+Scientific Problem of His Time (5, 4.5) - &lt;em&gt;Really good&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Einstein: His Life and Universe (4, 3.5) - &lt;em&gt;I was very glad to learn
+more about such an important and interesting figure, but was a bit
+long and hard going in places&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Agent Zigzag: A True Story of Nazi Espionage, Love, and Betrayal (5,
+4.5) - &lt;em&gt;Very cool story, and easy to read&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;A Spy Among Friends: Kim Philby and the Great Betrayal (4, 4) - &lt;em&gt;Very
+good&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;A Numerate Life: A&amp;nbsp;Mathematician Explores the Vagaries of Life, His
+Own and Probably Yours (4, 3.5) - &lt;em&gt;Mixed, good in parts&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Historical: (3.4, 3.6)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;In the Heart of the Sea: The Tragedy of the Whaleship Essex (4, 4) -
+&lt;em&gt;amazing and slightly harrowing story (and then I discovered they
+were making a film!)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Operation Mincemeat: How a Dead Man and a Bizarre Plan Fooled the
+Nazis and Assured an&amp;nbsp;Allied Victory (4, 4) - &lt;em&gt;Really well-written,
+gripping&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Killing the &amp;nbsp;Bismarck: Destroying the Pride of Hitler's Fleet (3,
+3.5)&lt;/li&gt;
+&lt;li&gt;The Secret Life of Bletchley Park: The WWII Codebreaking Centre and
+the Men and Women Who Worked&amp;nbsp;There (3, 4) - &lt;em&gt;Really good overview of
+Blethley and the people who worked there&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Tambora: The Eruption That Changed the World (3, 2.5) - &lt;em&gt;I bought
+this book because of the story; didn’t live up to expectations&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Other Science, Medical etc: (4.25, 4.5)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Bad Pharma: How Drug Companies Mislead Doctors and Harm Patients (4,
+4.5) - &lt;em&gt;Very important book, should be mandatory reading in schools&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;What If? : Serious Scientific Answers to &amp;nbsp;Absurd Hypothetical
+Questions (5, 5) - &lt;em&gt;I love XKCD, I loved this book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Thinking, Fast and Slow (3, 3.5) - &lt;em&gt;the subject matter I found
+fascinating, but I have read better expositions&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Emperor of All Maladies: A Biography&amp;nbsp;of Cancer (5, 5) - &lt;em&gt;amazing
+and epic journey into ‘the war on Cancer’&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Management: (4.3, 4.3)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Halo Effect:&amp;nbsp;How Managers let Themselves be Deceived (3, 3.5) -
+&lt;em&gt;Some really interesting ideas&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Joy, Inc.: How We Built a Workplace&amp;nbsp;People Love (5, 5) - &lt;em&gt;I loved
+this book and recommend it to nearly everyone I know. Maybe the best
+business of management book of all time&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Checklist Manifesto: How to Get&amp;nbsp;Things Right (5, 4.5) - &lt;em&gt;Everyone
+needs checklists!&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Other: (3.6, 3.6)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The End of Power:&amp;nbsp;From Boardrooms to Battlefields and Churches to
+States, Why Being In Charge&amp;nbsp;Isn't What It Used to Be (3, 2.5) -
+&lt;em&gt;Sounded interesting but too dry and uninspired writing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Antidote: Happiness for People Who&amp;nbsp;Can't Stand Positive Thinking
+(4, 4)&lt;/li&gt;
+&lt;li&gt;Average Is Over: Powering America Beyond&amp;nbsp;the Age of the Great
+Stagnation (3, 3.5)&lt;/li&gt;
+&lt;li&gt;Mornings in Mexico (3, 4)&lt;/li&gt;
+&lt;li&gt;The Road to Little Dribbling: More Notes&amp;nbsp;From a Small Island (4, 4) -
+Not his best work, but typically gentle and amusing stories&lt;/li&gt;
+&lt;li&gt;How to be a Husband (5, 4.5) - &lt;em&gt;Very amusing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The House of Wigs (3, 3.5)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Fiction: (3.8, 4.0)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Bone Clocks (4, 4)&lt;/li&gt;
+&lt;li&gt;The Temp (4, 4)&lt;/li&gt;
+&lt;li&gt;A Delicate Truth (4, 4) - &lt;em&gt;solid le Carré&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Farm (4, 4)&lt;/li&gt;
+&lt;li&gt;Jane Eyre (4, 4.5) - &lt;em&gt;really enjoyed&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The State We're In (2, 2)&lt;/li&gt;
+&lt;li&gt;The Memory of Love (5, 5)&lt;/li&gt;
+&lt;li&gt;The Martian (4, 5) - &lt;em&gt;loved the film, loved the book more&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Lathe of Heaven (4, 4)&lt;/li&gt;
+&lt;li&gt;Make Me (Jack Reacher #20) (3, 3.5) - &lt;em&gt;once again, rescued me from a
+long flight&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Binti (3, 3)&lt;/li&gt;
+&lt;li&gt;The Big Sleep (5, 5) - &lt;em&gt;very evocative writing&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</summary><category term="books"></category></entry></feed>

@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/maths.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-02-09T18:14:00-06:00</updated><entry><title>More traffic problems</title><link href="https://simonb83.github.io/more-traffic-problems.html" rel="alternate"></link><published>2016-02-09T18:14:00-06:00</published><updated>2016-02-09T18:14:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-02-09:more-traffic-problems.html</id><summary type="html">&lt;p&gt;Consider the following question posed on &lt;a class="reference external" href="http://fivethirtyeight.com/"&gt;http://fivethirtyeight.com/&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There is a very long, straight highway with some number of cars (N)
+placed somewhere along it, randomly. The highway is only one lane,
+so the cars can’t pass each other. Each car is going in the same
+direction, and each driver has a distinct positive speed at which
+she prefers to travel. Each preferred speed is chosen at random.
+Each driver travels at her preferred speed unless she gets stuck
+behind a slower car, in which case she remains stuck behind the
+slower car. On average, how many groups of cars will eventually
+form? (A group is one or more cars travelling at the same speed.)&lt;/p&gt;
+&lt;p&gt;For example, if the car in the very front happens to be slowest,
+there will be exactly one group — everybody will eventually pile up
+behind the slowpoke. If the cars happen to end up in order, fastest
+to slowest, there will be N groups — no car ever gets stuck behind a
+slower car.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Overall I think it took me too long to solve, and I am sure that this
+isn’t the fastest way of getting to the answer, but here is my solution.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It turns out that I made a silly mistake and ended up solving
+a slightly different problem. The mistake was due to abstracting the
+question too soon and only thinking about relative orders of speed in a
+given sequence and not taking into account that in the real world, cars
+will catch up with each other, and so under-counting the number of
+single groupings. Lesson learned.&lt;/p&gt;
+&lt;p&gt;I will leave my original solution at the bottom, because it was still an
+interesting problem and I ended up learning about something I didn’t
+know much about: Eulerian Numbers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Correct Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given a particular arrangement of the cars, we can consider a recursive
+algorithm for counting the number of pairings as follows:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Find the location of the car with the lowest velocity&lt;/li&gt;
+&lt;li&gt;That car and everything behind it represent 1 grouping, as all of the
+cars behind it have a higher speed&lt;/li&gt;
+&lt;li&gt;Add 1 to the number of groupings of the set of cars in front of it,
+etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is clearly a recursive problem, where every time we add a car, the
+new expected number of groupings is dependent on the previous number of
+groupings.&lt;/p&gt;
+&lt;p&gt;To simplify the problem let us suppose, without loss of generality, that
+we for some n&amp;lt;N, we line up all of the cars in order of decreasing speed
+and then place them randomly on the road, starting with the fastest car
+and moving downward. Let’s call the number of resulting groupings G(n).&lt;/p&gt;
+&lt;p&gt;Now we add in the next slowest car, that is a car whose speed is slower
+than all of the existing cars on the road. There are n+1 possible
+positions where we can place this car, and in any location, and we can
+see that:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;With probability 1/(n+1) the car goes at the back and creates 1 new
+group, so the total number of groups is G(n) + 1&lt;/li&gt;
+&lt;li&gt;With probability 1/(n+1) the car goes at the front and results in a
+total of just 1 group&lt;/li&gt;
+&lt;li&gt;In general, with probability 1/(n+1) the new car creates 1 group
+consisting of all the cars behind it + the expected groupings of all
+the cars in front of it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}{X_{n+1}} = \frac{1}{n+1}+\sum_{i=1}^{n}\frac{\mathbf{E}X_{i}+1}{n+1}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;and,&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}{X_{n}} = \frac{1}{n} + \sum_{i=1}^{n-1}\frac{\mathbf{E}X_{i}+1}{n} = \frac{1}{n}[1+S]
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(S = \sum_{i=0}^{n-1}\mathbf{E}X_{i}+1 \Rightarrow S = n\mathbf{E}X_{n}-1\)&lt;/span&gt;&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\therefore \mathbf{E}X_{n+1} = \frac{1}{n+1}[1 + \mathbf{E}X_{n}+1+S] = \frac{1}{n+1}[1 + \mathbf{E}X_{n}+1+n\mathbf{E}X_{n}-1]
+\end{equation*}
+&lt;/div&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\therefore \mathbf{E}X_{n+1} = \frac{1}{n+1}+\mathbf{E}X_{n}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For N=1, we know that &lt;span class="math"&gt;\(\mathbf{E}(G)=1\)&lt;/span&gt;, so we’re done and:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}X_{n} = \sum_{i=1}^{N}\frac{1}{i}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;which is the harmonic series.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Original Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The problem that my original solution answers is more like the following
+question:&lt;/p&gt;
+&lt;p&gt;The astronomer Simon Newcomb played the following game of solitaire.
+Cards numbered 1,2,....,n are shuffled, drawn and put into a pile as
+long as the card drawn has a number lower than its precessor. What is
+the average number of piles?&lt;/p&gt;
+&lt;p&gt;First of all, a couple of comments on the problem:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;This is clearly a counting problem involving permutations: we are
+interested in different ways of arranging the cards, and the order
+matters because the relative sizes of the cards dictate the number of
+piles&lt;/li&gt;
+&lt;li&gt;In fact we can abstract away from cards and simply consider
+permutations of the integers 1 to N.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As mentioned in the question, the extreme cases are quite simple:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;To end up with one pile, the only possibility is having all of the
+integers in decreasing order of magnitude, that is to say N &amp;gt; N-1 &amp;gt;
+N-2 &amp;gt;..&amp;gt;2 &amp;gt; 1 (a strictly decreasing sequence).&lt;/li&gt;
+&lt;li&gt;To end up with N piles, the only possibility is having all of the
+integers in increasing order of magnitude, that is to say 1 &amp;lt; 2 &amp;lt; 3
+&amp;lt;… &amp;lt; N-1 &amp;lt; N (a strictly increasing sequence)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If we play around with fairly small values of N, we can see some other
+interesting patterns start to emerge. Let us consider, for instance, how
+many ways there are there of having 2 piles.&lt;/p&gt;
+&lt;p&gt;For N=3, the possibilities are:&lt;/p&gt;
+&lt;p&gt;(3,1,2), (2,1,3), (2,3,1) and (1,3,2)&lt;/p&gt;
+&lt;p&gt;For N=4, the possibilities are:&lt;/p&gt;
+&lt;p&gt;(1,4,3,2), (2,1,4,3), (2,4,3,1), (3,1,4,2), (3,2,1,4), (3,2,4,1),
+(3,4,2,1), (4,1,3,2), (4,2,1,3), (4,2,3,1), (4,3,1,2)&lt;/p&gt;
+&lt;p&gt;With a little bit more work, we can see that what matters is the
+relationship between consecutive pairs of integers, specifically whether
+they are &amp;lt; or &amp;gt;.&lt;/p&gt;
+&lt;p&gt;For N=4 there are three consecutive pairings, and in order to have two
+piles, we need two of the pairings to be &amp;gt; and one pairing to be &amp;lt;. By
+similar reasoning we are able to see that for general N, we need N-1
+pairings to be &amp;gt; and one pairing to be &amp;lt;.&lt;/p&gt;
+&lt;p&gt;In fact, what dictates the number of end piles is the number of ascents
+(pairings where the 1st is &amp;lt; the 2&lt;sup&gt;nd&lt;/sup&gt;) or descents (pairings
+where the 1&lt;sup&gt;st&lt;/sup&gt; is &amp;lt; the 2&lt;sup&gt;nd&lt;/sup&gt;) in an ordered sequence.&lt;/p&gt;
+&lt;p&gt;Furthermore, the number of permutations of a sequence with the specific
+number of ascents or descents will tell us how many possible ways there
+are to end up with a certain number of piles.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Eulerian Numbers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It turns out that what we are looking for are numbers called Eulerian
+Numbers.&lt;/p&gt;
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+the &lt;strong&gt;Eulerian number&lt;/strong&gt; &lt;em&gt;A&lt;/em&gt;(&lt;em&gt;n&lt;/em&gt;, &lt;em&gt;m&lt;/em&gt;), is the number of
+&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Permutation"&gt;permutations&lt;/a&gt; of the
+numbers 1 to &lt;em&gt;n&lt;/em&gt; in which exactly &lt;em&gt;m&lt;/em&gt; elements are greater than the
+previous element (permutations with &lt;em&gt;m&lt;/em&gt; &amp;quot;ascents&amp;quot;)&lt;/blockquote&gt;
+&lt;p&gt;It is possible to generate the Eulerian Numbers algorithmically by
+counting the number of permutations of N that result in a given number
+of groups, or alternatively using well-defined iterative or generating
+functions.&lt;/p&gt;
+&lt;p&gt;Again from Wikipedia, here is a table with the Eulerian Numbers for
+small N:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/Eulerian_nums.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Before we get to the final solution, there are two interesting
+properties of Eulerian numbers that are worth noting:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;For a given row in the table above, the Eulerian Numbers for a
+particular N sum to N! (because we end up counting all possible
+permutations of N). Alternatively, we can write this as:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\sum_{k=0}^{n-1}A(n,k)=n!
+\end{equation*}
+&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;There is also symmetry within the Eulerian Numbers for given n, i.e.,
+A(n,0) = A(n,n-1), A(n,1) = A(n,n-2) etc. We can see this by
+repeating our arguments above for a reversed sequence of integers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;The Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What we are looking for is the average, or expected, number of groups
+(piles) for a given N.&lt;/p&gt;
+&lt;p&gt;By definition of expectation:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}(G)=\sum G*\mathbb{P}(G)
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;The probability of a given grouping is the number of ways of achieving
+that grouping / the total possible arrangements of N, which is given by:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbb{P}(G)=\frac{A(N, G-1)}{N!}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;Where A(N,G-1) is the Eulerian Number.&lt;/p&gt;
+&lt;p&gt;If we sum over all possible groupings, we are looking for:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbb{E}(G)=\sum_{k=1}^{N}k \times \frac{A(N, k-1)}{N!}=\frac{1}{N!}\sum_{k=0}^{N-1}(k+1) \times A(N,k)
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;We can write this sum out as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/diagram_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;We can then fill-in the triangle in order to make a rectangle:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/diagram_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However, from the properties of the Eulerian Numbers we know that&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Each row sums to N!&lt;/li&gt;
+&lt;li&gt;The sum of the red terms is equal to the sum of the blue terms due to
+the symmetry in the Eulerian Numbers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thus we can see that &lt;span class="math"&gt;\(2S = (N+1) \times N!\)&lt;/span&gt;, and so we get our final result:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}(G)=\frac{(N+1)\times N!}{2N!}=\frac{N+1}{2}
+\end{equation*}
+&lt;/div&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="maths"></category><category term="coding"></category></entry><entry><title>Some Counting Problems</title><link href="https://simonb83.github.io/some-counting-problems.html" rel="alternate"></link><published>2015-08-11T17:00:00-05:00</published><updated>2015-08-11T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-08-11:some-counting-problems.html</id><summary type="html">&lt;p&gt;I have been looking over some elementary probability recently, and spent some time thinking about a couple of questions that I think have pretty neat solutions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Birthday Problem&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The problem is very simply stated, but the answer is counterintuitive to most people.&lt;/p&gt;
+&lt;p&gt;What is the smallest number of people that you need in a room (or some type of gathering) for there to be a better than even chance that two people share the same birthday?&lt;/p&gt;
+&lt;p&gt;What seems to throw people off here is that they immediately try and answer a different question: What is the probability that someone else shares my birthday (or some other specific birthday)?.&lt;/p&gt;
+&lt;p&gt;In fact, we can quite quickly estimate a rough value for what this number of people should be (n). If we do not concern ourselves with a specific day, then what we are looking for is any pair of people who share the same birthday.&lt;/p&gt;
+&lt;p&gt;For some small values of n, the number of possible pairings are:&lt;/p&gt;
+&lt;p&gt;n = 18, 153 pairings (153/365 = 0.419)&lt;/p&gt;
+&lt;p&gt;n = 19, 171 pairings (171/365 = 0.468)&lt;/p&gt;
+&lt;p&gt;n = 20, 190 pairing (190/365 = 0.521)&lt;/p&gt;
+&lt;p&gt;So intuitively, we think that the answer should be somewhere around 20.&lt;/p&gt;
+&lt;p&gt;The actual calculation follows standard combinatorial reasoning:&lt;/p&gt;
+&lt;p&gt;Suppose n = 2. It turns out that it is simpler to think about the probability of the people not sharing a birthday, and then take the complement.&lt;/p&gt;
+&lt;p&gt;We can see that there are 365×365 total possible birthday combinations (365 for each person), and 365×364 combinations for them not sharing a birthday (365 possibilities for the first person, and 364 for the second as one day is now “out of the question”).&lt;/p&gt;
+&lt;p&gt;So for 2 people, the probability that they don’t share a birthday is&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\frac{365 \times ~364}{365 \times ~365} \approx 0.997
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For n = 3, similarly we can see that&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{365 \times ~364 \times 363}{365 \times ~365 \times ~365} \approx 0.992
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;In fact, for general n, by similar reasoning we can see that the probability that none of them share a birthday is:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{365 \times ~364 \times ... \times (365-n+1))}{365 \times ~365 \times ~... \times 365} = \frac{365!}{(365-n)! \times 365^{n}}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;(in the numerator, each person removes a possibility for the number of allowed birthdays).&lt;/p&gt;
+&lt;p&gt;Using Stirling’s approximation, we can show that this is:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\sim e^{-n} \left (\frac{365}{365-n} ~\right)^{365-n+0.5}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;Once this probability drops below 0.5, then we have a better than 50-50 chance of two people sharing a birthday.&lt;/p&gt;
+&lt;p&gt;For values of n around 20, we can see that:&lt;/p&gt;
+&lt;p&gt;n = 20, P = 0.589&lt;/p&gt;
+&lt;p&gt;n = 21, P = 0.556&lt;/p&gt;
+&lt;p&gt;n = 22, P = 0.524&lt;/p&gt;
+&lt;p&gt;n = 23, P = 0.493&lt;/p&gt;
+&lt;p&gt;So we see that with only 23 people, the probability that two people share the same birthday is 0.51.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Boxes and balls&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Suppose we have n balls that are tossed independently into n boxes. What is the probability that exactly one box is empty?&lt;/p&gt;
+&lt;p&gt;Once again let’s start by thinking about some small values of n.&lt;/p&gt;
+&lt;p&gt;If n=2, the total number of possibilities is two boxes for ball 1 x two boxes for ball 2 = 4 in total.&lt;/p&gt;
+&lt;p&gt;For one box to be empty, we only want to consider those arrangements where both balls are in one box, of which there are 2 (both in box 1 or both in box 2), so&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{2}{4} = \frac{1}{2}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;If n=3, suppose box 1 is empty, then we can either have two balls in box 2 and one in box 3 or one ball in box 2 and two in box 3.&lt;/p&gt;
+&lt;p&gt;So for our numerator we need three possibilities for the empty box x three ways of choosing 2 out of 3 balls x two possibilities for the box with 2 balls.&lt;/p&gt;
+&lt;p&gt;And in the denominator we have three possible boxes for each ball.&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{3 \times 3 \times 2}{3 \times 3 \times 3} = \frac{2}{3}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For general n, we can use similar reasoning.&lt;/p&gt;
+&lt;p&gt;The key is seeing that with exactly one empty box, all of the remaining n-1 boxes must have exactly one ball except for one box which will have two balls.&lt;/p&gt;
+&lt;p&gt;What might this look like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="boxes-and-balls" src="https://simonb83.github.io/images/counting_problems.png" /&gt;&lt;/p&gt;
+&lt;p&gt;There are n choices for the empty box.
+The two balls can be chosen ways.
+There are n-1 choices for the box with 2 balls.
+The remaining n-2 balls have (n-2)! arrangements among
+the n-2 boxes.&lt;/p&gt;
+&lt;p&gt;So the numerator is &lt;span class="math"&gt;\(n \times (n-1) \times (n-2)! \times {n \choose 2}\)&lt;/span&gt;, and the denominator is &lt;span class="math"&gt;\(n^{n}\)&lt;/span&gt; and&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\frac{n!}{n^{n}} \times {n \choose 2} = \frac{n! \times n \times (n-1)}{2n^{n}}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;What does this look like for small values of n?&lt;/p&gt;
+&lt;p&gt;n = 2, P = 0.5&lt;/p&gt;
+&lt;p&gt;n = 3, P = 0.667&lt;/p&gt;
+&lt;p&gt;n = 4, P = 0.563&lt;/p&gt;
+&lt;p&gt;n = 5, P = 0.384&lt;/p&gt;
+&lt;p&gt;n = 6, P = 0.231&lt;/p&gt;
+&lt;p&gt;n = 7, P = 0.129&lt;/p&gt;
+&lt;p&gt;n = 8, P = 0.067&lt;/p&gt;
+&lt;p&gt;n = 9, P = 0.0337&lt;/p&gt;
+&lt;p&gt;n = 10, P = 0.0163&lt;/p&gt;
+&lt;p&gt;In fact we can see that P reaches a maximum when n=3, and then decreases for higher values of n. This is because as the number of boxes increases, the number of possible outcomes with exactly one empty box becomes overwhelmed by all of the other possible outcomes.&lt;/p&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="maths"></category></entry><entry><title>Information &amp; Uncertainty</title><link href="https://simonb83.github.io/first-blog-post.html" rel="alternate"></link><published>2015-02-25T00:52:00-06:00</published><updated>2015-02-25T00:52:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-25:first-blog-post.html</id><summary type="html">&lt;p&gt;One of the most surprising and interesting results of the digital age is
+how information is intrinsically linked to uncertainty and entropy.&lt;/p&gt;
+&lt;p&gt;Of course for this to make sense, we need to be careful about how we
+define what we mean by information, separating it from any subjective
+interpretation, so that the results are applicable to any system in
+which some type of message is transmitted from one point to another.&lt;/p&gt;
+&lt;p&gt;Claude Shannon, the father of Information Theory, said in the
+introduction to his seminal paper A Mathematical Theory of
+Communication:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;Frequently the messages have meaning; that is they refer to or are
+correlated according to some system with certain physical or
+conceptual entities. These semantic aspects of communication are
+irrelevant to the engineering problem.&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;The problem is that in trying to place meaning or value on a particular
+message we must, inevitably, take the perspective of the receiver.&lt;/p&gt;
+&lt;p&gt;A message saying, “the cat is in the bag” would probably, out of
+context, be pretty meaningless to most people. However, suppose Alice
+sends this message to Bob and in advance they have agreed that this
+phrase is code for “The plan is going ahead. Send $10,000 by 10pm
+tonight”. Then in this case, there is a far greater amount of value or
+meaning contained within the message.&lt;/p&gt;
+&lt;p&gt;Similarly the message “Vikaar saadab oma tervitused ja palub, et sa
+tuled korraga” would only have intrinsic meaning for someone who speaks
+Estonian.&lt;/p&gt;
+&lt;p&gt;What we would like to arrive at is a method for quantifying the amount
+of information contained in any arbitrary message, generated by any
+arbitrary system, and we can get there using the tools of Information
+Theory. It is in this context that we begin to see the surprising
+relationship between information and uncertainty.&lt;/p&gt;
+&lt;p&gt;There are, in fact, two different schools of Information Theory:
+Classical Information Theory developed by Claude Shannon, and
+Algorithmic Information Theory developed by Ray Solomonoff, Andrey
+Kolmogorov and Gregory Chaitin.&lt;/p&gt;
+&lt;p&gt;We will look at both of these in turn.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Classical Information Theory&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Claude Shannon developed his core ideas while studying communication
+channels, which&lt;/div&gt;
+&lt;div class="line"&gt;can be represented very simply and generically with the following
+diagram:&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img alt="Shannon Channel" src="https://simonb83.github.io/images/channel_diagram.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Descriptively, for any such channel&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;We start with a source, for instance a piece of English text, some
+music or a picture&lt;/li&gt;
+&lt;li&gt;The source is encoded according to certain rules whereby each
+character or element of the source is mapped to a new symbol from a
+well-defined set of possible symbols, called the symbol space&lt;/li&gt;
+&lt;li&gt;We transmit the encoded message through some channel, which could be
+digital, visual etc., and which may be subject to interference of
+from a source of noise&lt;/li&gt;
+&lt;li&gt;On the receiving end, knowledge of the symbol space is then used to
+decode the message back into a form recognizable to the receiver.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;One of the things Shannon was interested in understanding was how many
+bits are needed to represent and transmit a given message.&lt;/p&gt;
+&lt;p&gt;Previously, Ralph Hartley had arrived at a measure of information:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+H=nlogS
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;where H is the amount of information, S is the symbol space and n is the
+number of symbols being transmitted.&lt;/p&gt;
+&lt;p&gt;From this equation we can see that the amount of information H, grows in
+line with the size of the symbol space. Why might this be?&lt;/p&gt;
+&lt;p&gt;Suppose we have a very simple system in which all we wish to communicate
+is a Go or Stop message. Here the Symbol Space can be thought of has
+having only two possibilities, say ‘1’ or ‘0’, and so in order to
+transmit our message we only need 1 bit of information.&lt;/p&gt;
+&lt;p&gt;Now suppose that we wish to expand our set of possible messages to have
+three options: Go Now, Go Tomorrow, Don’t Go, i.e. a symbol space of
+size 3.&lt;/p&gt;
+&lt;p&gt;In this case, 1 bit of information is no longer enough, and in fact we
+would need at least 1 additional bit in order to be able to reliably
+transmit any message, i.e.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Go Now = 10&lt;/li&gt;
+&lt;li&gt;Go Tomorrow = 01&lt;/li&gt;
+&lt;li&gt;Don’t Go = 00&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here we are already beginning to see an intuitive link between the
+amount of information and the amount of uncertainty about the message.
+With a symbol space of size 2, there is a 50% chance of being able to
+predict the next bit, whereas with a symbol space of size 3 there are
+more choices and hence a lower possibility of predicting what comes
+next.&lt;/p&gt;
+&lt;p&gt;However this model assumes that each symbol is equally likely. What
+Claude Shannon did was to extend this by understanding that, in the real
+world, not all choices are equally likely.&lt;/p&gt;
+&lt;p&gt;For example in the English language, the letters x, y and z are far less
+likely to appear than the letters a, e or m. Furthermore, the next
+letter can actually depend on the previous letter or even the previous
+group or letters, so q is almost always followed by u, cl is going to be
+followed by a vowel etc.&lt;/p&gt;
+&lt;p&gt;Shannon arrived at a definition for what he called the entropy of a
+message:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{align*}
+H = -\\sum\_{i}^{}N log {p}\_{i}
+\end{align*}
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\({p}\_{i}\)&lt;/span&gt; is the probability of the ith bit in the message.&lt;/p&gt;
+&lt;p&gt;Shannon saw that the information content of a message is fundamentally
+linked to the uncertainty associated with the message. In fact we can
+see that entropy, and hence information content, are maximised when all
+probabilities are equally likely.&lt;/p&gt;
+&lt;p&gt;Perhaps an easier way to see this intuitively is through another core
+idea of Information Theory, that of compression.&lt;/p&gt;
+&lt;p&gt;In recognizing that the letters, groups of letters and words in the
+English language are not all as likely to appear, we begin to see the
+possibilities for compression. In fact most people are already very
+familiar with the idea of compression, &lt;em&gt;fr nstnc by rdng th nd f ths
+sntnc&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The fundamental idea is that, the less random a message is, the more it
+can be compressed, and hence the less amount of information is needed to
+store and transmit it.&lt;/p&gt;
+&lt;p&gt;Take the following two sentences:&lt;/p&gt;
+&lt;p&gt;A: “word word word word word word word word word word word word”&lt;/p&gt;
+&lt;p&gt;B: “sbrgmdopbrlevgawglscjwhmoyucsaxjro peig bhzs kcttk oidomnfr”&lt;/p&gt;
+&lt;p&gt;Both are 59 characters long, however A can be compressed for
+transmission to “word 12 times”, i.e. only 13 characters or less than a
+quarter of its original length, whereas B is just a random mix of
+letters and so all 59 original characters would need to be transmitted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Algorithmic Information Theory&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We will go into far less detail regarding algorithmic information
+theory, however it is interesting to see how some very similar
+interpretations arise.&lt;/p&gt;
+&lt;p&gt;Whereas Shannon developed his ideas by thinking about communication
+channels, Algorithmic Information Theory is more concerned with the
+relationship between computation and information.&lt;/p&gt;
+&lt;p&gt;A core definition of Algorithmic Information theory states that ‘a
+binary string is said to be random if the Kolmogorov complexity of the
+string is at least the length of the string’&lt;sup&gt;1&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The Kolmogorov complexity, K, shares many properties with Shannon’s
+entropy, S. For a given string, K is defined as being its&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;shortest description p on a Universal Turing machine U:sup:`2`&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;Fundamentally this is a measure of the amount of computing resources
+needed to specify the string.&lt;/p&gt;
+&lt;p&gt;More informally, we might say that given a standardized computing
+framework (such as a programming language), the Kolmogorov complexity is
+the length of the shortest program required to represent or describe the
+string.&lt;/p&gt;
+&lt;p&gt;Once again we return to the idea of random and non-random strings. Given
+the two strings:&lt;/p&gt;
+&lt;p&gt;A: “1111111111111111111111111111111111111111”&lt;/p&gt;
+&lt;p&gt;B: “0001000101011100101011101100001000010011”&lt;/p&gt;
+&lt;p&gt;Both have the same length, however A could be represented as ‘1 40
+times’, whereas B has no other description than simply writing down the
+string itself.&lt;/p&gt;
+&lt;p&gt;Here we can see the link with Classical Information Theory. Shannon's
+entropy, which is a measure of information and the number of bits needed
+to represent a string, increases with uncertainty. Similarly, random
+strings are also more complex and so require more computing power or
+resources to represent them.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://en.wikipedia.org/wiki/Algorithmic_information_theory%23Precise_definitions"&gt;http://en.wikipedia.org/wiki/Algorithmic_information_theory#Precise_definitions&lt;/a&gt;
+&lt;a class="reference external" href="http://www.hutter1.net/ait.htm"&gt;http://www.hutter1.net/ait.htm&lt;/a&gt;&lt;/p&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="information-theory"></category><category term="maths"></category><category term="uncertainty"></category></entry></feed>

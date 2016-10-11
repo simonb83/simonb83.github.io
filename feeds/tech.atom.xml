@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/tech.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-02-01T17:49:00-06:00</updated><entry><title>Chef Jarvis - Your AI Sous-Chef</title><link href="https://simonb83.github.io/chef-jarvis-your-ai-sous-chef.html" rel="alternate"></link><published>2016-02-01T17:49:00-06:00</published><updated>2016-02-01T17:49:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-02-01:chef-jarvis-your-ai-sous-chef.html</id><summary type="html">&lt;div class="section" id="the-concept"&gt;
+&lt;h2&gt;&lt;strong&gt;1. The Concept&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="image" src="https://simonb83.github.io/images/chef_jarvis.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AI Sous-Chef&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ever find yourself needing to manage several key steps at the same time?
+Fear no more, your digital sous chef can help you multi-task like never
+before.&lt;/p&gt;
+&lt;p&gt;Chef Jarvis automatically integrates with all of your smart appliances
+giving you several extra pairs of hands in the kitchen.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Manager&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Do you find that you can’t remember if you used 600g or 900g of flour
+for your cake last time or how long it took to bake in your oven? Do you
+like to experiment with recipes, quantities and timing?&lt;/p&gt;
+&lt;p&gt;Chef Jarvis lets you annotate, modify and store every aspect of your
+recipes on-the-fly. Plus with in-built version control, you will have
+full access to every version of the recipes behind your signature
+dishes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tailored Suggestions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Not sure what to cook tonight? Maybe you have a vague idea in mind but
+are looking for some inspiration?&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Chef Jarvis suggests dishes and finds recipes based upon key&lt;/div&gt;
+&lt;div class="line"&gt;ingredients, cuisines, cooking techniques, preparation time or even
+wine or&lt;/div&gt;
+&lt;div class="line"&gt;beer pairings.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Over time, Chef Jarvis learns through its interactions with&lt;/div&gt;
+&lt;div class="line"&gt;you, making its recommendations more personalized to your preferences
+and style&lt;/div&gt;
+&lt;div class="line"&gt;of cooking.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Workflow Control&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Overcooked meat, burned vegetables and frantic last-minute scrambles
+are a thing of the past. Chef Jarvis keeps you on-track with all of
+your recipes whether you are&lt;/div&gt;
+&lt;div class="line"&gt;cooking a single dish for supper or a multi-course haute cuisine meal
+for your friends.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;By carefully tracking your progress through all of your active recipes,
+Chef Jarvis can warn you in advance of key upcoming steps and set alarms
+for time critical activities.&lt;/p&gt;
+&lt;p&gt;Furthermore, Chef Jarvis automatically takes care of conversions between
+imperial and metric systems, scales quantities, translates ingredients
+or suggests alternatives so that you can concentrate on the cooking.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Smart Shopping Lists&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once you have selected your recipes, Chef Jarvis automatically adds the
+necessary ingredients to your smart shopping list on the device of your
+choice.&lt;/p&gt;
+&lt;p&gt;Do you often work with recipes from across the world?&lt;/p&gt;
+&lt;p&gt;Chef Jarvis has you covered by automatically translating exotic
+ingredients into locally-available alternatives as well as finding
+nearby shops for buying the more unusual items.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conversational Interactions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Juggling multiple dishes and utensils with messy or wet fingers doesn’t
+leave you much flexibility for interacting with a computer or other
+device.&lt;/p&gt;
+&lt;p&gt;Chef Jarvis listens for and responds to your commands and makes you feel
+like you have a real assistant at all times in the kitchen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="background"&gt;
+&lt;h2&gt;&lt;strong&gt;2. Background&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Cooking has been a favourite hobby of mine for many years. However much
+of the time I find myself working alone in the kitchen trying to
+multi-task between various complex steps in concurrent recipes, all the
+while re-washing and drying my hands to return to my computer or phone
+in order to look up the next step, calculate quantities for ingredients,
+convert between cups and grams etc.&lt;/p&gt;
+&lt;p&gt;Separately, I have also been trying to study the principles behind
+machine learning techniques and in particular neural networks (fantastic
+introduction by Michael
+Nielsen&lt;a class="reference external" href="http://neuralnetworksanddeeplearning.com/"&gt;here&lt;/a&gt;), and have
+long been interested in trying to link my interests in cooking and
+technology.&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;One day I was reading about Artificial Intelligence&lt;/div&gt;
+&lt;div class="line"&gt;applications focused on home control systems, and I started wondering
+about more specialized applications for very specific tasks. It dawned
+on me that I could be far faster and more efficient working in the
+kitchen if I could automate everything to do with following recipes
+whilst trying to do something else with your hands, and so I started
+to develop the idea from there.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The name is (obviously) inspired by Iron Man, as in my head I imagine
+the helper to be as useful, friendly and easy-to-interact-with as Jarvis
+is for Tony Stark.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-thoughts-on-implementation"&gt;
+&lt;h2&gt;&lt;strong&gt;3. Some Thoughts on Implementation&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;These are just some very high level thoughts on how I might go about
+taking the first steps to implement something like this.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Parsing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A key requirement would be for the AI to be able to identify what a
+recipe looks like as well as break it down into sections (i.e.
+ingredients vs. method), as well as subsections (individual steps in
+method etc.)&lt;/p&gt;
+&lt;p&gt;On the face of it, this doesn’t look too hard as recipes themselves
+often have headings like Ingredients and Method, however I’m sure in
+this case the devil is in the detail. For instance you could start to
+think of ingredients as having some sort of predefined format {number -
+unit - ingredient}, however often some sub-quantity of ingredients are
+used multiple times in the method so you would need to be able to
+distinguish between many different cases.&lt;/p&gt;
+&lt;p&gt;As a start I would probably put together some type of web scraper to
+grab a large number of recipes from sites like BBC Cooking, SeriousEats,
+Chowhound etc.&lt;/p&gt;
+&lt;p&gt;Then I might use some kind of supervised learning to begin to break
+recipes down into their individual elements.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Storage&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once a recipe has been parsed then it can be stored locally for the user
+in some type of database structure.&lt;/p&gt;
+&lt;p&gt;I would look to integrate version control like git so that, for each
+recipe, the user is able to create and store copies, modifying specific
+elements. So for instance if the base recipe calls for 1kg of flour for
+serving 10 people, and you want to save a version scaled down for
+serving 4 people, then you would be able to store a modified copy.&lt;/p&gt;
+&lt;p&gt;Similarly if you find that you needed a higher oven temperature, longer
+cooking time or any other type of change, then you can store your own
+personalized version of that recipe.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Basic Helper Methods&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I consider these to be some of the simpler requirements to implement,
+that is for things like using voice commands to convert between
+measurement systems, translate foreign ingredients or even suggest
+alternative ingredients.&lt;/p&gt;
+&lt;p&gt;Currently you could probably do much of this with Siri, however in this
+case I think the problem is far narrower and better-defined (i.e., you
+don’t need to be able to process all natural language, just very
+specific commands for executing very specific functions).&lt;/p&gt;
+&lt;p&gt;So perhaps for conversions you could (at least at the start) use a
+specific command phrase to indicate that the AI will need to listen out
+for 1) a number, 2) input unit and 3) output unit.&lt;/p&gt;
+&lt;p&gt;For being able to suggest alternative ingredients, you could start by
+creating a large dictionary with common alternatives for harder-to-find
+ingredients (many cooking sites already have these types of lists).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Integrating with Appliances&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;While I think that just the recipe-management functionality could be a
+big help while cooking, it would also be fantastic for this type of AI
+to help you with controlling kitchen appliances too.&lt;/p&gt;
+&lt;p&gt;The very futuristic version would be just like Jarvis, with some sort of
+robotic arm that could move around and actually interact with items in
+the kitchen.&lt;/p&gt;
+&lt;p&gt;Obviously this is a far-fetched scenario, however more immediately I am
+seeing a move by appliance manufacturers to building devices that you
+can control via apps. For example I was recently given as a present a
+small Anova Sous Vide machine, which can be controlled from an app
+including turning it on and off, changing the temperature, setting a
+timer etc.&lt;/p&gt;
+&lt;p&gt;Potentially as more appliances emerge with associated apps, then a
+kitchen AI could use those interfaces to give you the ability to
+interact with appliances using only voice commands.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Command and Control&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A key part of the value of this sort of AI would be the ability to
+interact with it hands-free.&lt;/p&gt;
+&lt;p&gt;As I mentioned before, this problem could probably be reduced (somewhat)
+in complexity by defining specific commands that can be used to activate
+certain functions. Another gift I received last Christmas was the BB8
+robot by Sphero which has a small list of in-built voice activation
+commands that work surprisingly well.&lt;/p&gt;
+&lt;p&gt;So similarly you could program it to a list of 5-10 voice commands for
+things like:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Conversions&lt;/li&gt;
+&lt;li&gt;Set alarm&lt;/li&gt;
+&lt;li&gt;Get next step&lt;/li&gt;
+&lt;li&gt;Get ingredient amount etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</summary><category term="ai"></category><category term="cooking"></category><category term="deep-learning"></category><category term="machine-learning"></category></entry><entry><title>Crypto-currencies and the future of payments - Part I</title><link href="https://simonb83.github.io/crypto-currencies-and-the-future-of-payments-part-i.html" rel="alternate"></link><published>2015-02-23T16:50:00-06:00</published><updated>2015-02-23T16:50:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-23:crypto-currencies-and-the-future-of-payments-part-i.html</id><summary type="html">&lt;p&gt;Recently I have been trying to understand the ideas behind Bitcoin and
+other crypto-currencies and to think about what they might mean in the
+long-term for more traditional payments companies.&lt;/p&gt;
+&lt;p&gt;The Bitcoin protocol has some pretty neat ideas behind it and is
+generating a lot of interest and excitement. Something that makes it
+particularly cool is that, more than being purely transactional, it is a
+politically-independent alternative currency with no central controlling
+body.&lt;/p&gt;
+&lt;p&gt;However, payments is about so much more than just the transfer of money
+(or other forms of value) between people, so there is a lot more work
+that needs to be done before Bitcoin (or another crypto-currency) could
+seriously start to challenge existing mechanisms like payment cards.&lt;/p&gt;
+&lt;p&gt;Here is a draft version of a white paper I have been working on,
+analysing the payments value chain and how it might possibly be
+disrupted by a crypto-currency:&lt;a class="reference external" href="https://dl.dropboxusercontent.com/u/98312054/Cryptocurrencies%2C%20Block%20chains%20%26%20the%20Future%20of%20Payments.pdf"&gt;Cryptocurrencies, Block chains &amp;amp; the
+Future of
+Payments?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I think a fair summary of my current thinking is that there is too much
+additional value provided by banks and card issuers, especially to
+consumers, that is not currently offered by Bitcoin.&lt;/p&gt;
+&lt;p&gt;In particular, until things like lending, consumer protection through
+mechanisms like chargebacks, and maybe even rewards are integrated into
+crypto-payment solutions, I really can't see them disrupting payments
+for normal, every-day transactions.&lt;/p&gt;
+&lt;p&gt;There are, potentially, some pretty interesting hybrid solutions which
+incorporate the best of both worlds, and I discuss some of these
+alternatives in the paper.&lt;/p&gt;
+&lt;p&gt;Of course it's more than likely that I'm wrong. My intention is to
+discuss some of my ideas as well as other, alternative viewpoints, in
+future posts.&lt;/p&gt;
+</summary><category term="bitcoin"></category><category term="crypto-currencies"></category><category term="payments"></category></entry></feed>

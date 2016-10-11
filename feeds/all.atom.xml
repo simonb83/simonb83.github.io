@@ -1,0 +1,2234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-10-09T15:20:00-05:00</updated><entry><title>Machine Learning &amp; Food Classification</title><link href="https://simonb83.github.io/machine-learning-food-classification.html" rel="alternate"></link><published>2016-10-09T15:20:00-05:00</published><updated>2016-10-09T15:20:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-09:machine-learning-food-classification.html</id><summary type="html">&lt;p&gt;Over the past few months I have been working on a project attempting to train a machine learning algorithm to correctly classify pictures of food dishes.&lt;/p&gt;
+&lt;p&gt;The purpose of this blog post is to try and explain some of the underlying models and the results in a relatively non-technical way.&lt;/p&gt;
+&lt;p&gt;&lt;a href="#motivation"&gt;1. Project motivation&lt;/a&gt;&lt;br&gt;
+&lt;a href="#problem"&gt;2. The Problem and Definition of Success&lt;/a&gt;&lt;br&gt;
+&lt;a href="#approach"&gt;3. General Approach and Data&lt;/a&gt;&lt;br&gt;
+&lt;a href="#ml_algorithms"&gt;4. Traditional Machine Learning: Algorithms&lt;/a&gt;&lt;br&gt;
+&lt;a href="#ml_features"&gt;5. Traditional Machine Learning: Features&lt;/a&gt;&lt;br&gt;
+&lt;a href="#deep_learning"&gt;6. Deep Learning &amp;amp; Neural Networks&lt;/a&gt;&lt;br&gt;
+&lt;a href="#results"&gt;7. Results&lt;/a&gt;&lt;br&gt;
+&lt;a href="#visual"&gt;8. Visualizing a Network&lt;/a&gt;&lt;br&gt;
+&lt;a href="#summary"&gt;9. Summary&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="motivation"&gt;1. Motivation&lt;/h3&gt;
+
+&lt;p&gt;Perhaps the first question might be, why do you care about food classification?&lt;/p&gt;
+&lt;p&gt;The truth is that food classification is just a means to an end; I wanted to learn more about computer vision techniques, but in order to do this I needed a tangible problem to work on. I chose food classification because it let me apply what I was learning to one of my favourite hobbies: food and cooking.&lt;/p&gt;
+&lt;p&gt;Having said that, this is not just a toy problem. There are many potential applications for a successful food classification algorithm. For example, when people are searching for recipes it is now quite common to turn to websites and apps to find food-related content. One very simple application could be for recipe search and retrieval using a picture of a dish, such as something you tried while traveling but whose name you have now forgotten.&lt;/p&gt;
+&lt;p&gt;As another example, there are already researchers working on food classification tied-in with food calorie data in order to help people easily keep a daily food diary and calorie count, perhaps enabling them to better control their food intake and stick to a particular diet.&lt;/p&gt;
+&lt;p&gt;However, that is all that I will say about applications, as the real aim is to develop a better understanding of the techniques behind machine learning, in particular when applied to image classification.&lt;/p&gt;
+&lt;h3 id="problem"&gt;2. The Problem and Definition of Success&lt;/h3&gt;
+
+&lt;p&gt;I have already hinted at the problem that we hope to solve, however it will be useful to make this more formal.&lt;/p&gt;
+&lt;p&gt;Specifically, we are faced with a classification problem. Given a set of images of different types of food, we hope to find an algorithm that can be 'shown' an image and correctly categorize it into one of the pre-defined categories.&lt;/p&gt;
+&lt;p&gt;There are a couple of important points to note about this type of problem:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The categories are pre-defined and fixed; the algorithm is only going to be capable of categorizing an image into a 'known' category or class. It will not be able to identify new food categories on the fly.&lt;/li&gt;
+&lt;li&gt;We limit ourselves to single categories for each image, or in other words the algorithm must decide whether an image is of Pizza or Steak etc. There are computer vision techniques for identifying multiple objects in a single image, however these are beyond the scope of this project.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Definition of Success&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Something else that should be defined in advance is the definition of success: how will we evaluate different algorithms' performance on this classification problem?&lt;/p&gt;
+&lt;p&gt;One very simple measure could be the classification rate, that is the total number of correct predictions divided by the total number of predictions made.&lt;/p&gt;
+&lt;p&gt;Whilst this is a measure of success, this metric does not quite capture all of the subtleties of classification. Instead we will use a metric called the F1-score, illustrated using the following simple example.&lt;/p&gt;
+&lt;p&gt;Consider a reduced version of the problem looking at categorising images into Pizza or Not Pizza. Typically, when we show an image to an algorithm, instead of giving a definitive answer it will output probabilities for each of the two outcomes.&lt;/p&gt;
+&lt;p&gt;For example, given a new image, the algorithm may output:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pizza&lt;/strong&gt;: Probability = 0.6&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Not Pizza&lt;/strong&gt;: Probability = 0.4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In order to translate these probabilities into a definite prediction, we must set a probability cut-off or threshold for Pizza, whereby any score above that threshold will be translated into a prediction for Pizza, and any score below becomes Not Pizza. In this example, if we set the threshold at 0.5, then the image would be classified as Pizza (as 0.6 &amp;gt; 0.5).&lt;/p&gt;
+&lt;p&gt;Now imagine that we show 100 images to the classification algorithm, and we summarize the resulting predictions in a table (commonly called the confusion matrix).&lt;/p&gt;
+&lt;table class="tg"&gt;
+    &lt;tr&gt;
+        &lt;th class="tg-yw4l"&gt;&lt;/th&gt;
+        &lt;th class="tg-yw4l"&gt;&lt;/th&gt;
+        &lt;th class="tg-baqh" colspan="2"&gt;&lt;span class="bold"&gt;Predicted Category&lt;/span&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-yw4l col1"&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col2"&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col3"&gt;&lt;span class="bold italic"&gt;Pizza&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l col4"&gt;&lt;span class="bold italic"&gt;Not Pizza&lt;/span&gt;&lt;br&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-031e" rowspan="2"&gt;&lt;span class="bold"&gt;Actual Category&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;&lt;span class="bold italic"&gt;Pizza&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;True Positive&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;False Negative&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class="tg-yw4l"&gt;&lt;span class="bold italic"&gt;Not Pizza&lt;/span&gt;&lt;br&gt;&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;False Positive&lt;/td&gt;
+        &lt;td class="tg-yw4l"&gt;True Negative&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The rows represent the True Category of the images, and the columns represent the Predicted Category. We can describe these outcomes in the following way:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;True Positives: Top-left corner; images of Pizza correctly classified as Pizza.&lt;/li&gt;
+&lt;li&gt;False Negative: Top-right corner; images of Pizza incorrectly classified as Not Pizza.&lt;/li&gt;
+&lt;li&gt;False Positives: Bottom-left corner; images that are not Pizza incorrectly classified as being Pizza.&lt;/li&gt;
+&lt;li&gt;True Negatives: Bottom-right corner; images that are not Pizza correctly classified as being Not Pizza. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using these definitions, we can define two metrics.&lt;/p&gt;
+&lt;div class="math"&gt;$$Precision = \frac{True\ Positives}{True\ Positives + False\ Positives}$$&lt;/div&gt;
+&lt;div class="math"&gt;$$Recall = \frac{True\ Positives}{True\ Positives + False\ Negatives}$$&lt;/div&gt;
+&lt;p&gt;One way to think about Precision is that it measures, out of all images predicted to be Pizza, what proportion actually are Pizza. In some senses this tells us how noisy our Pizza predictions are, or how much the algorithm confuses other types of food with Pizza.&lt;/p&gt;
+&lt;p&gt;Similarly, Recall asks, out of all true Pizza images, what proportion were correctly identified as being Pizza. This is a measure of how good our algorithm is at correctly identifying pizza images and placing them in the correct category.&lt;/p&gt;
+&lt;p&gt;It turns out that by varying the probability classification threshold mentioned above, we can tune the Precision and Recall scores for the classification algorithm. &lt;/p&gt;
+&lt;p&gt;For example, if we decide that we want to maximize Precision, this means that we need to minimize the False Positives or, in other words, we want the algorithm to output Pizza only when it is really confident that the image is of Pizza. In order to achieve this, we can increase our threshold probability thus ensuring that Pizza predictions are only made when the probability is quite high for Pizza.&lt;/p&gt;
+&lt;p&gt;Similarly, by decreasing the probability threshold, we can get the algorithm to classify images as Pizza, even when its confidence is low, thus minimising the False Negatives and resulting in higher Recall. This might be important in other applications, for example using Machine Learning to detect cancerous cells, where the cost of False Negatives is higher than the cost of False Positives.&lt;/p&gt;
+&lt;p&gt;Although we could use either Precision or Recall as a way of measuring algorithm performance, ultimately we care about both. Thus we define the F1 score to be:&lt;/p&gt;
+&lt;div class="math"&gt;$$F1 = \frac{2\ *\ Precision\ * Recall}{Precision + Recall}$$&lt;/div&gt;
+&lt;p&gt;This particular definition gives equal weighting to both Precision and Recall, however it is possible to adapt the formula to give more weighting to one or the other. F1 is measured on a scale from 0 to 1, with 1 being the best possible score.&lt;/p&gt;
+&lt;h3 id="approach"&gt;3. General Approach and Data&lt;/h3&gt;
+
+&lt;p&gt;We now have a definition of our problem:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Find an algorithm that can take an image as input, and output a prediction for the category of food contained in the image&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;as well as a measure of success, the F1 score.&lt;/p&gt;
+&lt;p&gt;One way to approach this problem could be to try and manually create a list of rules in order to distinguish between different kinds of food. For example, if we were trying to distinguish between pictures of apples and bananas, we could attempt to program in rules looking at shape, size, colour etc.&lt;/p&gt;
+&lt;p&gt;However, as we know from experience, apples can come in a wide variety of colours, bananas in very different shapes etc., so coming up with an exhaustive set of rules could become overwhelming quite quickly. The problem is even worse when we move onto more complex food dishes rather than single ingredients.&lt;/p&gt;
+&lt;p&gt;For this reason, rather than using this rule-based approach, we turn to a field called Machine Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Machine Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Arthur Samuel, a pioneer of the field, &lt;a href="https://en.wikipedia.org/wiki/Machine_learning"&gt;defined&lt;/a&gt; Machine Learning as as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"Field of study that gives computers the ability to learn without being explicitly programmed”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;At the heart of Machine Learning are algorithms that are able to build an internal representation or model of data, &lt;span class="bold italic"&gt;without us having to explicitly program the model ourselves&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Such algorithms can then use this internal model in order to make predictions about new data points. We will specifically focus on a particular type of machine learning called Supervised Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Supervised Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In supervised learning, we start with a relevant set of data that has already been classified into the different categories of interest to us. In our case this would mean that someone has looked at every single image in the dataset and manually attached a label to each image.&lt;/p&gt;
+&lt;p&gt;We then use this data for a period of training in which we "show" each image to the algorithm along with the answer or prediction we expect, and the algorithm attempts to use this information to build a generalized model that can accurately map inputs (the training image data) to outputs (predictions of food categories).&lt;/p&gt;
+&lt;p&gt;As will be seen in later sections, the types internal models vary greatly between algorithms. Furthermore, when we "show" images to the algorithm for training, some algorithms use the entire image, pixel by pixel, whereas others use other types of data extracted from the each image.&lt;/p&gt;
+&lt;p&gt;The key to supervised learning is in having data where you know the categories, or answers, in advance, and using these answers to teach the algorithm how to make predictions about new data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Dataset&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For this particular problem we need a set of training data that consists of a large number of pre-categorized pictures of different types of food. The dataset that we will work with comes from the ETH Zurich Computer Vision Laboratory, and is called the &lt;a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/"&gt;Food 101 Dataset&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This dataset consists of 101 different food categories, with 1,000 images per category, for a total of 101,000 images. However the total dataset is too large for practical experimentation on a laptop, and so in order to reduce the complexity, we will focus on 12 categories out of the whole list:&lt;/p&gt;
+&lt;table class="tg food_cats"&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Pork Chop&lt;br&gt;&lt;/th&gt;
+   &lt;td class="tg-yw4l"&gt;Lasagna&lt;/th&gt;
+   &lt;td class="tg-baqh"&gt;French Toast&lt;br&gt;&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Guacamole&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Apple Pie&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Cheesecake&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-031e"&gt;Hamburger&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Fried Rice&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Carrot Cake&lt;br&gt;&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+   &lt;td class="tg-yw4l"&gt;Chocolate Cake&lt;br&gt;&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Steak&lt;/td&gt;
+   &lt;td class="tg-yw4l"&gt;Pizza&lt;/td&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The images in the Food-101 dataset are of mixed quality. Some are very clear, well-lit and framed on the food item in question. Others, however, are more noisy, poorly lit, contain irrelevant items and, in some cases, are even mislabeled. Some examples of both high and low-quality pictures are shown below:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt food_images" src="/images/capstone_food_examples_sm.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;In some respects this 'noise' in the data makes the problem harder, as the algorithm will need to differentiate between types of food that are not so easy to distinguish, as well as correctly identify food categories from images that vary significantly in terms of lighting and image quality. At the same time, this also means that if we are able to train a classifier to a sufficient level of accuracy, then we might expect its predictions to be more robust when used on real-world, equally-noisy data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Using Data&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before we move on to looking at different types of algorithms, it is important to note the general methodology for using data in Supervised Machine Learning problems.&lt;/p&gt;
+&lt;p&gt;As mentioned, we are starting with a set of 12,000 images, equally divided into 12 categories, however we will not use all of the pictures for training purposes.&lt;/p&gt;
+&lt;p&gt;Instead, before doing anything else, we will split the dataset into two random subsets for training and testing purposes. The training data is what we will show the algorithm along with the relevant answers during the training phase. The testing data is used exclusively for evaluating how well a given algorithm works in practice.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt test_training_split" src="/images/capstone_data_split.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This is a general pattern for data usage that applies to any supervised approach. It is absolutely key that the test data is not used at all during algorithm training, otherwise any predictions made on that data could be considered 'cheating', and ultimately we will not know how well the algorithm could perform in the real world on previously unseen data.&lt;/p&gt;
+&lt;p&gt;In an ideal world, when working on a supervised learning problem, one would be able to ring-fence somewhere around 15 to 20% of the data for testing purposes. In reality, the exact strategy and percentage used will depend on the nature of the problem as well as the actual available date.&lt;/p&gt;
+&lt;h3 id="ml_algorithms"&gt;4. Traditional Machine Learning: Algorithms&lt;/h3&gt;
+
+&lt;p&gt;We start by exploring techniques from a traditional machine learning approach, where we must make two key choices:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The type of algorithm to use&lt;/li&gt;
+&lt;li&gt;The type of data to use for during training&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There are a wide variety of machine learning algorithms that we could use, and we will briefly explore three examples below.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;k-Nearest Neighbours&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;k-Nearest Neighbours (kNN) is one of the simplest supervised learning algorithms, and has the benefit of being very easy to use, visualize and understand.&lt;/p&gt;
+&lt;p&gt;The basic methodology for making a prediction is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Find the k 'closest' neighbouring images within the training dataset&lt;/li&gt;
+&lt;li&gt;Look at the category for each of these neighbours&lt;/li&gt;
+&lt;li&gt;Combine the category for each neighbour into an overall prediction&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In the example below we have two categories, Red and Blue. Given a new data point (the green triangle) we look at the 4 nearest neighbours of which three are Red and only one is Blue, and so we would classify the new point as being Red.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt k_nearest_neighbours" src="/images/capstone_knn.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Some specific parameters we can define for the algorithm are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;How many neighbours to take into consideration (the value of k)&lt;/li&gt;
+&lt;li&gt;How to define distance between neighbours, and hence how to define "closest"&lt;/li&gt;
+&lt;li&gt;How to aggregate the categories for each neighbour into an overall prediction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One of the biggest drawbacks of the kNN algorithm is that testing takes a long time, especially if we have a large dataset. This is because, in order to make a prediction, we have to make a comparison with every single element of the training data in order to find the k-closest neighbours.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Random Forest&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In order to understand the Random Forest, we will start with a slightly simpler model called a Decision Tree.&lt;/p&gt;
+&lt;p&gt;Decision Trees are probably familiar to many people in other contexts, and most would likely recognise the general branching structure based upon different conditions. In supervised learning the underlying concept is the same, that is to try and construct a tree where the branches enable us to differentiate between different categories.&lt;/p&gt;
+&lt;p&gt;For example, suppose that we are trying to differentiate between Oranges, Apples and Bananas; one very simple decision tree might look something like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt decision_tree" src="/images/capstone_decision_tree.png" /&gt;&lt;/p&gt;
+&lt;p&gt;For certain types of problems, Decision Trees can be very powerful and they have the benefit of being fast to train and test.  However, one issue is that they tend to “overfit” the data. This means that the model they construct tends to be far too specific to the exact training data provided, and the model is not able to generalise very well when making predictions on new examples.&lt;/p&gt;
+&lt;p&gt;One way to combat this overfitting is to construct a large number of different Decision Trees and combine the output of all of the trees when making predictions. Each tree is 'grown' using a slightly different version of the training data, and the hope is that each tree will create a slightly different model and thus we can capture more of the nuances of the underlying problem and better generalise to new data.&lt;/p&gt;
+&lt;p&gt;This combination of decision trees is called a Random Forest, and is an example of what is know as an 'ensemble' method. Random Forests are a very powerful classifier and find applications in many types of problems. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt random_forest_1" src="/images/capstone_rf.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt random_forest_1" src="/images/capstone_rf2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Support Vector Machine&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The final model we will briefly explore is the Support Vector Machine. &lt;/p&gt;
+&lt;p&gt;Very informally, a Support Vector Machine attempts to build a model by finding a line (or lines) that separates the different categories in such a way that the data points are divided by a gap that is as large as possible. Once this line has been identified, prediction is simply a matter of identifying on which side of the line a new data point falls.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm.png" /&gt;&lt;/p&gt;
+&lt;p&gt;For a slightly more technical explanation we turn to linear algebra (feel free to skip the next few paragraphs). Suppose we are given training data whereby each example is represented by &lt;span class="bold italic"&gt;p&lt;/span&gt; different values; in this case we can consider our training data to be points in &lt;span class="bold italic"&gt;p&lt;/span&gt;-dimensional space.&lt;/p&gt;
+&lt;p&gt;The Support Vector Machine attempts to find a &lt;span class="bold italic"&gt;p-1&lt;/span&gt; dimensional hyperplane (basically a generalisation of a straight line to &lt;span class="bold italic"&gt;p-1&lt;/span&gt;-dimensions) that separates and also maximises the gap between the categories.&lt;/p&gt;
+&lt;p&gt;The model described so far is called a Linear Support Vector Machine.  One common problem with this approach is that is often not possible to find a separating straight-line or plane given only the existing data points.&lt;/p&gt;
+&lt;p&gt;Consider the following example in one dimension:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here it is impossible to find a straight line that separates these data points.&lt;/p&gt;
+&lt;p&gt;Look at what happens, however, when we project the data into two dimensions, say by plotting $ x^{2} $ against $ x $.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt support_vector_machine" src="/images/capstone_svm_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In this higher-dimensional space it is now possible to find a straight-line that separates the two classes. &lt;/p&gt;
+&lt;p&gt;This is an example of non-linear classification using Suport Vector Machines. Some common transformations to higher dimensions are Polynomial (such as the example above where the data is transformed to some power of itself), as well as using what is called the &lt;a href="https://en.wikipedia.org/wiki/Radial_basis_function_kernel"&gt;RBF&lt;/a&gt; kernel.&lt;/p&gt;
+&lt;p&gt;In practice these transformations are calculated using what is called the &lt;a href="https://en.wikipedia.org/wiki/Kernel_method"&gt;"&lt;span class="italic"&gt;kernel trick"&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Algorithm Optimisation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before moving on we must say something about the need for optimisation in supervised learning. For each of the models mentioned above, there are specific choices we must make at the start when we initialise the model prior to training.&lt;/p&gt;
+&lt;p&gt;For example for the k-Nearest Neighbour algorithm we must decide on the value of k and the definition of ‘closeness’. For Random Forests, among other things, we need to specify the number of decision trees to have in the forest. Similarly, for Support Vector Machines, there are a number of parameters we must specify.   &lt;/p&gt;
+&lt;p&gt;These parameters are called hyper-parameters, and in general different choices for the parameters can result in different outcomes for the model in terms of predictive performance. For instance, a kNN algorithm may make very different predictions based upon whether it is looking at the nearest 3 vs. 10 neighbours.&lt;/p&gt;
+&lt;p&gt;Thus one key task when ‘training’ a machine-learning algorithm is to identify the values for the hyper-parameters which give the best results for the problem under consideration. This is called hyper-parameter tuning, and one of the most common approaches is called a grid search.&lt;/p&gt;
+&lt;p&gt;In a grid-search we specify up-front a range of values for each hyper-parameter, and then train and test a model using every possible combination of the parameters. The values that give us the best result during training (importantly not using the ring-fenced testing data), are then said to be the optimal parameters.&lt;/p&gt;
+&lt;h3 id="ml_features"&gt;5. Traditional Machine Learning: Features&lt;/h3&gt;
+
+&lt;p&gt;We have now looked at some examples of common machine learning algorithms that can be used in classification problems. However, for each of these algorithms, we must also decide what data to use during training in the hope of creating the best predictive model.&lt;/p&gt;
+&lt;p&gt;Ultimately what we are looking for is the best possible representation of each of our different data points (in this case images), subject to a number of considerations, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We want the representation to have sufficient information to be able to group together examples from the same category, but also to differentiate between different categories.&lt;/li&gt;
+&lt;li&gt;At the same time, we want to avoid as much as possible the overfitting problem we mentioned earlier, that is we don’t want to provide so much detail that the model is not able to generalise well when used on new data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The representations of the data that we use are typically called features.&lt;/p&gt;
+&lt;p&gt;For our problem of image classification we need to begin by understanding the way images are represented digitally. Although we see images visually, a computer just sees them as a series of numbers. To illustrate this, let us look at the following picture consisting of a grid of 16 x 16 squares :&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt grey_pixels" src="/images/capstone_pixels_grey.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Each square represents one pixel in the image. We can think of a pixel as being the basic building block of an image, where each pixel has a particular shade of grey associated with it. By laying out pixels of different shades next to each other we can build up more and more complex patterns and shapes.&lt;/p&gt;
+&lt;p&gt;Furthermore, we can specify the particular shade of grey of a given pixel using a single number and so the image above can be represented using a matrix of 16 x 16 = 256 numbers.&lt;/p&gt;
+&lt;p&gt;Now let us take a look at a similar image in colour:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt rgb_pixels" src="/images/capstone_pixels_rgb.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here the principle is the same, with each pixel having a specific colour, however in this case we need three numbers rather than just one in order to specify the colour. These three numbers specify the shades of Red, Green and Blue which are combined to produce any colour we wish. (Note: there are alternative representations of colour, however this RGB representation is one of the most common).&lt;/p&gt;
+&lt;p&gt;For example, the pixels with this colour:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt green_pixel" src="/images/capstone_green_pixel.png" /&gt;&lt;/p&gt;
+&lt;p&gt;can be specified by (Red = 0, Green = 128, Blue = 0), while these pixels:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt pink_pixel" src="/images/capstone_pink_pixel.png" /&gt;&lt;/p&gt;
+&lt;p&gt;can be specified by (Red = 242, Green = 128, Blue = 88).&lt;/p&gt;
+&lt;p&gt;Thus the colour image can be represented by a matrix of 16 x 16 x 3 = 768 separate numbers, and this is how a computer 'sees' images.&lt;/p&gt;
+&lt;p&gt;For machine learning, one approach could be to use these Red, Green and Blue pixel colour values as the features, however we might imagine that this is not necessarily the best approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The number of individual features can become very large very quickly; for example our images have 512 x 512 pixels, meaning each individual image requires 786,432 different numbers to represent them&lt;/li&gt;
+&lt;li&gt;Very large feature vectors can lead to problems of overfitting and,&lt;/li&gt;
+&lt;li&gt;There is no reason to assume that the pixel-based representation will be the best possible representation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Instead we will use a number of different approaches to extract different types of features from the images, and see what works best when training different algorithms.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RGB Histograms&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;One of the simplest types of features we can look at are histograms of the different Red, Green and Blue pixel values in the images, that is we are comparing the relative frequencies of different colour intensities. Perhaps these differences will enable our classifier to distinguish between the different food categories.&lt;/p&gt;
+&lt;p&gt;In fact, if we look at such histograms for three food categories, we can immediately see that the colour distributions are very different:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt rgb_histograms" src="/images/capstone_histograms.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edges&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Another fairly simple type of feature we consider are called Edges. An edge is defined by a discontinuity between pixels, which is basically an area where there is sufficient difference between pixels of one colour and another that an edge appears in the image.&lt;/p&gt;
+&lt;div class="image" id="edge-image"&gt;
+    &lt;img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/edges.png"&gt;&lt;br&gt;
+    &lt;span class="small"&gt;Image by &lt;a href="https://en.wikipedia.org/wiki/User:JonMcLoone" class="extiw" title="wikipedia:User:JonMcLoone"&gt;JonMcLoone&lt;/a&gt; at &lt;a href="https://en.wikipedia.org/wiki/" class="extiw" title="wikipedia:"&gt;English Wikipedia&lt;/a&gt;, &lt;a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=44894482"&gt;https://commons.wikimedia.org/w/index.php?curid=44894482&lt;/a&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Typically we count the number of edges within a given image or sub-region of an image, although in the field of computer vision there are other ways of using edges, for example looking at the orientation of different edges (i.e., how many are vertical vs. horizontal etc.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Corners&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Finally, during our machine learning attempts, we also consider the number of corners within an image or image-region, where a corner is defined as the meeting point of two edges.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Meta-Approaches&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It is important to note that features are typically not used in isolation, but are combined together to try and come up with richer representations of the underlying examples.&lt;/p&gt;
+&lt;p&gt;For example we might use a set of features that is a combination of RGB Histogram values, plus the number of edges, plus the number of corners.&lt;/p&gt;
+&lt;p&gt;Another way we can combine features for a given image is by splitting the image into sub-regions, extracting features for each of the sub-regions, and then aggregating them all together into a complete representation of the overall image.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt features" src="/images/capstone_features.png" /&gt;&lt;/p&gt;
+&lt;h3 id="deep_learning"&gt;6. Deep Learning &amp;amp; Neural Networks &lt;/h3&gt;
+
+&lt;p&gt;The general machine learning techniques we have discussed so far form the basis of what was the standard approach to computer vision for a long time. However in the past few years these techniques have been replaced by new approaches based on Deep Learning, and in particular models called Convolutional Neural Networks.&lt;/p&gt;
+&lt;p&gt;Convolutional Neural Networks, or CNNs for short, are currently considered to be "state of the art" in computer vision, and have also achieved success in many other areas and applications. In fact, in some very specific problems, Convolutional Neural Networks are able to achieve greater accuracy than humans.&lt;/p&gt;
+&lt;p&gt;We will give a very brief introduction to Convolutional Neural Networks in order to motivate our approach.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Neurons&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We start with the idea of a 'neuron', which is fundamentally nothing more than a very simple function that takes an input and produces an output dependent on two parameters that are intrinsic to that neuron, called its weight and bias:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt neuron_1" src="/images/capstone_neuron_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Thus, in the example above, if X is 3, w is 1.2 and b is -6, the neuron would return an output of 3 x 1.2 - 6 = -2.4&lt;/p&gt;
+&lt;p&gt;This particular neuron is not that interesting as all it gives us is a simple linear function. Thus we introduce the concept of 'Activation', which is a way of ensuring that neurons do not produce output all of the time, only some of the time based on certain conditions:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt neuron_2" src="/images/capstone_neuron_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In the diagram above:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The neuron receives input X&lt;/li&gt;
+&lt;li&gt;The linear transform wX + b is calculated&lt;/li&gt;
+&lt;li&gt;The result is passed through an activation function, &amp;sum;&lt;/li&gt;
+&lt;li&gt;The final output depends on the nature of the activation function.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Probably the simplest choice for the activation function is what is called the Step function:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt step_function" src="/images/capstone_step.png" /&gt;&lt;/p&gt;
+&lt;p&gt;If the Step function receives a negative input (x &amp;lt; 0), then it returns an output of 0, while for inputs greater than or equal to 0, it returns an output of 1.&lt;/p&gt;
+&lt;p&gt;In practice this function does not behave in a mathematically nice way, and so typically the activation functions used will look more like these:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt activation_functions" src="/images/capstone_activation.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This concept of activation is where the name neuron comes from, as these functions behave similar to biological neurons that 'fire' or don't 'fire' depending on the inputs they receive.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Networks&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A single neuron on its own cannot do very much, however we can build up more and more complexity by combining many of these neurons into layers, and then connecting the layers together, for example as in the diagram below:&lt;/p&gt;
+&lt;div class="image" id="net-image"&gt;
+    &lt;img src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/nn.svg"&gt;
+    &lt;br&gt;
+    &lt;span class="small"&gt;Image by &lt;a href="//commons.wikimedia.org/wiki/User_talk:Glosser.ca" title="User talk:Glosser.ca"&gt;Glosser.ca&lt;/a&gt; - &lt;span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, Derivative of &lt;a href="//commons.wikimedia.org/wiki/File:Artificial_neural_network.svg" title="File:Artificial neural network.svg"&gt;File:Artificial neural network.svg&lt;/a&gt;, &lt;a title="Creative Commons Attribution-Share Alike 3.0" href="http://creativecommons.org/licenses/by-sa/3.0"&gt;CC BY-SA 3.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=24913461"&gt;https://commons.wikimedia.org/w/index.php?curid=24913461&lt;/a&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ultimately this is just a pictorial representation of a complicated function, which&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Receives an input or inputs&lt;/li&gt;
+&lt;li&gt;"Propagates" it through each neuron in each layer of the network, by which the output of one layer becomes the input to the next layer&lt;/li&gt;
+&lt;li&gt;At each neuron, the simple function above is applied, using the relevant weight, bias and activation&lt;/li&gt;
+&lt;li&gt;Returns an output which is dependent on the value of all of the different parameters of all of the neurons in the network&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In fact it can be shown that, with appropriate choices for each of the parameters, this sort of model can approximate any arbitrary function (as long as it is mathematically 'nice'), which means that it has the potential to be very powerful.&lt;/p&gt;
+&lt;p&gt;In the specific example above, there is one 'hidden' layer which sits between the input and output layers. Networks which have many hidden layers are called deep networks, and for this reason we talk about Deep Learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Training a Network&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once again we return to the idea of training a model using our inputs as well as the output we want from the model. In this case the model is a network of connected neurons, and training involves adjusting the parameters of each neuron in order to maximize the total number of correct predictions emerging from the model.&lt;/p&gt;
+&lt;p&gt;Although the model looks very complex, the key ideas behind the training procedure turn out to be relatively simple. There is just one missing ingredient we need which is some sort of cost or loss function to measure how wrong the network outputs, or predictions, are.&lt;/p&gt;
+&lt;p&gt;When the predictions are very different from what they should be, then this loss should be high, and as the predictions get closer to reality, then the loss should decrease toward 0. We can then use this loss function during training to understand how to tweak the parameters in order to lead to better predictions.&lt;/p&gt;
+&lt;p&gt;To illustrate the training procedure, we use a very simple toy example for a single neuron with only weight and no bias. During training, the procedure is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Start with an input &lt;strong&gt;X&lt;/strong&gt;, which is fixed&lt;/li&gt;
+&lt;li&gt;Pass &lt;strong&gt;X&lt;/strong&gt; through the neuron, and calculate its output &lt;strong&gt;wX&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Compare the output to the desired result (in this case 1.00) and calculate the loss associated with the current output&lt;/li&gt;
+&lt;li&gt;Slightly modify the neuron parameter &lt;strong&gt;w&lt;/strong&gt; in such a way as to decrease the loss on the next pass&lt;/li&gt;
+&lt;li&gt;Repeat until there do not seem to be any improvements.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This procedure is demonstrated in the animation below. Click on the button to start the training procedure and watch how the weight parameter, output and associated loss evolve.&lt;/p&gt;
+&lt;p&gt;&lt;button class="myButton" id="button-3"&gt;Train&lt;/button&gt;
+&lt;div class="training"&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;For the mathematically inclined, this problem is nothing more than standard optimisation where we have a function &lt;span class="bold italic"&gt;F&lt;/span&gt; that takes an input &lt;span class="bold italic"&gt;x&lt;/span&gt; and, by using parameters &lt;span class="bold italic"&gt;W&lt;/span&gt; and &lt;span class="bold italic"&gt;B&lt;/span&gt;, returns an output &lt;span class="bold italic"&gt;C&lt;/span&gt;. We wish to find the values of &lt;span class="bold italic"&gt;W&lt;/span&gt; and &lt;span class="bold italic"&gt;B&lt;/span&gt; that minimize &lt;span class="bold italic"&gt;C&lt;/span&gt; for a given input &lt;span class="bold italic"&gt;x&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;As such, we can use calculus to find the gradient of this function at &lt;span class="bold italic"&gt;x&lt;/span&gt;, and when we tweak the parameters, we do it &lt;span class="bold italic"&gt;in the direction of decreasing gradient&lt;/span&gt; of the function.&lt;/p&gt;
+&lt;p&gt;Although we have only illustrated training for a single neuron, we can use the same procedure to train very large and complex networks by taking advantage of two key ideas.&lt;/p&gt;
+&lt;p&gt;The first technique, called backpropagation, enables us to calculate the gradient for many different types of networks and neurons connected together in different ways.&lt;/p&gt;
+&lt;p&gt;The second is the use of very efficient computer-based implementations of linear algebra and in particular vector and matrix multiplication, which lets us quickly perform the relevant calculations on very large inputs, or even to process multiple inputs at the same time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Predictions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In any network, the last layer typically corresponds to the categories that are being used for classification, where one neuron corresponds to a particular category. Then, when we make a prediction, it is based upon the neuron in the last layer with the highest activation, or output.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt prediction" src="/images/capstone_predict.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Although neural networks like the ones mentioned above are powerful, it turns out that for problems like computer vision we obtain even better results by using a number of innovations. Thus far we have only looked at neurons that are "fully connected", that is in each layer (except the input and output layers) every neuron is connected to every other neuron in the preceding and following layers.&lt;/p&gt;
+&lt;p&gt;One key challenge associated with fully-connected networks, especially when using very high-dimensional data such as images, is that the number of required parameters can become too large to feasibly carry out the required computations, especially when using readily-available hardware.&lt;/p&gt;
+&lt;p&gt;For example, if we were to use 256 x 256 colour images as inputs, and supposing the first hidden layer has 1000 neurons, then just the initial weights to the input layer would require nearly 200 million parameters.&lt;/p&gt;
+&lt;p&gt;Furthermore, this "fully-connected" model is not always sufficient to capture all of the underlying complexities and nuances of the data, such as complex patterns that can appear in many different locations in an image. &lt;/p&gt;
+&lt;p&gt;However there are other types of layers we can use that are connected in different ways or even perform different roles, which we can combine strategically, resulting in greater prediction accuracy, while using less overall parameters.&lt;/p&gt;
+&lt;p&gt;One of the key types of layers used in state-of-the-art models is called a convolution layer.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt convolution_layer" src="https://s3-us-west-1.amazonaws.com/simon.bedford/food_classification/blog/img/conv.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;
+&lt;span class="small"&gt;Image by &lt;a href="//commons.wikimedia.org/w/index.php?title=User:Aphex34&amp;amp;action=edit&amp;amp;redlink=1" class="new" title="User:Aphex34 (page does not exist)"&gt;Aphex34&lt;/a&gt; - &lt;span class="int-own-work" lang="en"&gt;Own work&lt;/span&gt;, &lt;a title="Creative Commons Attribution-Share Alike 4.0" href="http://creativecommons.org/licenses/by-sa/4.0"&gt;CC BY-SA 4.0&lt;/a&gt;, &lt;a href="https://commons.wikimedia.org/w/index.php?curid=45659236"&gt;https://commons.wikimedia.org/w/index.php?curid=45659236&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Unlike a fully connected layer, a convolutional layer does not "look at" the whole image in one go, but instead can be thought of as scanning across the image one piece at a time. During training the parameters of the convolution layer are modified as it attempts to detect underlying patterns that can be used for identifying different types of images.&lt;/p&gt;
+&lt;p&gt;These convolution layers can be stacked up, one after the other, and we typically find that the earlier layers are used to identify very basic patterns, while later layers become tuned to identify more complex shapes made up of these simpler patterns.&lt;/p&gt;
+&lt;p&gt;This innovative architecture is also far more efficient in terms of parameters and calculations: single convolution layers used in practice can have only tens of thousands of parameters, and the best neural network used in this project has a total of 60 million parameters.&lt;/p&gt;
+&lt;p&gt;While this is still a large number, it is far smaller than what could be required for a deep network consisting only of fully-connected layers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Deep Learning in Practice&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This basic introduction to Neural Networks and Deep Learning is not intended as a rigorous explanation, but more to give a brief overview of the core ideas behind this approach.&lt;/p&gt;
+&lt;p&gt;Before moving on to the results, it is worth noting two practical aspects of Deep Learning with CNNs:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Image Features&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;While using traditional machine learning models, we had to choose which types of features to feed into the model. Although in many cases the features were obtained using algorithms or other types of machine learning models, ultimately we were making a conscious decision in selecting the features ourselves.&lt;/p&gt;
+&lt;p&gt;In the case of CNNs, we simply feed in the raw images and then let the network itself identify and extract the key features. Not only is this less labour-intensive for the user, but the generated features tend to be superior and more useful.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Resources&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CNNs can get very complex very quickly. Every single neuron has two parameters to optimize, its weight and bias, and CNNs typically have many thousands of neurons, resulting in hundreds of thousands or even millions of parameters to be optimised during training.&lt;/p&gt;
+&lt;p&gt;The result of this is that training a CNN from scratch can take a long time and require a lot of training data. For example, for competition-winning CNNs, training is performed on more than a million images and is said to take three weeks or more.&lt;/p&gt;
+&lt;p&gt;All is not lost though, as there are techniques whereby we can take advantage of other people’s hard work, and instead of starting from scratch, work with networks that have been pre-trained on some other dataset.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Transfer Learning&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;There are two main approaches when it comes to working with pre-trained networks.&lt;/p&gt;
+&lt;p&gt;The first, &lt;span class="bold italic"&gt;Feature Extraction&lt;/span&gt;, is based on using the network to generate some features which we can then use to train a standard machine learning algorithm. Here we are taking advantage of the fact that CNNs are remarkably good at detecting the important features on their own and so we can save ourselves the trouble of trying to figure out the right sorts of features to use.&lt;/p&gt;
+&lt;p&gt;Here all we need to do is feed all of our training images into the network, and use the output from some layer as a set of features to use while training one of the algorithms we have previously mentioned, say a Support Vector Machine or a Random Forest.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt feature_extraction" src="/images/capstone_extract.png" /&gt;&lt;/p&gt;
+&lt;p&gt;An alternative approach is called parameter &lt;span class="bold italic"&gt;Fine-tuning&lt;/span&gt;. Here we rely on the fact that the parameters of the network will already have been painstakingly optimised over many weeks, and so should already be pretty good at detecting image-based features.&lt;/p&gt;
+&lt;p&gt;As was previously mentioned, the initial layers of a CNN become tuned to detect very basic features, patterns and colours that are likely to exist in many different types of images. So rather than trying to train a network from scratch, we can start with a model that is already successful at classification in one domain, and simply spend some time tweaking the parameters very slightly in order to better adapt the network to our specific problem.&lt;/p&gt;
+&lt;h3 id ="results"&gt;7. Results&lt;/h3&gt;
+
+&lt;p&gt;When we look at results, we will visualize performance in a couple of different ways:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The overall accuracy of each model&lt;/li&gt;
+&lt;li&gt;The performance on each food category&lt;/li&gt;
+&lt;li&gt;The categories for which the models had most trouble&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Overall Results&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The chart below shows the overall classifier accuracy (more specifically the F1 score) for each of the different models that were tested. The results are plotted in order of performance from worst to best. You can move your mouse over each bar to see more details about the specific Algorithm, Data Features and Score for each attempt.&lt;/p&gt;
+&lt;p&gt;Looking at the chart, two things are clear.&lt;/p&gt;
+&lt;p&gt;First of all, progress using traditional machine learning approaches (models + pre-selected features) was slow and painful. Although the results did gradually improve, it took quite a long time to achieve an accuracy of 0.30 or above.&lt;/p&gt;
+&lt;p&gt;Secondly, the superiority of Deep Learning with CNNs is clear: all of the deep learning models (orange bars) performed better than traditional machine learning, and accuracy jumped significantly once we switched to deep learning approaches.&lt;/p&gt;
+&lt;div class="overall_results"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Per Class Results&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;On this chart we plot the evolution of the F1 score for each different food category. In this case, the results are plotted in the order they were obtained, that is attempt 1, followed by attempt 2, attempt 3 etc. Each line represents a different food category, and you can move the mouse over each line to see the relevant class and its final F1 score.&lt;/p&gt;
+&lt;p&gt;The first observation is that there is quite a wide range of performance for different categories, even when using the more powerful CNN-based models. For example, for the best classifier, the range of scores was as low as 0.61 for Steak, and as high as 0.91 for Guacamole.&lt;/p&gt;
+&lt;p&gt;[Note that this chart has 46 different values on the $ x $-axis compared to 54 in the previous chart. This is because I did not obtain full per-class results for all of the initial attempts.]&lt;/p&gt;
+&lt;p&gt;From looking at this chart we can also say something about the overall process, notably that progress was not linear. At each attempt, both for traditional machine learning as well as CNNs, we tested different methodologies in the hope of improving on past results. In some cases this worked out, but in other cases these new combinations ended up giving worse scores than previous attempts.&lt;/p&gt;
+&lt;div class="per_class_results"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Confusion Matrix&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now we turn our attention to the Confusion Matrix. Here we plot the predictions for each different category, where the rows represent the true class, and the columns represented the predicted class. For example, the top left hand cell corresponds to pictures of Pork Chop correctly classified, and the next cell along on the same row corresponds to pictures of Pork Chop classified as being Lasagna etc.&lt;/p&gt;
+&lt;p&gt;The cell colour is indicative of the proportion of predictions that fall into a given cell, with darker shading corresponding to a higher proportion. A perfect classifier would, for each category, place 100% of the predictions for that class into the cells on the diagonal line that goes from the top-left to bottom-right corners.&lt;/p&gt;
+&lt;p&gt;Thus, what we are looking for in the confusion matrix is for the cells on this diagonal line to be shaded very dark blue, with all other cells being shaded very light grey.&lt;/p&gt;
+&lt;p&gt;The initial starting point for the matrix is the results of a purely random model, that is to say a model where each prediction is based upon drawing food categories out of a hat. To explore the confusion matrix for different attempts you can either use the slider at the top, or press the Run Simulation button to cycle through the results of each of the different models. You can also hover over individual cells to see the exact proportions of predictions.&lt;/p&gt;
+&lt;div class="confusion_matrix"&gt;
+    &lt;div id="tooltip" class="hidden"&gt;
+        &lt;span id="value"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;div id="slider"&gt;&lt;/div&gt;
+        &lt;button class="myButton run-button"&gt;Run Simulation&lt;/button&gt;
+        &lt;button class="myButton" id="stop-1"&gt;Stop&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If we look at the confusion matrix for the &lt;a class="best_confusion" href="" onclick="return false;"&gt;best performing model&lt;/a&gt;, overall the picture looks very good, with a good amount of dark shading on the diagonal, and generally lighter cells everywhere else. However there are a couple of outliers that stand out:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="confusion_2" href="" onclick="return false;"&gt;18% of Steak images are classified as being Pork Chop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="confusion_1" href="" onclick="return false;"&gt;10% of Pork Chop pictures are classified as being Steak&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;What we are seeing is that the model has a particularly hard time distinguishing between these two categories, perhaps understandably as a cooked pork chop can look quite similar to a cooked piece of steak, particularly in a low-quality image.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Class Predictions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We saw above how different food categories can be "confused" for each other by the classifier. In this final chart we look more closely at how this confusion changes for each particular category using the different models.&lt;/p&gt;
+&lt;p&gt;The chart shows, for a given category of test images, what % of images are predicted as belonging to each class. The bar for the true category is shown in blue, and all incorrect categories are shown in green.&lt;/p&gt;
+&lt;p&gt;For example, the initial picture shows that for Pork Chops, just under 10% are correctly classified, and in general the predictions are distributed fairly evenly across all categories.&lt;/p&gt;
+&lt;p&gt;For any category, you can see how its predictions are distributed as the classifiers evolve either by dragging the slider to a particular attempt, or by pressing the Run All button. Once again the order of the models is based upon the order that they were created and tested.&lt;/p&gt;
+&lt;p&gt;&lt;div class="class_predictions"&gt;
+    &lt;select id="selector" class="class_selector"&gt;
+      &lt;option value="pork_chop"&gt;Pork Chop&lt;/option&gt;
+      &lt;option value="lasagna"&gt;Lasagna&lt;/option&gt;
+      &lt;option value="french_toast"&gt;French Toast&lt;/option&gt;
+      &lt;option value="guacamole"&gt;Guacamole&lt;/option&gt;
+      &lt;option value="apple_pie"&gt;Apple Pie&lt;/option&gt;
+      &lt;option value="cheesecake"&gt;Cheesecake&lt;/option&gt;
+      &lt;option value="hamburger"&gt;Hamburger&lt;/option&gt;
+      &lt;option value="fried_rice"&gt;Fried Rice&lt;/option&gt;
+      &lt;option value="carrot_cake"&gt;Carrot Cake&lt;/option&gt;
+      &lt;option value="chocolate_cake"&gt;Chocolate Cake&lt;/option&gt;
+      &lt;option value="steak"&gt;Steak&lt;/option&gt;
+      &lt;option value="pizza"&gt;Pizza&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div id="slider-2"&gt;&lt;/div&gt;
+  &lt;button class="myButton" id="button-1"&gt;Run All&lt;/button&gt;
+  &lt;button class="myButton" id="stop-2"&gt;Stop&lt;/button&gt;
+  &lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;In general, for any given category, what we see is that early on the predictions are all over the place with the true class sometimes dominating and sometimes not, and then we we reach the CNN-based models around attempt number 40, all of a sudden the true class dominates the model's predictions.&lt;/p&gt;
+&lt;h3 id ="visual"&gt;8. Visualizing a Convolutional Neural Network&lt;/h3&gt;
+
+&lt;p&gt;One benefit of many of the 'simpler' machine learning algorithms is that it is easier to visualize conceptually how they are working 'under the hood'.&lt;/p&gt;
+&lt;p&gt;For example, a &lt;strong&gt;k-Nearest Neighbours&lt;/strong&gt; classifier is simply finding the 'closest' data points and making a prediction based upon the categories of these neighbours.&lt;/p&gt;
+&lt;p&gt;The maths behind a &lt;strong&gt;Support Vector Machine&lt;/strong&gt; is more complicated, however we can at least imagine a series of straight lines separating different data points of different classes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Random Forests&lt;/strong&gt; can seem more like a black box, but we can still try and picture a large number of different decision trees, each taking slightly different features into account, and then combining predictions from each one into an overall prediction.&lt;/p&gt;
+&lt;p&gt;[Note that this refers to conceptual rather than actual visualization. In practice most non-trivial examples will consist of high-dimensional data which is much harder to visualize in practice.]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutional Neural Networks&lt;/strong&gt; however are so complex, with many different types of neurons stacked into tens or even hundreds of layers, that is is much harder to come up with a simple explanation for how they are working. Having said that, there are a few tricks for visualizing what these networks are doing which can start to shed some light on the underlying model.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Convolutions and Patterns&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We saw earlier how one of the key elements behind the CNN is the convolution layer, which we can think of as scanning across the image, looking for particular patterns in each part of the picture. One of the first things we can visualize is what some of these patterns might look like. This makes the most sense for the very first convolution layer which is applied directly to the raw image.&lt;/p&gt;
+&lt;p&gt;Here we can see very basic patterns such as straight edges of different orientations as well as simple blobs of different colours.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt conv_layer_1" src="/images/capstone_conv_layer.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;High Activation Images&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;An alternative approach to visualizing what is happening in each layer is through looking at images that maximally activate a given neuron. Over the next few paragraphs we will look at what this means.&lt;/p&gt;
+&lt;p&gt;Recall the concept of activation which we introduced for individual neurons whereby, depending on the input, the neuron's output can very from being very low to very high. This means that when a particular neuron is activated in the network, there must be some combination of pixels in the input image which is causing this activation.&lt;/p&gt;
+&lt;p&gt;What we can do is to try and artificially create a combination of pixels which results in the highest possible activation for this neuron, thus getting a sense of what sort of patterns, shapes or colours are causing different neurons to 'fire'.&lt;/p&gt;
+&lt;p&gt;Mathematically we take advantage of the fact that we already have a well-behaved function that we optimised to find the set of parameters resulting in the best overall predictions. Now we take a similar optimisation approach, however this time rather than leaving the image fixed and varying the weights, we will instead leave the weights fixed and vary the image pixel values in order to maximize the activation, or output, of a given neuron.&lt;/p&gt;
+&lt;p&gt;For example, below we show synthetically generated images for two neurons in the prediction layer:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images" src="/images/capstone_synthetic_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Although we don't get pictures that look exactly like Hamburgers or Guacamole, it is certainly possible to discern certain structure, texture and colour in these images.&lt;/p&gt;
+&lt;p&gt;We can do the same for the different convolutional layers in the network which, you will remember, are theoretically detecting different patterns at varying scales.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images_2" src="/images/capstone_synthetic_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here we can see two things quite clearly. First, as expected, the initial layers are activated by simple patterns, whereas later layers look for more complexity. Secondly, the field of vision of each layer increases as we go deeper into the network. For example the first layer look at very small sub-regions of the image, whereas by the last layer, the convolutional 'filters' are receiving input from a much larger area.&lt;/p&gt;
+&lt;p&gt;In reality most of the food items that we are classifying do not have very distinctive shapes or colours, and so it is quite hard to interpret some of these patterns being detected by the different layers. The visualizations become a lot clearer if we look at similar synthetic images for the original network prior to fine-tuning on our food dataset.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt synthetic_images_3" src="/images/capstone_synthetic_3.png" /&gt;&lt;/p&gt;
+&lt;h3 id="summary"&gt;9. Summary&lt;/h3&gt;
+
+&lt;p&gt;Overall this was a fantastic learning experience that gave me the opportunity to work with both traditional machine learning as well as deep learning models. Working on a tangible, and at times messy, problem has definitely been the best way for learning about how some of these models are applied in the real world, and the associated challenges.&lt;/p&gt;
+&lt;p&gt;In terms of computer vision, it is clear why Convolutional Neural Networks are the current state-of-the-art approach, given the relative ease of obtaining good results in a relatively short space of time.&lt;/p&gt;
+&lt;p&gt;There is still a lot of work that could be done to achieve even better results for classifying food pictures, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Expanding the approach to use all 101 food categories from the dataset&lt;/li&gt;
+&lt;li&gt;Fine-tuning a more recent network that has achieved better results (i.e., GoogleNet, ResNet etc.)&lt;/li&gt;
+&lt;li&gt;Investing more time in optimising parameters during fine-tuning&lt;/li&gt;
+&lt;li&gt;Training multiple models and aggregating the predictions (an ensemble approach)&lt;/li&gt;
+&lt;li&gt;Expanding the methods to include object detection for identifying multiple food types in one image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+
+&lt;p&gt;The code for the final CNN-based model along with a full report and presentation can be found on &lt;a href="https://github.com/simonb83/food_classification/tree/draft"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;An excellent introduction to Convolutional Neural Networks for Computer Vision is the Stanford &lt;a href="http://cs231n.stanford.edu/"&gt;CS231n&lt;/a&gt; course.&lt;/p&gt;
+&lt;p&gt;The network visualizations were created using the &lt;a href="https://github.com/yosinski/deep-visualization-toolbox"&gt;Deep Visualization Toolbox&lt;/a&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="machine-learning"></category><category term="deep-learning"></category><category term="data-science"></category></entry><entry><title>Measuring Box Office Success</title><link href="https://simonb83.github.io/measuring-box-office-success.html" rel="alternate"></link><published>2016-10-06T18:20:00-05:00</published><updated>2016-10-06T18:20:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-06:measuring-box-office-success.html</id><summary type="html">&lt;p&gt;During a discussion with my wife about the Batman vs. Superman film from
+earlier this year, the question came up as to whether the box office
+drop from the opening to the 2nd weekend was normal, or whether it
+dropped more than it should have due to bad word of mouth.&lt;/p&gt;
+&lt;p&gt;I decided to get hold of some data from the BoxOffice Mojo website to
+try and answer this question, and it then also evolved into an exercise
+in data visualization.&lt;/p&gt;
+&lt;p&gt;The data was all obtained from BoxOfficeMojo using a couple of web
+scraping scripts. For additional details, as well as known issues, see
+more at
+&lt;a class="reference external" href="https://github.com/simonb83/DataScienceIntensive/tree/master/projects/box-office"&gt;https://github.com/simonb83/DataScienceIntensive/tree/master/projects/box-office&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="what-does-success-mean"&gt;
+&lt;h2&gt;What does success mean&lt;/h2&gt;
+&lt;p&gt;In reality we see that films can be successful in different ways
+depending on the metric we use.&lt;/p&gt;
+&lt;p&gt;If we look at box office takings for the opening weekend then, as
+expected, Sci-Fi, Action and Animated are the genres that typically
+dominate.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/box_office_image1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However if we also take budget into account, then it turns out that
+Horror films are particularly successful.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/box_office_image2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;When we look into why this might be, we see that on average Horror films
+have a budget one quarter of the size of that for Action, SciFi and
+Animated films, so it is much easier for them to make their money back.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/box_office_image3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;When we look further into budgets we see that they have increased
+steadily since the 1980s in both nominal and adjusted terms.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image4" src="https://simonb83.github.io/images/box_office_image4.png" /&gt;&lt;/p&gt;
+&lt;p&gt;At the same time, the average opening weekend takings seem to have been
+on a slight downward trend since 2000.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image5" src="https://simonb83.github.io/images/box_office_image5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This could be because the total number of films released has almost
+doubled since 2000, pushing down the box office average.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image6" src="https://simonb83.github.io/images/box_office_image6.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In terms of total takings, the vast majority of releases make less than
+$25 million in their opening weekend.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image7" src="https://simonb83.github.io/images/box_office_image7.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Whilst ‘blockbusters’ continue&amp;nbsp; to break box office records on a regular
+basis.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image8" src="https://simonb83.github.io/images/box_office_image8.png" /&gt;&lt;/p&gt;
+&lt;p&gt;On average, films drop by about 40% in Box Office takings between their
+opening and second weekends.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image9" src="https://simonb83.github.io/images/box_office_image9.png" /&gt;&lt;/p&gt;
+&lt;p&gt;That said, there are films that actually increase their box office
+takings in their second weekend, although these are typically from more
+obscure genres.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image10" src="https://simonb83.github.io/images/box_office_image10.png" /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="batman-vs-superman"&gt;
+&lt;h2&gt;Batman vs Superman&lt;/h2&gt;
+&lt;p&gt;Now we look at the Batman vs Superman film in more detail and compare
+with two specific films:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Avengers: Civil War&lt;/li&gt;
+&lt;li&gt;Batman: Dark Knight Rises&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We also use a general group consisting of 89 Sci-Fi and Action/Adventure
+films, with budget &amp;gt; 100 million USD, released since 2010.Batman vs.
+Superman performed very well in its opening weekend.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image11" src="https://simonb83.github.io/images/box_office_image11.png" /&gt;&lt;/p&gt;
+&lt;p&gt;It was also within the top 10 films with a highest grossing opening
+weekend based on our comparison group:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image12" src="https://simonb83.github.io/images/box_office_image12.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However, by the second weekend it did a lot worse than its peers,
+dropping nearly 70% vs. an average drop of 50% for similar films.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image13" src="https://simonb83.github.io/images/box_office_image13.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we look at a couple of very simple scenarios for how well BvS
+could have performed in its second weekend, had it not dropped more than
+average vs. its peer group.&lt;/p&gt;
+&lt;p&gt;We find that it could have made an additional $12-30 million in its
+second weekend had it performed similar to comparative films.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image14" src="https://simonb83.github.io/images/box_office_image14.png" /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="exploratory-analysis"></category><category term="visualization"></category><category term="data-science"></category></entry><entry><title>Newbie training errors</title><link href="https://simonb83.github.io/newbie-training-errors.html" rel="alternate"></link><published>2016-10-03T18:19:00-05:00</published><updated>2016-10-03T18:19:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-03:newbie-training-errors.html</id><summary type="html">&lt;p&gt;During a recent personal project I was working with Deep Learning models, and in particular trying to fine tune a CNN (AlexNet) in Caffe. At first I was getting some pretty strange, and frustrating, learning curves.&lt;/p&gt;
+&lt;p&gt;It turned out that my error was that I was that I was running a script to augment my images prior to training, but forgetting to randomize the resulting dataset.&lt;/p&gt;
+&lt;p&gt;Luckily, once I corrected this, everything started nicely converging.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/training_fail_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/training_fail_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/training_fail_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image4" src="https://simonb83.github.io/images/training_fail_4.png" /&gt;&lt;/p&gt;
+</summary><category term="deep-learning"></category><category term="machine-learning"></category><category term="neural-network"></category></entry><entry><title>First Kaggle</title><link href="https://simonb83.github.io/first-kaggle.html" rel="alternate"></link><published>2016-03-09T18:17:00-06:00</published><updated>2016-03-09T18:17:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-03-09:first-kaggle.html</id><summary type="html">&lt;p&gt;This is a brief summary of my first experience with a Kaggle
+competition. I entered for the learning experience, and because I wanted
+to play around with a real problem in machine learning.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Problem: Crime In San Francisco&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I chose the Crime Classification in San Francisco as it seemed like a
+fairly well-defined problem, and it is also in the Playground section of
+Kaggle so is probably more of a gentle introduction.&lt;/p&gt;
+&lt;p&gt;You are given a training data set of 878,049 crimes from the past 12
+years, each with the following information:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Date Crime Occurred&lt;/li&gt;
+&lt;li&gt;Day of Week&lt;/li&gt;
+&lt;li&gt;Police District&lt;/li&gt;
+&lt;li&gt;Street Address&lt;/li&gt;
+&lt;li&gt;X and Y coordinates&lt;/li&gt;
+&lt;li&gt;Type of Crime&lt;/li&gt;
+&lt;li&gt;Description&lt;/li&gt;
+&lt;li&gt;Resolution&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The challenge is to develop an algorithm which can then correctly
+classify other crimes using only the date and location features
+mentioned above.&lt;/p&gt;
+&lt;p&gt;Given a test data set of another 884,262 crimes, for each instance the
+algorithm needs to assign probabilities to 39 different crime
+categories.&lt;/p&gt;
+&lt;p&gt;The output is evaluated using the Multi-Class Logarithmic Loss function
+(more in another post), where each predicted probability is compared to
+the true probability. The idea is to make the loss function as small as
+possible.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Being very eager to jump in and try something out, I very naively threw
+something together using the Python Sklearn Random Forest algorithm
+(chosen as I had read that it is one of the algorithms that most
+frequently wins Kaggle competitions), with the following features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Time of day (based on number of second in the day)&lt;/li&gt;
+&lt;li&gt;X &amp;amp; Y coordinates&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Score of 26.85, ranked 1,150 on leaderboard.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My second submission was the result of randomly playing around. I cut
+down the features to only:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Police precinct&lt;/li&gt;
+&lt;li&gt;Time of Day&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However I think the biggest improvement was using the predict_proba
+instead of predict method. Whereas predict gives effectively a binary
+classification for the most likely class (i.e. 1 or 0), predict_proba
+assigns a probability to every single class.&lt;/p&gt;
+&lt;p&gt;It turns out that Logarithmic Loss penalizes confident but wrong answers
+very heavily, so it is better to “spread your bets” as it were rather
+than predicting a single category.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Big improvement to score of 4.9, moved up 172 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Around this point, I started to test locally prior to submitting by
+splitting the train data set approximately 80%/20% into training and
+test data in order to better measure whether my changes were improving
+my score or not.&lt;/p&gt;
+&lt;p&gt;For the third submission, I used only two categorical features:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Hour of day&lt;/li&gt;
+&lt;li&gt;Police precinct&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However the biggest improvement came from specifying a max depth of 10
+for the Random Forest.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.59, moved up 426 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Submission 4 was when I realized that pretty much all of my success up
+until this point had been beginner’s luck, and I needed a more
+systematic approach. So, after reading quite a bit about feature
+engineering, I used the following variables:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Precinct&lt;/li&gt;
+&lt;li&gt;Day of Week&lt;/li&gt;
+&lt;li&gt;Time of Day&lt;/li&gt;
+&lt;li&gt;X and Y (scaled to 0,1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For Precinct, Day of Week and Time of Day I finally began treating them
+as categorical variables (using pandas get_dummies).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.49, moved up 267 places.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 5&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For submission 5 I got some inspiration from comments on the competition
+forum (thanks papadopc and SatendraKumar).&lt;/p&gt;
+&lt;p&gt;In particular I did additional feature engineering on the X and Y
+coordinates to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Rotate coordinate frames through 30, 45, 60 and 90 degrees&lt;/li&gt;
+&lt;li&gt;Convert to polar coordinates and calculate R for each point&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I was also inspired by a comment from papdopc to create a crime count
+per address, that is to say, using the training data:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Get a list of unique street names&lt;/li&gt;
+&lt;li&gt;For each street name count the instances of each crime category&lt;/li&gt;
+&lt;li&gt;Use these counts as new categorical variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(Note: I have already seen some issues with this approach so will
+revisit later on).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Results:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Improved score to 2.44, and moved up to current position of 277 on
+leaderboard.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Submission 6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It would only be honest to note that I have made an additional
+submission with an approach pretty similar to Submission 5, but
+filtering for outliers in the training data, however this did not
+improve on my current best score.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary and Next steps&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So far it has been a really fun and interesting experience and it is
+pretty cool that there are so many tools out there that enable you to
+make headway so quickly with complex problems.&lt;/p&gt;
+&lt;p&gt;In some respects this can also be a disadvantage because it also makes
+it very easy to implement algorithms when you have very little idea of
+what you are doing, or how they work. However, on balance, I think it is
+also very useful not to have to get bogged down in the detail of
+creating efficient implementations of algorithms and enables far faster
+learning of some difficult concepts.&lt;/p&gt;
+&lt;p&gt;I am already working on my newest model including:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Some new categorical features: Season of Year, Daylight Saving Time
+Indicator, Whether the address is an Intersection or not&lt;/li&gt;
+&lt;li&gt;Smarter featurization of the address data vs. crime counts (based on
+papdopc solution)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some other approaches I want to try include:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Using a Neural Network&lt;/li&gt;
+&lt;li&gt;Combining predictions from multiple algorithms&lt;/li&gt;
+&lt;li&gt;Probability smoothing&lt;/li&gt;
+&lt;/ul&gt;
+</summary><category term="machine-learning"></category></entry><entry><title>More traffic problems</title><link href="https://simonb83.github.io/more-traffic-problems.html" rel="alternate"></link><published>2016-02-09T18:14:00-06:00</published><updated>2016-02-09T18:14:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-02-09:more-traffic-problems.html</id><summary type="html">&lt;p&gt;Consider the following question posed on &lt;a class="reference external" href="http://fivethirtyeight.com/"&gt;http://fivethirtyeight.com/&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There is a very long, straight highway with some number of cars (N)
+placed somewhere along it, randomly. The highway is only one lane,
+so the cars can’t pass each other. Each car is going in the same
+direction, and each driver has a distinct positive speed at which
+she prefers to travel. Each preferred speed is chosen at random.
+Each driver travels at her preferred speed unless she gets stuck
+behind a slower car, in which case she remains stuck behind the
+slower car. On average, how many groups of cars will eventually
+form? (A group is one or more cars travelling at the same speed.)&lt;/p&gt;
+&lt;p&gt;For example, if the car in the very front happens to be slowest,
+there will be exactly one group — everybody will eventually pile up
+behind the slowpoke. If the cars happen to end up in order, fastest
+to slowest, there will be N groups — no car ever gets stuck behind a
+slower car.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Overall I think it took me too long to solve, and I am sure that this
+isn’t the fastest way of getting to the answer, but here is my solution.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; It turns out that I made a silly mistake and ended up solving
+a slightly different problem. The mistake was due to abstracting the
+question too soon and only thinking about relative orders of speed in a
+given sequence and not taking into account that in the real world, cars
+will catch up with each other, and so under-counting the number of
+single groupings. Lesson learned.&lt;/p&gt;
+&lt;p&gt;I will leave my original solution at the bottom, because it was still an
+interesting problem and I ended up learning about something I didn’t
+know much about: Eulerian Numbers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Correct Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given a particular arrangement of the cars, we can consider a recursive
+algorithm for counting the number of pairings as follows:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Find the location of the car with the lowest velocity&lt;/li&gt;
+&lt;li&gt;That car and everything behind it represent 1 grouping, as all of the
+cars behind it have a higher speed&lt;/li&gt;
+&lt;li&gt;Add 1 to the number of groupings of the set of cars in front of it,
+etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is clearly a recursive problem, where every time we add a car, the
+new expected number of groupings is dependent on the previous number of
+groupings.&lt;/p&gt;
+&lt;p&gt;To simplify the problem let us suppose, without loss of generality, that
+we for some n&amp;lt;N, we line up all of the cars in order of decreasing speed
+and then place them randomly on the road, starting with the fastest car
+and moving downward. Let’s call the number of resulting groupings G(n).&lt;/p&gt;
+&lt;p&gt;Now we add in the next slowest car, that is a car whose speed is slower
+than all of the existing cars on the road. There are n+1 possible
+positions where we can place this car, and in any location, and we can
+see that:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;With probability 1/(n+1) the car goes at the back and creates 1 new
+group, so the total number of groups is G(n) + 1&lt;/li&gt;
+&lt;li&gt;With probability 1/(n+1) the car goes at the front and results in a
+total of just 1 group&lt;/li&gt;
+&lt;li&gt;In general, with probability 1/(n+1) the new car creates 1 group
+consisting of all the cars behind it + the expected groupings of all
+the cars in front of it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}{X_{n+1}} = \frac{1}{n+1}+\sum_{i=1}^{n}\frac{\mathbf{E}X_{i}+1}{n+1}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;and,&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}{X_{n}} = \frac{1}{n} + \sum_{i=1}^{n-1}\frac{\mathbf{E}X_{i}+1}{n} = \frac{1}{n}[1+S]
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\(S = \sum_{i=0}^{n-1}\mathbf{E}X_{i}+1 \Rightarrow S = n\mathbf{E}X_{n}-1\)&lt;/span&gt;&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\therefore \mathbf{E}X_{n+1} = \frac{1}{n+1}[1 + \mathbf{E}X_{n}+1+S] = \frac{1}{n+1}[1 + \mathbf{E}X_{n}+1+n\mathbf{E}X_{n}-1]
+\end{equation*}
+&lt;/div&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\therefore \mathbf{E}X_{n+1} = \frac{1}{n+1}+\mathbf{E}X_{n}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For N=1, we know that &lt;span class="math"&gt;\(\mathbf{E}(G)=1\)&lt;/span&gt;, so we’re done and:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}X_{n} = \sum_{i=1}^{N}\frac{1}{i}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;which is the harmonic series.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Original Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The problem that my original solution answers is more like the following
+question:&lt;/p&gt;
+&lt;p&gt;The astronomer Simon Newcomb played the following game of solitaire.
+Cards numbered 1,2,....,n are shuffled, drawn and put into a pile as
+long as the card drawn has a number lower than its precessor. What is
+the average number of piles?&lt;/p&gt;
+&lt;p&gt;First of all, a couple of comments on the problem:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;This is clearly a counting problem involving permutations: we are
+interested in different ways of arranging the cards, and the order
+matters because the relative sizes of the cards dictate the number of
+piles&lt;/li&gt;
+&lt;li&gt;In fact we can abstract away from cards and simply consider
+permutations of the integers 1 to N.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As mentioned in the question, the extreme cases are quite simple:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;To end up with one pile, the only possibility is having all of the
+integers in decreasing order of magnitude, that is to say N &amp;gt; N-1 &amp;gt;
+N-2 &amp;gt;..&amp;gt;2 &amp;gt; 1 (a strictly decreasing sequence).&lt;/li&gt;
+&lt;li&gt;To end up with N piles, the only possibility is having all of the
+integers in increasing order of magnitude, that is to say 1 &amp;lt; 2 &amp;lt; 3
+&amp;lt;… &amp;lt; N-1 &amp;lt; N (a strictly increasing sequence)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If we play around with fairly small values of N, we can see some other
+interesting patterns start to emerge. Let us consider, for instance, how
+many ways there are there of having 2 piles.&lt;/p&gt;
+&lt;p&gt;For N=3, the possibilities are:&lt;/p&gt;
+&lt;p&gt;(3,1,2), (2,1,3), (2,3,1) and (1,3,2)&lt;/p&gt;
+&lt;p&gt;For N=4, the possibilities are:&lt;/p&gt;
+&lt;p&gt;(1,4,3,2), (2,1,4,3), (2,4,3,1), (3,1,4,2), (3,2,1,4), (3,2,4,1),
+(3,4,2,1), (4,1,3,2), (4,2,1,3), (4,2,3,1), (4,3,1,2)&lt;/p&gt;
+&lt;p&gt;With a little bit more work, we can see that what matters is the
+relationship between consecutive pairs of integers, specifically whether
+they are &amp;lt; or &amp;gt;.&lt;/p&gt;
+&lt;p&gt;For N=4 there are three consecutive pairings, and in order to have two
+piles, we need two of the pairings to be &amp;gt; and one pairing to be &amp;lt;. By
+similar reasoning we are able to see that for general N, we need N-1
+pairings to be &amp;gt; and one pairing to be &amp;lt;.&lt;/p&gt;
+&lt;p&gt;In fact, what dictates the number of end piles is the number of ascents
+(pairings where the 1st is &amp;lt; the 2&lt;sup&gt;nd&lt;/sup&gt;) or descents (pairings
+where the 1&lt;sup&gt;st&lt;/sup&gt; is &amp;lt; the 2&lt;sup&gt;nd&lt;/sup&gt;) in an ordered sequence.&lt;/p&gt;
+&lt;p&gt;Furthermore, the number of permutations of a sequence with the specific
+number of ascents or descents will tell us how many possible ways there
+are to end up with a certain number of piles.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Eulerian Numbers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It turns out that what we are looking for are numbers called Eulerian
+Numbers.&lt;/p&gt;
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+the &lt;strong&gt;Eulerian number&lt;/strong&gt; &lt;em&gt;A&lt;/em&gt;(&lt;em&gt;n&lt;/em&gt;, &lt;em&gt;m&lt;/em&gt;), is the number of
+&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Permutation"&gt;permutations&lt;/a&gt; of the
+numbers 1 to &lt;em&gt;n&lt;/em&gt; in which exactly &lt;em&gt;m&lt;/em&gt; elements are greater than the
+previous element (permutations with &lt;em&gt;m&lt;/em&gt; &amp;quot;ascents&amp;quot;)&lt;/blockquote&gt;
+&lt;p&gt;It is possible to generate the Eulerian Numbers algorithmically by
+counting the number of permutations of N that result in a given number
+of groups, or alternatively using well-defined iterative or generating
+functions.&lt;/p&gt;
+&lt;p&gt;Again from Wikipedia, here is a table with the Eulerian Numbers for
+small N:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/Eulerian_nums.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Before we get to the final solution, there are two interesting
+properties of Eulerian numbers that are worth noting:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;For a given row in the table above, the Eulerian Numbers for a
+particular N sum to N! (because we end up counting all possible
+permutations of N). Alternatively, we can write this as:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\sum_{k=0}^{n-1}A(n,k)=n!
+\end{equation*}
+&lt;/div&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;There is also symmetry within the Eulerian Numbers for given n, i.e.,
+A(n,0) = A(n,n-1), A(n,1) = A(n,n-2) etc. We can see this by
+repeating our arguments above for a reversed sequence of integers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;The Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What we are looking for is the average, or expected, number of groups
+(piles) for a given N.&lt;/p&gt;
+&lt;p&gt;By definition of expectation:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}(G)=\sum G*\mathbb{P}(G)
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;The probability of a given grouping is the number of ways of achieving
+that grouping / the total possible arrangements of N, which is given by:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbb{P}(G)=\frac{A(N, G-1)}{N!}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;Where A(N,G-1) is the Eulerian Number.&lt;/p&gt;
+&lt;p&gt;If we sum over all possible groupings, we are looking for:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbb{E}(G)=\sum_{k=1}^{N}k \times \frac{A(N, k-1)}{N!}=\frac{1}{N!}\sum_{k=0}^{N-1}(k+1) \times A(N,k)
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;We can write this sum out as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/diagram_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;We can then fill-in the triangle in order to make a rectangle:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/diagram_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However, from the properties of the Eulerian Numbers we know that&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Each row sums to N!&lt;/li&gt;
+&lt;li&gt;The sum of the red terms is equal to the sum of the blue terms due to
+the symmetry in the Eulerian Numbers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thus we can see that &lt;span class="math"&gt;\(2S = (N+1) \times N!\)&lt;/span&gt;, and so we get our final result:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\mathbf{E}(G)=\frac{(N+1)\times N!}{2N!}=\frac{N+1}{2}
+\end{equation*}
+&lt;/div&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="maths"></category><category term="coding"></category></entry><entry><title>Chef Jarvis - Your AI Sous-Chef</title><link href="https://simonb83.github.io/chef-jarvis-your-ai-sous-chef.html" rel="alternate"></link><published>2016-02-01T17:49:00-06:00</published><updated>2016-02-01T17:49:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-02-01:chef-jarvis-your-ai-sous-chef.html</id><summary type="html">&lt;div class="section" id="the-concept"&gt;
+&lt;h2&gt;&lt;strong&gt;1. The Concept&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img alt="image" src="https://simonb83.github.io/images/chef_jarvis.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AI Sous-Chef&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ever find yourself needing to manage several key steps at the same time?
+Fear no more, your digital sous chef can help you multi-task like never
+before.&lt;/p&gt;
+&lt;p&gt;Chef Jarvis automatically integrates with all of your smart appliances
+giving you several extra pairs of hands in the kitchen.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Manager&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Do you find that you can’t remember if you used 600g or 900g of flour
+for your cake last time or how long it took to bake in your oven? Do you
+like to experiment with recipes, quantities and timing?&lt;/p&gt;
+&lt;p&gt;Chef Jarvis lets you annotate, modify and store every aspect of your
+recipes on-the-fly. Plus with in-built version control, you will have
+full access to every version of the recipes behind your signature
+dishes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tailored Suggestions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Not sure what to cook tonight? Maybe you have a vague idea in mind but
+are looking for some inspiration?&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Chef Jarvis suggests dishes and finds recipes based upon key&lt;/div&gt;
+&lt;div class="line"&gt;ingredients, cuisines, cooking techniques, preparation time or even
+wine or&lt;/div&gt;
+&lt;div class="line"&gt;beer pairings.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Over time, Chef Jarvis learns through its interactions with&lt;/div&gt;
+&lt;div class="line"&gt;you, making its recommendations more personalized to your preferences
+and style&lt;/div&gt;
+&lt;div class="line"&gt;of cooking.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Workflow Control&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Overcooked meat, burned vegetables and frantic last-minute scrambles
+are a thing of the past. Chef Jarvis keeps you on-track with all of
+your recipes whether you are&lt;/div&gt;
+&lt;div class="line"&gt;cooking a single dish for supper or a multi-course haute cuisine meal
+for your friends.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;By carefully tracking your progress through all of your active recipes,
+Chef Jarvis can warn you in advance of key upcoming steps and set alarms
+for time critical activities.&lt;/p&gt;
+&lt;p&gt;Furthermore, Chef Jarvis automatically takes care of conversions between
+imperial and metric systems, scales quantities, translates ingredients
+or suggests alternatives so that you can concentrate on the cooking.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Smart Shopping Lists&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once you have selected your recipes, Chef Jarvis automatically adds the
+necessary ingredients to your smart shopping list on the device of your
+choice.&lt;/p&gt;
+&lt;p&gt;Do you often work with recipes from across the world?&lt;/p&gt;
+&lt;p&gt;Chef Jarvis has you covered by automatically translating exotic
+ingredients into locally-available alternatives as well as finding
+nearby shops for buying the more unusual items.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conversational Interactions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Juggling multiple dishes and utensils with messy or wet fingers doesn’t
+leave you much flexibility for interacting with a computer or other
+device.&lt;/p&gt;
+&lt;p&gt;Chef Jarvis listens for and responds to your commands and makes you feel
+like you have a real assistant at all times in the kitchen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="background"&gt;
+&lt;h2&gt;&lt;strong&gt;2. Background&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Cooking has been a favourite hobby of mine for many years. However much
+of the time I find myself working alone in the kitchen trying to
+multi-task between various complex steps in concurrent recipes, all the
+while re-washing and drying my hands to return to my computer or phone
+in order to look up the next step, calculate quantities for ingredients,
+convert between cups and grams etc.&lt;/p&gt;
+&lt;p&gt;Separately, I have also been trying to study the principles behind
+machine learning techniques and in particular neural networks (fantastic
+introduction by Michael
+Nielsen&lt;a class="reference external" href="http://neuralnetworksanddeeplearning.com/"&gt;here&lt;/a&gt;), and have
+long been interested in trying to link my interests in cooking and
+technology.&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;One day I was reading about Artificial Intelligence&lt;/div&gt;
+&lt;div class="line"&gt;applications focused on home control systems, and I started wondering
+about more specialized applications for very specific tasks. It dawned
+on me that I could be far faster and more efficient working in the
+kitchen if I could automate everything to do with following recipes
+whilst trying to do something else with your hands, and so I started
+to develop the idea from there.&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The name is (obviously) inspired by Iron Man, as in my head I imagine
+the helper to be as useful, friendly and easy-to-interact-with as Jarvis
+is for Tony Stark.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-thoughts-on-implementation"&gt;
+&lt;h2&gt;&lt;strong&gt;3. Some Thoughts on Implementation&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;These are just some very high level thoughts on how I might go about
+taking the first steps to implement something like this.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Parsing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A key requirement would be for the AI to be able to identify what a
+recipe looks like as well as break it down into sections (i.e.
+ingredients vs. method), as well as subsections (individual steps in
+method etc.)&lt;/p&gt;
+&lt;p&gt;On the face of it, this doesn’t look too hard as recipes themselves
+often have headings like Ingredients and Method, however I’m sure in
+this case the devil is in the detail. For instance you could start to
+think of ingredients as having some sort of predefined format {number -
+unit - ingredient}, however often some sub-quantity of ingredients are
+used multiple times in the method so you would need to be able to
+distinguish between many different cases.&lt;/p&gt;
+&lt;p&gt;As a start I would probably put together some type of web scraper to
+grab a large number of recipes from sites like BBC Cooking, SeriousEats,
+Chowhound etc.&lt;/p&gt;
+&lt;p&gt;Then I might use some kind of supervised learning to begin to break
+recipes down into their individual elements.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recipe Storage&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Once a recipe has been parsed then it can be stored locally for the user
+in some type of database structure.&lt;/p&gt;
+&lt;p&gt;I would look to integrate version control like git so that, for each
+recipe, the user is able to create and store copies, modifying specific
+elements. So for instance if the base recipe calls for 1kg of flour for
+serving 10 people, and you want to save a version scaled down for
+serving 4 people, then you would be able to store a modified copy.&lt;/p&gt;
+&lt;p&gt;Similarly if you find that you needed a higher oven temperature, longer
+cooking time or any other type of change, then you can store your own
+personalized version of that recipe.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Basic Helper Methods&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I consider these to be some of the simpler requirements to implement,
+that is for things like using voice commands to convert between
+measurement systems, translate foreign ingredients or even suggest
+alternative ingredients.&lt;/p&gt;
+&lt;p&gt;Currently you could probably do much of this with Siri, however in this
+case I think the problem is far narrower and better-defined (i.e., you
+don’t need to be able to process all natural language, just very
+specific commands for executing very specific functions).&lt;/p&gt;
+&lt;p&gt;So perhaps for conversions you could (at least at the start) use a
+specific command phrase to indicate that the AI will need to listen out
+for 1) a number, 2) input unit and 3) output unit.&lt;/p&gt;
+&lt;p&gt;For being able to suggest alternative ingredients, you could start by
+creating a large dictionary with common alternatives for harder-to-find
+ingredients (many cooking sites already have these types of lists).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Integrating with Appliances&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;While I think that just the recipe-management functionality could be a
+big help while cooking, it would also be fantastic for this type of AI
+to help you with controlling kitchen appliances too.&lt;/p&gt;
+&lt;p&gt;The very futuristic version would be just like Jarvis, with some sort of
+robotic arm that could move around and actually interact with items in
+the kitchen.&lt;/p&gt;
+&lt;p&gt;Obviously this is a far-fetched scenario, however more immediately I am
+seeing a move by appliance manufacturers to building devices that you
+can control via apps. For example I was recently given as a present a
+small Anova Sous Vide machine, which can be controlled from an app
+including turning it on and off, changing the temperature, setting a
+timer etc.&lt;/p&gt;
+&lt;p&gt;Potentially as more appliances emerge with associated apps, then a
+kitchen AI could use those interfaces to give you the ability to
+interact with appliances using only voice commands.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Command and Control&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A key part of the value of this sort of AI would be the ability to
+interact with it hands-free.&lt;/p&gt;
+&lt;p&gt;As I mentioned before, this problem could probably be reduced (somewhat)
+in complexity by defining specific commands that can be used to activate
+certain functions. Another gift I received last Christmas was the BB8
+robot by Sphero which has a small list of in-built voice activation
+commands that work surprisingly well.&lt;/p&gt;
+&lt;p&gt;So similarly you could program it to a list of 5-10 voice commands for
+things like:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Conversions&lt;/li&gt;
+&lt;li&gt;Set alarm&lt;/li&gt;
+&lt;li&gt;Get next step&lt;/li&gt;
+&lt;li&gt;Get ingredient amount etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</summary><category term="ai"></category><category term="cooking"></category><category term="deep-learning"></category><category term="machine-learning"></category></entry><entry><title>My 2015 in Books</title><link href="https://simonb83.github.io/my-2015-in-books.html" rel="alternate"></link><published>2016-01-14T17:46:00-06:00</published><updated>2016-01-14T17:46:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-01-14:my-2015-in-books.html</id><summary type="html">&lt;p&gt;Over the past couple of years I found myself getting frustrated that I wasn’t reading enough, and so in 2015 when I saw friends signing up for
+Goodreads’ Reading challenge, I thought it might be a nice way to set a goal and try and stick to it.&lt;/p&gt;
+&lt;p&gt;I wanted to challenge myself so went for quite an aggressive goal of 52 books. This is how I fared.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Overall statistics:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;53 books in total&lt;/li&gt;
+&lt;li&gt;17,512 pages&lt;/li&gt;
+&lt;li&gt;343 page average book length&lt;/li&gt;
+&lt;li&gt;41 Non-Fiction (77%) vs. 12 Fiction&lt;/li&gt;
+&lt;li&gt;Month with most books finished - December (8)&lt;/li&gt;
+&lt;li&gt;Month with least books finished - January, September, October (2)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="the-list"&gt;
+&lt;h2&gt;&lt;strong&gt;The List&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Methodology:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I used a small Python script to download my books from 2015 via the
+Goodreads API.&lt;/p&gt;
+&lt;p&gt;I manually tagged the books into the following categories (which are not
+necessarily mutually exclusive), and also reevaluated the score that I
+originally gave when I saved the book in the Goodreads app.&lt;/p&gt;
+&lt;p&gt;For each book I have specified in brackets my original score followed by
+an updated score based upon my impressions 1-12 months after finishing.&lt;/p&gt;
+&lt;p&gt;In the case where I don’t remember much about the book (surprisingly
+often for the fiction books), I have left the score as the original.
+Also within the updated score I have included half points which are not
+currently allowed on Goodreads.&lt;/p&gt;
+&lt;p&gt;The numbers following the category titles are the average scores of my
+original reviews, followed by updated reviews.&lt;/p&gt;
+&lt;p&gt;Any thoughts or comments I think to be worth noting about a particular
+book are in italics.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some observations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;I was already sure I had a read a lot more non-fiction than fiction,
+but how much more actually surprised me a little (41 non-fiction vs
+12 fiction)&lt;/li&gt;
+&lt;li&gt;I hadn’t realized I had read so many biographies&lt;/li&gt;
+&lt;li&gt;In general I remember a lot more about the non-fiction rather than
+fiction books&lt;/li&gt;
+&lt;li&gt;Overall I think I was pretty consistent in my ratings between before
+and after - although I changed my rating for 25 books, this was
+mostly to be able to take advantage of half points (21 books)&lt;/li&gt;
+&lt;li&gt;I only change my mind by 1 point on 4 books (all increases)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Maths, Computing, Technology: (3.7, 3.8)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Naked Statistics (4, 3.5)&lt;/li&gt;
+&lt;li&gt;The Information: A History, a Theory, a Flood (4, 4) - &lt;em&gt;very
+interesting overview but quite dense in parts&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Theory That Would Not Die: How Bayes' Rule Cracked the Enigma
+Code, Hunted Down Russian &amp;nbsp;Submarines, and Emerged Triumphant from
+Two Centuries of Controversy (3, 4) - &lt;em&gt;very detailed overview of
+Bayes; I still remember a lot of the detailed examples&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Simpsons and Their Mathematical Secrets(3, 3)&lt;/li&gt;
+&lt;li&gt;A Mathematician's Apology (3, 3.5) - &lt;em&gt;felt more like a book that I
+had to read rather than wanted to read&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Signal and the Noise: Why So Many Predictions Fail - But Some
+Don't (5, 5) - &lt;em&gt;awesome, really enjoyable. Want to re-read.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;How Not to Be Wrong: The Power of Mathematical Thinking (4, 4) - &lt;em&gt;one
+of the best popular maths books I have read in a while; want to
+re-read.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Six Degrees: The Science of a Connected Age (3, 4) - &lt;em&gt;the maths is
+really fascinating; there are parts I want to look over in more
+detail&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Probability: A Very Short Introduction (3, 3)&lt;/li&gt;
+&lt;li&gt;Countdown to Zero Day: Stuxnet and the Launch of the World's First
+Digital Weapon (4, 4) - &lt;em&gt;really interesting and eye opening&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Shadow Factory: The Ultra-Secret NSA from 9/11 to the
+Eavesdropping on America (3, 3) - &lt;em&gt;while it was full of interesting
+tidbits, I thought it could have been more&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;No Place to Hide: Edward Snowden, the NSA, and the U.S. Surveillance
+State (5, 4.5) - &lt;em&gt;an absolute must read book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Dark Net: Inside the Digital Underworld (4, 4) - &lt;em&gt;very
+interesting, sightly scary&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Biographies: (4.2, 4.1)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Immortal Life of Henrietta Lacks (5, 5) - &lt;em&gt;amazing story, highly
+recommeneded, so important to modern science and medicine&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Alcatraz-1259 (4, 4) - &lt;em&gt;true story of someone who was incarcerated in
+Alcatraz (I have a copy signed by the author)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Thomas Cromwell: The Untold Story of Henry VIII's Most Faithful
+Servant (4, 4.5) - &lt;em&gt;I knew nothing about him beforehand; fascinating
+book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Not Much of an Engineer (3, 3) - &lt;em&gt;Some very interesting stories and
+engineering, but I wasn’t a big fan of the writing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Longitude: The True Story of a Lone Genius Who Solved the Greatest
+Scientific Problem of His Time (5, 4.5) - &lt;em&gt;Really good&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Einstein: His Life and Universe (4, 3.5) - &lt;em&gt;I was very glad to learn
+more about such an important and interesting figure, but was a bit
+long and hard going in places&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Agent Zigzag: A True Story of Nazi Espionage, Love, and Betrayal (5,
+4.5) - &lt;em&gt;Very cool story, and easy to read&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;A Spy Among Friends: Kim Philby and the Great Betrayal (4, 4) - &lt;em&gt;Very
+good&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;A Numerate Life: A&amp;nbsp;Mathematician Explores the Vagaries of Life, His
+Own and Probably Yours (4, 3.5) - &lt;em&gt;Mixed, good in parts&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Historical: (3.4, 3.6)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;In the Heart of the Sea: The Tragedy of the Whaleship Essex (4, 4) -
+&lt;em&gt;amazing and slightly harrowing story (and then I discovered they
+were making a film!)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Operation Mincemeat: How a Dead Man and a Bizarre Plan Fooled the
+Nazis and Assured an&amp;nbsp;Allied Victory (4, 4) - &lt;em&gt;Really well-written,
+gripping&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Killing the &amp;nbsp;Bismarck: Destroying the Pride of Hitler's Fleet (3,
+3.5)&lt;/li&gt;
+&lt;li&gt;The Secret Life of Bletchley Park: The WWII Codebreaking Centre and
+the Men and Women Who Worked&amp;nbsp;There (3, 4) - &lt;em&gt;Really good overview of
+Blethley and the people who worked there&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Tambora: The Eruption That Changed the World (3, 2.5) - &lt;em&gt;I bought
+this book because of the story; didn’t live up to expectations&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Other Science, Medical etc: (4.25, 4.5)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Bad Pharma: How Drug Companies Mislead Doctors and Harm Patients (4,
+4.5) - &lt;em&gt;Very important book, should be mandatory reading in schools&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;What If? : Serious Scientific Answers to &amp;nbsp;Absurd Hypothetical
+Questions (5, 5) - &lt;em&gt;I love XKCD, I loved this book&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Thinking, Fast and Slow (3, 3.5) - &lt;em&gt;the subject matter I found
+fascinating, but I have read better expositions&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Emperor of All Maladies: A Biography&amp;nbsp;of Cancer (5, 5) - &lt;em&gt;amazing
+and epic journey into ‘the war on Cancer’&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Management: (4.3, 4.3)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Halo Effect:&amp;nbsp;How Managers let Themselves be Deceived (3, 3.5) -
+&lt;em&gt;Some really interesting ideas&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Joy, Inc.: How We Built a Workplace&amp;nbsp;People Love (5, 5) - &lt;em&gt;I loved
+this book and recommend it to nearly everyone I know. Maybe the best
+business of management book of all time&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Checklist Manifesto: How to Get&amp;nbsp;Things Right (5, 4.5) - &lt;em&gt;Everyone
+needs checklists!&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Other: (3.6, 3.6)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The End of Power:&amp;nbsp;From Boardrooms to Battlefields and Churches to
+States, Why Being In Charge&amp;nbsp;Isn't What It Used to Be (3, 2.5) -
+&lt;em&gt;Sounded interesting but too dry and uninspired writing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Antidote: Happiness for People Who&amp;nbsp;Can't Stand Positive Thinking
+(4, 4)&lt;/li&gt;
+&lt;li&gt;Average Is Over: Powering America Beyond&amp;nbsp;the Age of the Great
+Stagnation (3, 3.5)&lt;/li&gt;
+&lt;li&gt;Mornings in Mexico (3, 4)&lt;/li&gt;
+&lt;li&gt;The Road to Little Dribbling: More Notes&amp;nbsp;From a Small Island (4, 4) -
+Not his best work, but typically gentle and amusing stories&lt;/li&gt;
+&lt;li&gt;How to be a Husband (5, 4.5) - &lt;em&gt;Very amusing&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The House of Wigs (3, 3.5)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Fiction: (3.8, 4.0)&lt;/strong&gt;&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The Bone Clocks (4, 4)&lt;/li&gt;
+&lt;li&gt;The Temp (4, 4)&lt;/li&gt;
+&lt;li&gt;A Delicate Truth (4, 4) - &lt;em&gt;solid le Carré&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Farm (4, 4)&lt;/li&gt;
+&lt;li&gt;Jane Eyre (4, 4.5) - &lt;em&gt;really enjoyed&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The State We're In (2, 2)&lt;/li&gt;
+&lt;li&gt;The Memory of Love (5, 5)&lt;/li&gt;
+&lt;li&gt;The Martian (4, 5) - &lt;em&gt;loved the film, loved the book more&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Lathe of Heaven (4, 4)&lt;/li&gt;
+&lt;li&gt;Make Me (Jack Reacher #20) (3, 3.5) - &lt;em&gt;once again, rescued me from a
+long flight&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Binti (3, 3)&lt;/li&gt;
+&lt;li&gt;The Big Sleep (5, 5) - &lt;em&gt;very evocative writing&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</summary><category term="books"></category></entry><entry><title>Some Counting Problems</title><link href="https://simonb83.github.io/some-counting-problems.html" rel="alternate"></link><published>2015-08-11T17:00:00-05:00</published><updated>2015-08-11T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-08-11:some-counting-problems.html</id><summary type="html">&lt;p&gt;I have been looking over some elementary probability recently, and spent some time thinking about a couple of questions that I think have pretty neat solutions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. Birthday Problem&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The problem is very simply stated, but the answer is counterintuitive to most people.&lt;/p&gt;
+&lt;p&gt;What is the smallest number of people that you need in a room (or some type of gathering) for there to be a better than even chance that two people share the same birthday?&lt;/p&gt;
+&lt;p&gt;What seems to throw people off here is that they immediately try and answer a different question: What is the probability that someone else shares my birthday (or some other specific birthday)?.&lt;/p&gt;
+&lt;p&gt;In fact, we can quite quickly estimate a rough value for what this number of people should be (n). If we do not concern ourselves with a specific day, then what we are looking for is any pair of people who share the same birthday.&lt;/p&gt;
+&lt;p&gt;For some small values of n, the number of possible pairings are:&lt;/p&gt;
+&lt;p&gt;n = 18, 153 pairings (153/365 = 0.419)&lt;/p&gt;
+&lt;p&gt;n = 19, 171 pairings (171/365 = 0.468)&lt;/p&gt;
+&lt;p&gt;n = 20, 190 pairing (190/365 = 0.521)&lt;/p&gt;
+&lt;p&gt;So intuitively, we think that the answer should be somewhere around 20.&lt;/p&gt;
+&lt;p&gt;The actual calculation follows standard combinatorial reasoning:&lt;/p&gt;
+&lt;p&gt;Suppose n = 2. It turns out that it is simpler to think about the probability of the people not sharing a birthday, and then take the complement.&lt;/p&gt;
+&lt;p&gt;We can see that there are 365×365 total possible birthday combinations (365 for each person), and 365×364 combinations for them not sharing a birthday (365 possibilities for the first person, and 364 for the second as one day is now “out of the question”).&lt;/p&gt;
+&lt;p&gt;So for 2 people, the probability that they don’t share a birthday is&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\frac{365 \times ~364}{365 \times ~365} \approx 0.997
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For n = 3, similarly we can see that&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{365 \times ~364 \times 363}{365 \times ~365 \times ~365} \approx 0.992
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;In fact, for general n, by similar reasoning we can see that the probability that none of them share a birthday is:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{365 \times ~364 \times ... \times (365-n+1))}{365 \times ~365 \times ~... \times 365} = \frac{365!}{(365-n)! \times 365^{n}}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;(in the numerator, each person removes a possibility for the number of allowed birthdays).&lt;/p&gt;
+&lt;p&gt;Using Stirling’s approximation, we can show that this is:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\sim e^{-n} \left (\frac{365}{365-n} ~\right)^{365-n+0.5}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;Once this probability drops below 0.5, then we have a better than 50-50 chance of two people sharing a birthday.&lt;/p&gt;
+&lt;p&gt;For values of n around 20, we can see that:&lt;/p&gt;
+&lt;p&gt;n = 20, P = 0.589&lt;/p&gt;
+&lt;p&gt;n = 21, P = 0.556&lt;/p&gt;
+&lt;p&gt;n = 22, P = 0.524&lt;/p&gt;
+&lt;p&gt;n = 23, P = 0.493&lt;/p&gt;
+&lt;p&gt;So we see that with only 23 people, the probability that two people share the same birthday is 0.51.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Boxes and balls&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Suppose we have n balls that are tossed independently into n boxes. What is the probability that exactly one box is empty?&lt;/p&gt;
+&lt;p&gt;Once again let’s start by thinking about some small values of n.&lt;/p&gt;
+&lt;p&gt;If n=2, the total number of possibilities is two boxes for ball 1 x two boxes for ball 2 = 4 in total.&lt;/p&gt;
+&lt;p&gt;For one box to be empty, we only want to consider those arrangements where both balls are in one box, of which there are 2 (both in box 1 or both in box 2), so&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{2}{4} = \frac{1}{2}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;If n=3, suppose box 1 is empty, then we can either have two balls in box 2 and one in box 3 or one ball in box 2 and two in box 3.&lt;/p&gt;
+&lt;p&gt;So for our numerator we need three possibilities for the empty box x three ways of choosing 2 out of 3 balls x two possibilities for the box with 2 balls.&lt;/p&gt;
+&lt;p&gt;And in the denominator we have three possible boxes for each ball.&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+P = \frac{3 \times 3 \times 2}{3 \times 3 \times 3} = \frac{2}{3}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;For general n, we can use similar reasoning.&lt;/p&gt;
+&lt;p&gt;The key is seeing that with exactly one empty box, all of the remaining n-1 boxes must have exactly one ball except for one box which will have two balls.&lt;/p&gt;
+&lt;p&gt;What might this look like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="boxes-and-balls" src="https://simonb83.github.io/images/counting_problems.png" /&gt;&lt;/p&gt;
+&lt;p&gt;There are n choices for the empty box.
+The two balls can be chosen ways.
+There are n-1 choices for the box with 2 balls.
+The remaining n-2 balls have (n-2)! arrangements among
+the n-2 boxes.&lt;/p&gt;
+&lt;p&gt;So the numerator is &lt;span class="math"&gt;\(n \times (n-1) \times (n-2)! \times {n \choose 2}\)&lt;/span&gt;, and the denominator is &lt;span class="math"&gt;\(n^{n}\)&lt;/span&gt; and&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+\frac{n!}{n^{n}} \times {n \choose 2} = \frac{n! \times n \times (n-1)}{2n^{n}}
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;What does this look like for small values of n?&lt;/p&gt;
+&lt;p&gt;n = 2, P = 0.5&lt;/p&gt;
+&lt;p&gt;n = 3, P = 0.667&lt;/p&gt;
+&lt;p&gt;n = 4, P = 0.563&lt;/p&gt;
+&lt;p&gt;n = 5, P = 0.384&lt;/p&gt;
+&lt;p&gt;n = 6, P = 0.231&lt;/p&gt;
+&lt;p&gt;n = 7, P = 0.129&lt;/p&gt;
+&lt;p&gt;n = 8, P = 0.067&lt;/p&gt;
+&lt;p&gt;n = 9, P = 0.0337&lt;/p&gt;
+&lt;p&gt;n = 10, P = 0.0163&lt;/p&gt;
+&lt;p&gt;In fact we can see that P reaches a maximum when n=3, and then decreases for higher values of n. This is because as the number of boxes increases, the number of possible outcomes with exactly one empty box becomes overwhelmed by all of the other possible outcomes.&lt;/p&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="maths"></category></entry><entry><title>Do You Really Care About Your Customers?</title><link href="https://simonb83.github.io/do-you-really-care-about-your-customers.html" rel="alternate"></link><published>2015-03-11T16:53:00-06:00</published><updated>2015-03-11T16:53:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-03-11:do-you-really-care-about-your-customers.html</id><summary type="html">&lt;p&gt;Many companies claim to be customer-centric , but in my experience most
+of the time its just untrue.&lt;/p&gt;
+&lt;p&gt;Claiming to be focused on your customers and their needs certainly
+sounds like the right thing to say, and no-one would ever advertise that
+they don’t care about customers, however in reality there is a world of
+difference between companies that just say it, and those who live by it.&lt;/p&gt;
+&lt;p&gt;So how can you tell the difference? If you answer yes to the majority of
+these questions, then the likelihood is that your company still has a
+long way to go to be truly “customer-centric”.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;You find yourself working more on cost-cutting and re-engineering
+projects than long-term investments in improving customer experience
+and loyalty&lt;/li&gt;
+&lt;li&gt;Top executives don’t spend time engaging with front-line
+employees&lt;/li&gt;
+&lt;li&gt;Most people stop caring about customer metrics when conflicts arise
+(i.e. with sales or other results)&lt;/li&gt;
+&lt;li&gt;Executives never speak to customers (applies equally to B2B or B2C)&lt;/li&gt;
+&lt;li&gt;Customer Experience is seen as being the responsibility of operations&lt;/li&gt;
+&lt;li&gt;Customer-facing non-sales roles pay below market&lt;/li&gt;
+&lt;li&gt;People in the contact center spend a lot of time worrying about
+Average Call Time&lt;/li&gt;
+&lt;li&gt;Your top customer complaint is the same for 3 years in a row&lt;/li&gt;
+&lt;li&gt;Nobody knows what to do with or how to handle a complex customer
+problem&lt;/li&gt;
+&lt;li&gt;Your employee turnover is high, particularly in customer-facing teams&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You may notice that 3 of these have nothing to do with customer
+management, but instead are indicators of employee treatment and
+engagement:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Executives don’t engage with front-line employees&lt;/li&gt;
+&lt;li&gt;Customer service roles are poorly paid&lt;/li&gt;
+&lt;li&gt;Turnover is high&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hands-down the best way to create outstanding customer loyalty is by
+having dedicated and motivated employees, who enjoy what they do and who
+are proud of where they work.&lt;/p&gt;
+&lt;p&gt;I think this is the one area where I see companies fall down the most,
+and I am always amazed when I work with people who say they aim to
+provide the best service in the industry, but are unwilling to invest in
+hiring the best people.&lt;/p&gt;
+</summary><category term="customer-experience"></category></entry><entry><title>10 Science Communication Ideas</title><link href="https://simonb83.github.io/10-science-communication-ideas.html" rel="alternate"></link><published>2015-03-11T02:54:00-06:00</published><updated>2015-03-11T02:54:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-03-11:10-science-communication-ideas.html</id><summary type="html">&lt;p&gt;It feels like we are in a a crisis of science education and
+understanding. From overreaction and scare stories about Ebola, to the
+spread of measles due to vaccination myths, it has become far too easy
+for the general public to become influenced by scare stories and
+fear-mongering.&lt;/p&gt;
+&lt;p&gt;Furthermore, it seems like every other day that I see stories and posts
+on Facebook with titles like “Why honey is the best antibiotic” or “The
+secret cure for cancer they don’t want you to know about”&lt;/p&gt;
+&lt;p&gt;In my mind, a lot of this comes down to the fact that as a society we,
+no longer seem to value science or scientists. There is something very
+wrong when ‘not being good at maths’ is considered a badge of honour,
+and non-scientific and discredited ideas are given so much weight and
+media-coverage, particularly when it comes to issues which affect
+society more broadly such as public health policy and climate change.&lt;/p&gt;
+&lt;p&gt;To that end, here is a list of ideas (some more realistic than others)
+for trying to reverse this trend with better education, communication
+and engagement. Many of these are aimed more at children because I think
+that is where we need to focus in order to make a real difference.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;A compelling basic science book for the general public which doesn’t
+just educate but really engages people and gets them excited about
+science. For me this would need to:&lt;ul&gt;
+&lt;li&gt;Be written by a non-expert who has spoken to and interviewed
+enough scientists until they understand the ideas well enough to
+be able to explain them to someone else&lt;/li&gt;
+&lt;li&gt;Include not just the ideas, but also personal stories about the
+people behind the ideas; my personal choice for the author would
+be Bill Bryson.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Games and apps that explore specific concepts and help people to
+learn in a fun way. Some nice existing examples include
+&lt;a class="reference external" href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.historyofvaccines.org%2Fcontent%2Fillsville-fight-disease&amp;amp;t=NDA0NjExM2UzMjljMDM3YzhjNzBhN2JlNjliYTIyMGE1NzgwNGJkMSxWWkNQOFNxSA%3D%3D&amp;amp;b=t%3A8OtdUEzgn7QWMCk7O9GO0g&amp;amp;m=1"&gt;Illsville&lt;/a&gt;
+and &lt;a class="reference external" href="http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.earthprimer.com%2F&amp;amp;t=OTMyYjRjYmQ2ZThlYmQ2NjAxNzg5MTFlM2NiNWUyODFhMTRlYjA2NyxWWkNQOFNxSA%3D%3D&amp;amp;b=t%3A8OtdUEzgn7QWMCk7O9GO0g&amp;amp;m=1"&gt;Earth
+Primer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Immersive gaming – An immersive world that players need to explore
+and learn about in order to advance. For instance you might start
+with atoms and then once you have solved enough challenges, unlock
+further levels to move onto molecules or atomic power. The more you
+explore, the more you learn and the more you can unlock and advance.&lt;/li&gt;
+&lt;li&gt;Virtual Lab – an online lab through which people can interact from
+afar in scientific experiments. Participants would be able to suggest
+and vote on experiments, and then review and interpret data in a
+collaborative, and probably guided/moderated fashion. This is rather
+like the idea of
+&lt;a class="reference external" href="http://t.umblr.com/redirect?z=https%3A%2F%2Fwww.quirky.com%2Finvent&amp;amp;t=M2M4MjdiZDUxOTc1NjAxODcxMzEzM2VkMmViOTc4MzE4ODE4MTQzYixWWkNQOFNxSA%3D%3D&amp;amp;b=t%3A8OtdUEzgn7QWMCk7O9GO0g&amp;amp;m=1"&gt;Quirky&lt;/a&gt;
+but for general science.&lt;/li&gt;
+&lt;li&gt;Community science labs – staffed science labs which give
+disadvantaged children and those without access to proper resources
+the chance to use microscopes, telescopes and other instruments, as
+well as interact with young, passionate scientists.&lt;/li&gt;
+&lt;li&gt;More films and TV programs about science and scientists. There has
+been a positive trend recently with The Imitation Game and The Theory
+of Everything, but there are still countless amazing and compelling
+stories which could be told: Marie Curie, The Double Helix, Darwin,
+Copernicus, Isaac Newton, Louis Pasteur etc.&lt;/li&gt;
+&lt;li&gt;Cereal Box Science – collaborate with cereal manufacturers to put
+educational materials on the back of cereal boxes and scientific
+collectibles inside (could also apply to other types of food
+manufacturers).&lt;/li&gt;
+&lt;li&gt;Cooking, Home Brewing and Mixology classes that teach adults both
+techniques as well as underlying science, ideally in the lab or
+kitchen. For theory &lt;a class="reference external" href="http://t.umblr.com/redirect?z=https%3A%2F%2Fwww.edx.org%2Fcourse%2Fscience-cooking-haute-cuisine-soft-harvardx-spu27x&amp;amp;t=YjM3YjMzYzk1MzZmM2E3MTZlY2E0MDE2YjcxNTMwZjNjOTUwZGNiZSxWWkNQOFNxSA%3D%3D&amp;amp;b=t%3A8OtdUEzgn7QWMCk7O9GO0g&amp;amp;m=1"&gt;this
+course&lt;/a&gt;
+is awesome, but nothing beats hands on practice and interaction.&lt;/li&gt;
+&lt;li&gt;Engage the world’s leading advertising companies in science education
+campaigns. If Ogilvy can create awesome campaigns and commercials for
+consumer products, I’m sure they’d have some pretty cool ideas for
+science too. Maybe they could even be persuaded to do some ‘pro-bono’
+work which could help them contribute towards their Corporate Social
+Responsibility goals.&lt;/li&gt;
+&lt;li&gt;“Rock star scientists” - As long as children grow up and see sports
+players, actors, musicians and reality TV stars getting all of the
+fame, money and attention, then those are the 'occupations’ that they
+will see as most valued by society.Maybe we can fight back by with
+“rock star” scientist positions for the most talented young
+scientists, who would be put more in the spotlight to act as role
+models for young people, rather like what has happened in the UK with
+Brian Cox.I know this feels a bit like the dumbing down and even
+degradation of science, but honestly desperate times call for
+desperate measures, and right now I feel like we’re in pretty
+desperate times.&lt;/li&gt;
+&lt;/ol&gt;
+</summary><category term="10ideas"></category><category term="science"></category></entry><entry><title>10 Ways to Improve your Startup Customer Service</title><link href="https://simonb83.github.io/10-ways-to-improve-your-startup-customer-service.html" rel="alternate"></link><published>2015-02-27T16:51:00-06:00</published><updated>2015-02-27T16:51:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-27:10-ways-to-improve-your-startup-customer-service.html</id><summary type="html">&lt;p&gt;I came across an article recently about problems that customers have
+been having with a popular and fast-growing tech startup. Mostly these
+seem to be because of a lack of formalized customer service processes,
+rather than any massive flaw in the underlying product, team or business
+model.&lt;/p&gt;
+&lt;p&gt;I figure that these sorts of growing pains must be pretty common for
+companies in this position...where growth is so rapid that there almost
+isn't enough time to catch up and put the right servicing structure in
+place (at least this is my hypothesis for what is happening).&lt;/p&gt;
+&lt;p&gt;I think one thing that people worry about is the costs of providing
+solid, 24/7 service, but the truth is that good customer service and
+experience don't have to cost the earth.&lt;/p&gt;
+&lt;p&gt;In fact I think there is a lot that you can do on a tight budget to
+really create a service culture that matches a beuatifully-designed and
+useful product. To that end I came up with this list of ideas, which I
+think any business could (and should) implement pretty quickly:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;strong&gt;Set Expectations About Response Times&lt;/strong&gt; - People get pretty antsy
+when they send a message or an email and then don't hear anything
+back, particularly when they have a problem. They are probably
+sitting there thinking &amp;quot;Oh my god. Why haven't they answered me? They
+don't care about my problem. There must be something wrong&amp;quot;. So then
+they send another message and another and it becomes a vicious cycle.
+However, if you let them know how quickly they can expect a response,
+say with an auto-reply, then at least they will be able to relax a
+bit more and not wonder whether or not someone is ever going to
+reply.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Try and Beat Those Expectations&lt;/strong&gt; - If you say you’re going to get
+back to someone in 12 hours, then that is the minimum that is
+expected. However its even better when you surprise them by beating
+their expectations. For instance I love my web hosting company.
+Whenever I get in touch I am told that someone will get back to me
+within 1 working day, but I don’t think I have ever had to wait more
+than a couple of hours for a response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Voice is sometimes best&lt;/strong&gt; - One of the main concerns I have seen
+raised is the lack of a phone number for critical problems. I know
+digital service can be work very well, particularly for everyday
+problems, but in general I subscribe to the philosophy of respecting
+customer channel of choice, and when someone is stressing out about
+something really big, then what they really want is to speak to
+another human being. This doesn’t have to turn into a huge call
+center and could, for example, be limited to outbound calls for
+critical cases…but I think its really, really important to have the
+option.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clear Escalation Process&lt;/strong&gt; - With so much going on, particularly in
+an exciting and fast-growth environment, problems can get overlooked
+or even lost among all the other day-to-day activities. Sometimes the
+person who does pick up on the problem isn’t the right person to deal
+with it, or they don’t have the authority to take action. Customer
+Service should be a top priority for everyone from the front-line
+employee up to the head of service. If someone identifies a customer
+issue that isn’t getting resolved fast enough, then they need to know
+exactly what they have to do to get the problem escalated until a
+solution is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Use Feedback Wisely&lt;/strong&gt; - One thing that differentiates customer
+experience leaders is what they do with the feedback they receive,
+both positive and negative. There are typically three levels of
+response:
+&lt;em&gt;i.Customer&lt;/em&gt; - fix the customer issue a.s.a.p (within 48 hours if not
+sooner)
+&lt;em&gt;ii. Process&lt;/em&gt; - understand what processes went wrong and how they
+need to be fixed (within a month or so)
+&lt;em&gt;iii. Strategy&lt;/em&gt; - think about how customer experience issues feed
+into the overall company strategy&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Be more proactive than reactive&lt;/strong&gt; - one of the best things you can
+do is to try and figure out what is hurting customers before they
+have an opportunity to tell you. A great source of information is
+front-line employees.There is a huge difference between companies who
+are going out of their way to be customer-centric, and those who wait
+for the results of their most recent survey&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Engage with Detractors&lt;/strong&gt; - detractors doesn’t have to mean the
+formal NPS definition, but pretty much anyone who is mad at you, and
+even more so those who start tweeting or writing about it. Ask them
+if they are willing to spend some time with you to help you figure
+out what you need to do to improve. Invite them to a working lunch.
+There is an awesome story about a Chick-fil-A manager who invited a
+detractor to come to a tasting with the chef to help perfect the
+recipe.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shout about how you’re improving&lt;/strong&gt; - most companies ask for
+feedback from customers and then go off and work on it internally.
+One really cool idea for customer engagement is telling all your
+customers about how you are using their feedback to improve, maybe
+through a blog, tweets etc. Virgin Media is a great example here,
+&lt;a class="reference external" href="http://www.virginmedia.com/nps/BillingEnquiries.html"&gt;creating a
+website&lt;/a&gt; for
+telling their customers about all the customer initiatives they are
+working on thanks to their feedback.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Be known for being a customer advocate&lt;/strong&gt; - I have an American
+Express card and I love it. Why? Because I know that Amex has my
+back, and I know it because I see it every day and every time I
+interact with them. Last year I was hit up for about $4,000 USD of
+fraud on my card, but resolving it was the most painless process
+imaginable.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Passionate Employees&lt;/strong&gt; - This goes without saying, however I have
+worked with far too many supposedly ‘customer-centric’ companies to
+know that this doesn’t always happen. I am amazed by the number of
+people who expect first class customer results, but then hire the
+first person who comes along, pay them terribly and treat them even
+worse. Zappos knows exactly what they are doing in this regard and
+they are definitely a role model.&lt;/li&gt;
+&lt;/ol&gt;
+</summary><category term="customer-experience"></category><category term="10ideas"></category></entry><entry><title>Information &amp; Uncertainty</title><link href="https://simonb83.github.io/first-blog-post.html" rel="alternate"></link><published>2015-02-25T00:52:00-06:00</published><updated>2015-02-25T00:52:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-25:first-blog-post.html</id><summary type="html">&lt;p&gt;One of the most surprising and interesting results of the digital age is
+how information is intrinsically linked to uncertainty and entropy.&lt;/p&gt;
+&lt;p&gt;Of course for this to make sense, we need to be careful about how we
+define what we mean by information, separating it from any subjective
+interpretation, so that the results are applicable to any system in
+which some type of message is transmitted from one point to another.&lt;/p&gt;
+&lt;p&gt;Claude Shannon, the father of Information Theory, said in the
+introduction to his seminal paper A Mathematical Theory of
+Communication:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;Frequently the messages have meaning; that is they refer to or are
+correlated according to some system with certain physical or
+conceptual entities. These semantic aspects of communication are
+irrelevant to the engineering problem.&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;The problem is that in trying to place meaning or value on a particular
+message we must, inevitably, take the perspective of the receiver.&lt;/p&gt;
+&lt;p&gt;A message saying, “the cat is in the bag” would probably, out of
+context, be pretty meaningless to most people. However, suppose Alice
+sends this message to Bob and in advance they have agreed that this
+phrase is code for “The plan is going ahead. Send $10,000 by 10pm
+tonight”. Then in this case, there is a far greater amount of value or
+meaning contained within the message.&lt;/p&gt;
+&lt;p&gt;Similarly the message “Vikaar saadab oma tervitused ja palub, et sa
+tuled korraga” would only have intrinsic meaning for someone who speaks
+Estonian.&lt;/p&gt;
+&lt;p&gt;What we would like to arrive at is a method for quantifying the amount
+of information contained in any arbitrary message, generated by any
+arbitrary system, and we can get there using the tools of Information
+Theory. It is in this context that we begin to see the surprising
+relationship between information and uncertainty.&lt;/p&gt;
+&lt;p&gt;There are, in fact, two different schools of Information Theory:
+Classical Information Theory developed by Claude Shannon, and
+Algorithmic Information Theory developed by Ray Solomonoff, Andrey
+Kolmogorov and Gregory Chaitin.&lt;/p&gt;
+&lt;p&gt;We will look at both of these in turn.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Classical Information Theory&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;Claude Shannon developed his core ideas while studying communication
+channels, which&lt;/div&gt;
+&lt;div class="line"&gt;can be represented very simply and generically with the following
+diagram:&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img alt="Shannon Channel" src="https://simonb83.github.io/images/channel_diagram.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Descriptively, for any such channel&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;We start with a source, for instance a piece of English text, some
+music or a picture&lt;/li&gt;
+&lt;li&gt;The source is encoded according to certain rules whereby each
+character or element of the source is mapped to a new symbol from a
+well-defined set of possible symbols, called the symbol space&lt;/li&gt;
+&lt;li&gt;We transmit the encoded message through some channel, which could be
+digital, visual etc., and which may be subject to interference of
+from a source of noise&lt;/li&gt;
+&lt;li&gt;On the receiving end, knowledge of the symbol space is then used to
+decode the message back into a form recognizable to the receiver.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;One of the things Shannon was interested in understanding was how many
+bits are needed to represent and transmit a given message.&lt;/p&gt;
+&lt;p&gt;Previously, Ralph Hartley had arrived at a measure of information:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{equation*}
+H=nlogS
+\end{equation*}
+&lt;/div&gt;
+&lt;p&gt;where H is the amount of information, S is the symbol space and n is the
+number of symbols being transmitted.&lt;/p&gt;
+&lt;p&gt;From this equation we can see that the amount of information H, grows in
+line with the size of the symbol space. Why might this be?&lt;/p&gt;
+&lt;p&gt;Suppose we have a very simple system in which all we wish to communicate
+is a Go or Stop message. Here the Symbol Space can be thought of has
+having only two possibilities, say ‘1’ or ‘0’, and so in order to
+transmit our message we only need 1 bit of information.&lt;/p&gt;
+&lt;p&gt;Now suppose that we wish to expand our set of possible messages to have
+three options: Go Now, Go Tomorrow, Don’t Go, i.e. a symbol space of
+size 3.&lt;/p&gt;
+&lt;p&gt;In this case, 1 bit of information is no longer enough, and in fact we
+would need at least 1 additional bit in order to be able to reliably
+transmit any message, i.e.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Go Now = 10&lt;/li&gt;
+&lt;li&gt;Go Tomorrow = 01&lt;/li&gt;
+&lt;li&gt;Don’t Go = 00&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here we are already beginning to see an intuitive link between the
+amount of information and the amount of uncertainty about the message.
+With a symbol space of size 2, there is a 50% chance of being able to
+predict the next bit, whereas with a symbol space of size 3 there are
+more choices and hence a lower possibility of predicting what comes
+next.&lt;/p&gt;
+&lt;p&gt;However this model assumes that each symbol is equally likely. What
+Claude Shannon did was to extend this by understanding that, in the real
+world, not all choices are equally likely.&lt;/p&gt;
+&lt;p&gt;For example in the English language, the letters x, y and z are far less
+likely to appear than the letters a, e or m. Furthermore, the next
+letter can actually depend on the previous letter or even the previous
+group or letters, so q is almost always followed by u, cl is going to be
+followed by a vowel etc.&lt;/p&gt;
+&lt;p&gt;Shannon arrived at a definition for what he called the entropy of a
+message:&lt;/p&gt;
+&lt;div class="math"&gt;
+\begin{align*}
+H = -\\sum\_{i}^{}N log {p}\_{i}
+\end{align*}
+&lt;/div&gt;
+&lt;p&gt;where &lt;span class="math"&gt;\({p}\_{i}\)&lt;/span&gt; is the probability of the ith bit in the message.&lt;/p&gt;
+&lt;p&gt;Shannon saw that the information content of a message is fundamentally
+linked to the uncertainty associated with the message. In fact we can
+see that entropy, and hence information content, are maximised when all
+probabilities are equally likely.&lt;/p&gt;
+&lt;p&gt;Perhaps an easier way to see this intuitively is through another core
+idea of Information Theory, that of compression.&lt;/p&gt;
+&lt;p&gt;In recognizing that the letters, groups of letters and words in the
+English language are not all as likely to appear, we begin to see the
+possibilities for compression. In fact most people are already very
+familiar with the idea of compression, &lt;em&gt;fr nstnc by rdng th nd f ths
+sntnc&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The fundamental idea is that, the less random a message is, the more it
+can be compressed, and hence the less amount of information is needed to
+store and transmit it.&lt;/p&gt;
+&lt;p&gt;Take the following two sentences:&lt;/p&gt;
+&lt;p&gt;A: “word word word word word word word word word word word word”&lt;/p&gt;
+&lt;p&gt;B: “sbrgmdopbrlevgawglscjwhmoyucsaxjro peig bhzs kcttk oidomnfr”&lt;/p&gt;
+&lt;p&gt;Both are 59 characters long, however A can be compressed for
+transmission to “word 12 times”, i.e. only 13 characters or less than a
+quarter of its original length, whereas B is just a random mix of
+letters and so all 59 original characters would need to be transmitted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Algorithmic Information Theory&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We will go into far less detail regarding algorithmic information
+theory, however it is interesting to see how some very similar
+interpretations arise.&lt;/p&gt;
+&lt;p&gt;Whereas Shannon developed his ideas by thinking about communication
+channels, Algorithmic Information Theory is more concerned with the
+relationship between computation and information.&lt;/p&gt;
+&lt;p&gt;A core definition of Algorithmic Information theory states that ‘a
+binary string is said to be random if the Kolmogorov complexity of the
+string is at least the length of the string’&lt;sup&gt;1&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The Kolmogorov complexity, K, shares many properties with Shannon’s
+entropy, S. For a given string, K is defined as being its&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;em&gt;shortest description p on a Universal Turing machine U:sup:`2`&lt;/em&gt;&lt;/blockquote&gt;
+&lt;p&gt;Fundamentally this is a measure of the amount of computing resources
+needed to specify the string.&lt;/p&gt;
+&lt;p&gt;More informally, we might say that given a standardized computing
+framework (such as a programming language), the Kolmogorov complexity is
+the length of the shortest program required to represent or describe the
+string.&lt;/p&gt;
+&lt;p&gt;Once again we return to the idea of random and non-random strings. Given
+the two strings:&lt;/p&gt;
+&lt;p&gt;A: “1111111111111111111111111111111111111111”&lt;/p&gt;
+&lt;p&gt;B: “0001000101011100101011101100001000010011”&lt;/p&gt;
+&lt;p&gt;Both have the same length, however A could be represented as ‘1 40
+times’, whereas B has no other description than simply writing down the
+string itself.&lt;/p&gt;
+&lt;p&gt;Here we can see the link with Classical Information Theory. Shannon's
+entropy, which is a measure of information and the number of bits needed
+to represent a string, increases with uncertainty. Similarly, random
+strings are also more complex and so require more computing power or
+resources to represent them.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://en.wikipedia.org/wiki/Algorithmic_information_theory%23Precise_definitions"&gt;http://en.wikipedia.org/wiki/Algorithmic_information_theory#Precise_definitions&lt;/a&gt;
+&lt;a class="reference external" href="http://www.hutter1.net/ait.htm"&gt;http://www.hutter1.net/ait.htm&lt;/a&gt;&lt;/p&gt;
+&lt;script type='text/javascript'&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="information-theory"></category><category term="maths"></category><category term="uncertainty"></category></entry><entry><title>Crypto-currencies and the future of payments - Part I</title><link href="https://simonb83.github.io/crypto-currencies-and-the-future-of-payments-part-i.html" rel="alternate"></link><published>2015-02-23T16:50:00-06:00</published><updated>2015-02-23T16:50:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-23:crypto-currencies-and-the-future-of-payments-part-i.html</id><summary type="html">&lt;p&gt;Recently I have been trying to understand the ideas behind Bitcoin and
+other crypto-currencies and to think about what they might mean in the
+long-term for more traditional payments companies.&lt;/p&gt;
+&lt;p&gt;The Bitcoin protocol has some pretty neat ideas behind it and is
+generating a lot of interest and excitement. Something that makes it
+particularly cool is that, more than being purely transactional, it is a
+politically-independent alternative currency with no central controlling
+body.&lt;/p&gt;
+&lt;p&gt;However, payments is about so much more than just the transfer of money
+(or other forms of value) between people, so there is a lot more work
+that needs to be done before Bitcoin (or another crypto-currency) could
+seriously start to challenge existing mechanisms like payment cards.&lt;/p&gt;
+&lt;p&gt;Here is a draft version of a white paper I have been working on,
+analysing the payments value chain and how it might possibly be
+disrupted by a crypto-currency:&lt;a class="reference external" href="https://dl.dropboxusercontent.com/u/98312054/Cryptocurrencies%2C%20Block%20chains%20%26%20the%20Future%20of%20Payments.pdf"&gt;Cryptocurrencies, Block chains &amp;amp; the
+Future of
+Payments?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I think a fair summary of my current thinking is that there is too much
+additional value provided by banks and card issuers, especially to
+consumers, that is not currently offered by Bitcoin.&lt;/p&gt;
+&lt;p&gt;In particular, until things like lending, consumer protection through
+mechanisms like chargebacks, and maybe even rewards are integrated into
+crypto-payment solutions, I really can't see them disrupting payments
+for normal, every-day transactions.&lt;/p&gt;
+&lt;p&gt;There are, potentially, some pretty interesting hybrid solutions which
+incorporate the best of both worlds, and I discuss some of these
+alternatives in the paper.&lt;/p&gt;
+&lt;p&gt;Of course it's more than likely that I'm wrong. My intention is to
+discuss some of my ideas as well as other, alternative viewpoints, in
+future posts.&lt;/p&gt;
+</summary><category term="bitcoin"></category><category term="crypto-currencies"></category><category term="payments"></category></entry><entry><title>10 Ideas for a better Airline Customer Experience</title><link href="https://simonb83.github.io/10-ideas-for-a-better-airline-customer-experience.html" rel="alternate"></link><published>2015-02-13T16:45:00-06:00</published><updated>2015-02-13T16:45:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-13:10-ideas-for-a-better-airline-customer-experience.html</id><summary type="html">&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;strong&gt;Bag management technology&lt;/strong&gt; - bags tagged with RFID chips which are
+scanned as bags are loaded onto and taken off the aircraft. It would
+be awesome to receive a message as you board saying &amp;quot;Don't worry,
+your bag is now on-board the plane&amp;quot;, and then another when you get
+off letting you know when your bag is on its way to you to be
+collected&lt;/li&gt;
+&lt;li&gt;Other types of &lt;strong&gt;entertainment options&lt;/strong&gt; - sometimes I have been on a
+flight and unexpectedly finished the book I'm reading (maybe due to
+an unexpected delay). It would be great to have the option of
+borrowing another book while on board, perhaps electronically.&lt;/li&gt;
+&lt;li&gt;More &lt;strong&gt;relevant in-flight shopping&lt;/strong&gt; - I have always found in-flight
+shopping options to be totally uninteresting. Perhaps I could order
+my duty free (or other items) on the plane and then have it waiting
+for me when I get off at the other end. This way I wouldn't have to
+worry about carrying it until I get to my destination.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boarding process&lt;/strong&gt; - this is the big one to solve. Maybe dedicated
+queuing lanes per boarding group would work, or maybe randomized
+boarding with 4 seats at a time being displayed on a board calling up
+the next 4 people and eliminating the queues. Probably the most
+important challenge to solve in my opinion.
+(&lt;a class="reference external" href="http://www.wired.com/2014/11/whats-boarding-airplanes-takes-forever/"&gt;http://www.wired.com/2014/11/whats-boarding-airplanes-takes-forever/&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Personalized offers / pricing&lt;/strong&gt; - I typically always fly at the
+same times of year on the exact same route. However I can't ever
+remember having received some type of personalized email telling me
+about the best prices for flights around those times of year.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pick meal at check-in time&lt;/strong&gt; - when I check in online, I would love
+to see what the two food options will be, and maybe make my selection
+at that time. Maybe I could also pay more at this time to get a more
+premium selection? Or pay at check-in to get a better wine selection?&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Immigration guides&lt;/strong&gt; - Immigration is always a pain. All you want
+to do is get through as soon as possible. Once I book a flight it
+would be great to receive an email with a guide to the destination
+airport and immigration process: average wait times, what forms I
+will need to have filled out, guide on how to fill them out, how long
+the walk is to immigration etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Live updated immigration wait times&lt;/strong&gt; - provide live information on
+immigration average wait times as the plane lands, just like a
+weather report&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Overhead locker space&lt;/strong&gt; - another part of the process that stresses
+me out. It always feels so unfair when I see a family with 4 enormous
+suitcase-sized bags as their 'carry-on' luggage. Another hard one to
+fix. Maybe people who travel with smaller carry on luggage could get
+some sort of discount or incentive. Or reduce handheld luggage
+allowance but increase checked luggage allowance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;In-flight mood lighting&lt;/strong&gt; - on over-night flights when it is near
+landing time and lights are switched back on to full strength, I
+already feel pretty bad on waking up due to jet-lag, and the bright
+lights don't help. Some sort of more gentle wake-up maybe with blue
+tinted LED lighting would be much more pleasant. I have heard that
+Qatar airlines already does something like this.&lt;/li&gt;
+&lt;/ol&gt;
+</summary><category term="10ideas"></category><category term="customer-experience"></category></entry><entry><title>10 Ideas for Creating New Connections</title><link href="https://simonb83.github.io/10-ideas-for-creating-new-connections.html" rel="alternate"></link><published>2015-02-11T02:53:00-06:00</published><updated>2015-02-11T02:53:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-11:10-ideas-for-creating-new-connections.html</id><summary type="html">&lt;ol class="arabic simple"&gt;
+&lt;li&gt;“Dinner from around the world” club – invite 5 people you know (who
+don’t know each other) from different countries to dinner, each
+person has to bring a dish from their home country.&lt;/li&gt;
+&lt;li&gt;“Degrees of connectivity” – choose a country at random from a world
+atlas; choose a city at random from that country. The aim is to get
+connected to someone who lives in that city. Ask someone you know if
+they could connect you with someone who might be able to help etc.
+Capture and publish all new connections made.&lt;/li&gt;
+&lt;li&gt;Build a website where people can post their networking requests (i.e.
+who they would like to get in touch with and why), and other people
+can come along and see if they can help out. You can earn
+points/credibility by creating connections, or lose credibility by
+only asking for help and not helping others.&lt;/li&gt;
+&lt;li&gt;“Speed networking” – organize event at a bar, anyone can sign up, you
+get 2-3 minutes to introduce yourself and then move on to the next
+person.&lt;/li&gt;
+&lt;li&gt;“Business card raffle” – find a location to collect business cards
+(can even just be bit of paper with contact details) i.e. coffee
+shop. When enough cards have been collected, pair people up randomly
+who then have to meet over coffee. Make sure rules are clear for
+people who leave their cards.&lt;/li&gt;
+&lt;li&gt;“Virtual business card raffle” – for a group of interested people
+i.e., a LinkedIn or other group, pair them up randomly and the pairs
+have to contact each other and learn more about each other by email /
+skype / phone etc.&lt;/li&gt;
+&lt;li&gt;“Pay it forward coffee” – offer to pay for coffee for the first
+person who responds to a post / blog / tweet etc. Meet up and get to
+know them. They pay you back by doing the same thing etc. Capture all
+new connections made on a simple website (could be quite cool
+visually).&lt;/li&gt;
+&lt;li&gt;“Pop-up networking” – in fairly central public area, create pop-up
+event around lunchtime where anyone can drop by to meet other people.
+Consider having a specific theme to help target to right individuals
+i.e., tech, sports, bloggers etc.&lt;/li&gt;
+&lt;li&gt;Create a website / Linkedin / Facebook group for your area where
+people can publish the biggest challenge they are currently trying to
+solve (professional, personal project, life goal etc.). Others can
+come along and contact if they think they can help.&lt;/li&gt;
+&lt;li&gt;Build an app that lets people capture their route to work and/or
+other routes they frequently take; publish anonymized route maps; let
+other people place geo-tagged requests for knowledge, skills etc.&lt;/li&gt;
+&lt;/ol&gt;
+</summary><category term="10ideas"></category><category term="networks"></category></entry><entry><title>Traffic Modeling Part I</title><link href="https://simonb83.github.io/traffic-modeling-part-i.html" rel="alternate"></link><published>2015-02-07T13:00:00-06:00</published><updated>2015-02-07T13:00:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2015-02-07:traffic-modeling-part-i.html</id><summary type="html">&lt;p&gt;One of my personal projects for the beginning of this year was to get
+more comfortable with Python in preparation for (maybe) doing a Data
+Science course of some kind. However I knew that just trying to work
+through theory wouldn’t be very effective, and instead wanted to play
+around with an actual problem as a learning device.&lt;/p&gt;
+&lt;p&gt;So, a few weeks ago when I was stuck waiting at a particularly bad set
+of traffic lights near my house and thinking about how bad the timing
+seemed to be, I hit upon an idea for doing something in Python: modeling
+the behavior of traffic at a traffic light.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Quick disclaimer:&lt;/em&gt; the only thing I really wanted to achieve was to
+improve in Python, so I make no claim as to the accuracy of any models,
+assumptions or results when it comes to actual traffic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Model 1: Single Car arriving per interval&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The first version of my model was a very-simple one, looking at single
+cars arriving at a light during 1-minute intervals and calculating the
+average car waiting time.&lt;/p&gt;
+&lt;p&gt;I created a simple TrafficLight class with two basic properties:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;greenTime being the number of seconds the light is green&lt;/li&gt;
+&lt;li&gt;redTime the number of seconds the light is red&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and for simplicity I assumed that greenTime + redTime = 60&lt;/p&gt;
+&lt;p&gt;I modeled car arrival time as a Uniform random variable on [0,60] (i.e.,
+each individual car is equally likely to arrive at any time during the
+minute interval.)&lt;/p&gt;
+&lt;p&gt;I ran simulations for greenTime starting at 0.6 seconds, and in
+increments of 0.2 seconds (up to 59.4), and for each greenTime
+calculated the average for 20 independent car arrival times.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/traffic_model_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The results are not that surprising. When the greenTime % is low, then
+the average wait time is around 30 seconds. We would expect this because
+the total redTime is approximately 60 seconds, and the expected car
+arrival time is at 30 seconds, so on average each car would be likely to
+wait 30 seconds before the light turns green again.&lt;/p&gt;
+&lt;p&gt;Similarly, we can see that when the green/red proportion is 50-50, the
+average waiting time is somewhere between 5 and 10 seconds. In this
+case, we would expect half the cars to arrive between 0-30 with a wait
+time of 0, and half to arrive between 30-60 with an average wait time of
+15 seconds, leading to a global average of 7.5s.&lt;/p&gt;
+&lt;p&gt;Finally, when the light is green nearly all of the time, the average
+wait time is around 0 seconds, again as we would expect.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Model 2: Multiple cars arriving per interval&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Here I move on to a more complex case where multiple cars can arrive in
+a given 60-second interval.&lt;/p&gt;
+&lt;p&gt;I model cars arriving as a Poisson Random Variable, and again look at
+average car waiting time based on three variables:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Car arrival rate: Between 2 and 38 per minute&lt;/li&gt;
+&lt;li&gt;Green time proportion: % of 60-second interval traffic light is green&lt;/li&gt;
+&lt;li&gt;Car pass rate: the number of cars that can pass the light per second
+when it is green&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;First we plot car arrival rate vs. average waiting time, for different
+values of the greenTime percentage.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/traffic_model_2A.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Again the results are not so surprising. As the car arrival rate
+increases, the average wait time increases, with the gradient determined
+by the % of the interval for which the light is green.&lt;/p&gt;
+&lt;p&gt;The picture is pretty similar if we vary the value of car pass rate
+instead of greenTime %, although with different gradient values.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/traffic_model_2B.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Model 3: Multiple cars arriving per interval + blocked junction&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For the next iteration, I took Model 2 and added in an extra factor:
+junction blocking.&lt;/p&gt;
+&lt;p&gt;From personal experience (where I live), I have seen that in heavy
+traffic (i.e. high car arrival rate), traffic junctions can often become
+blocked as cars either remain stationary across the junction when their
+light turns red, or continue to pass after the light turns red and hence
+end up blocking the oncoming traffic.&lt;/p&gt;
+&lt;p&gt;I model this using a blocking probability, p, so when cars arrive at the
+light then with probability p, the junction is blocked and so even if
+the light is green, then all cars must wait for the full 60 seconds
+(greenTime + redTime) before they have the possibility of advancing (or
+again being blocked with probability p).&lt;/p&gt;
+&lt;p&gt;In this example I assume that if the junction is blocked, then the block
+lasts for the full greenTime.&lt;/p&gt;
+&lt;p&gt;[Note: in both Models 2 and 3, I am assuming that all the cars arrive at
+the start of the 60 second interval.]&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image4" src="https://simonb83.github.io/images/traffic_model_3_30.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here we plot Average car waiting time vs. Car arrival rate for different
+values of p, the blocking probability, all for the case where the light
+is green for 30 seconds.&lt;/p&gt;
+&lt;p&gt;As we would expect, average waiting time increases substantially as the
+probability of the intersection being clocked increases, but also
+variability in waiting time (around the best fit line) also increases
+quite dramatically.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Model 4 Part I: Minute-by-minute simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In the next iteration, I looked at a minute-by-minute simulation over
+the course of a one-hour period.&lt;/p&gt;
+&lt;p&gt;The rough procedure for each one-minute interval is:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Simulate new number of cars, X, that arrive and join the queue by
+drawing from a Poisson distribution&lt;/li&gt;
+&lt;li&gt;Calculate the number, Y, of cars that pass the traffic light based
+upon traffic conditions&lt;/li&gt;
+&lt;li&gt;Calculate the average wait time for the cars passing in that period&lt;/li&gt;
+&lt;li&gt;Update the ‘new’ queue of cars to reflect the situation after that
+period.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I also modified some of my assumptions regarding the traffic flow:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;The rate at which cars can pass a green light decreases as the
+traffic gets heavier – based on personal observation, what I see is
+that the heavier the traffic, the more people try and do things like
+cut across lanes at the last second to turn etc., and so overall
+everyone advances more slowly&lt;/li&gt;
+&lt;li&gt;The probability that other cars block the junction on a green light
+also increases with traffic density: again in heavier traffic, it is
+more likely that cars will end up blocking when their corresponding
+light turns red&lt;/li&gt;
+&lt;li&gt;If cars do block the junction, then it is not for the whole of the
+green-light period, but for a varying proportion of time&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In this model we use a new model, Car, with a waitTime property to keep
+track of how long each cars waits before it passes.&lt;/p&gt;
+&lt;p&gt;I defined three types of traffic conditions, Light, Medium &amp;amp; Heavy as
+follows:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Light Traffic:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Car arrival rate: 8 cars per minute&lt;/li&gt;
+&lt;li&gt;Car pass rate: 1 car per second when the traffic light is green&lt;/li&gt;
+&lt;li&gt;Blocking probability: 0.05&lt;/li&gt;
+&lt;li&gt;Blocking time: 5% of the green light period&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Medium Traffic:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Car arrival rate: 12 cars per minute&lt;/li&gt;
+&lt;li&gt;Car pass rate: 0.9 car per second when the traffic light is green
+(90% of normal rate)&lt;/li&gt;
+&lt;li&gt;Blocking probability: 0.2&lt;/li&gt;
+&lt;li&gt;Blocking time: 20% of the green light period&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Heavy Traffic:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Car arrival rate: 20 cars per minute&lt;/li&gt;
+&lt;li&gt;Car pass rate: 0.72 car per second when the traffic light is green
+(72% of normal rate)&lt;/li&gt;
+&lt;li&gt;Blocking probability: 0.45&lt;/li&gt;
+&lt;li&gt;Blocking time: 50% of the green light period&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I divided the 60 minute period into five different sub-periods:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;5 mins of Light traffic&lt;/li&gt;
+&lt;li&gt;15 mins of Heavy traffic&lt;/li&gt;
+&lt;li&gt;20 mins of Medium traffic&lt;/li&gt;
+&lt;li&gt;15 mins of Heavy traffic&lt;/li&gt;
+&lt;li&gt;5 mins of Light traffic&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For each 1-minute period the program adds a new number of cars to the
+waiting queue, based upon the arrival rate, and uses a runTraffic
+function to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Model the probability that the intersection is blocked&lt;/li&gt;
+&lt;li&gt;Calculate the number of cars that can pass&lt;/li&gt;
+&lt;li&gt;Update the wait time for each car that passes&lt;/li&gt;
+&lt;li&gt;Calculate the average wait time for the cars that passed in that
+period&lt;/li&gt;
+&lt;li&gt;Remove the passed cars from the queue&lt;/li&gt;
+&lt;li&gt;Update the wait time for each of the cars still in the queue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note regarding waiting times:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For each minute interval, for the cars that do not pass the light, we
+add 60 seconds to their total wait time.&lt;/p&gt;
+&lt;p&gt;For cars that do pass the light in a given interval, I originally added
+0 seconds to their wait time, effectively assuming that once the light
+turns green all cars that are going to pass do so immediately.&lt;/p&gt;
+&lt;p&gt;However this assumption is not realistic, and so I changed this by
+dividing the light greenTime by the number of cars that pass, taking
+into account any blocking time, and assuming that these cars pass
+uniformly in that interval.&lt;/p&gt;
+&lt;p&gt;Finally, I run the simulation 1000 times and look at average results per
+minute for&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Number of cars still waiting in the queue&lt;/li&gt;
+&lt;li&gt;Number of cars passing per minute&lt;/li&gt;
+&lt;li&gt;Average car waiting time&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="image5" src="https://simonb83.github.io/images/traffic_model4_numCars.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Regarding the size of the traffic queue, unsurprisingly we see the
+number of waiting cars around 0 when the traffic is Light or Medium and
+pretty much all cars are able to pass in the given time, and the size of
+the queue steadily increases to a maximum of around 12 or 13 cars in
+heavier traffic.&lt;/p&gt;
+&lt;p&gt;In terms of passing cars, we see fairly steady (but different) pass
+rates in each of the traffic conditions, plus a little bit of noise
+being generated by the blocking probabilities.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image6" src="https://simonb83.github.io/images/traffic_model4_avgTime.png" /&gt;&lt;/p&gt;
+&lt;p&gt;If we look at the average waiting time per period, defined to be the
+average wait time for the cars that make it past the traffic light in
+the minute, we see large variability. In Heavy traffic conditions, in
+some of the simulations, the average waiting time reached nearly 600
+seconds, whereas the average and median statistics across all of the
+simulations are much lower at around 50 seconds.&lt;/p&gt;
+&lt;p&gt;We can get a better picture of what is going on by looking at the
+distribution of waiting times across all cars, and it turns out that
+about 75% of cars wait for less than 50 seconds, 20% wait for between 50
+and 100 seconds and less than 5% wait for more than 100 seconds.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image7" src="https://simonb83.github.io/images/traffic_model4_hist.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image8" src="https://simonb83.github.io/images/traffic_model4_hist_cum.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In a subsequent post I will explore two further improvements:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Simplifying the structure of Model 4 by introducing new classes&lt;/li&gt;
+&lt;li&gt;Creating a second-by-second simulation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Code is at: &lt;a class="reference external" href="https://github.com/simonb83/traffic"&gt;https://github.com/simonb83/traffic&lt;/a&gt;&lt;/p&gt;
+</summary><category term="python"></category><category term="coding"></category></entry></feed>

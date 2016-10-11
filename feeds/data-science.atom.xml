@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/data-science.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-10-06T18:20:00-05:00</updated><entry><title>Measuring Box Office Success</title><link href="https://simonb83.github.io/measuring-box-office-success.html" rel="alternate"></link><published>2016-10-06T18:20:00-05:00</published><updated>2016-10-06T18:20:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-06:measuring-box-office-success.html</id><summary type="html">&lt;p&gt;During a discussion with my wife about the Batman vs. Superman film from
+earlier this year, the question came up as to whether the box office
+drop from the opening to the 2nd weekend was normal, or whether it
+dropped more than it should have due to bad word of mouth.&lt;/p&gt;
+&lt;p&gt;I decided to get hold of some data from the BoxOffice Mojo website to
+try and answer this question, and it then also evolved into an exercise
+in data visualization.&lt;/p&gt;
+&lt;p&gt;The data was all obtained from BoxOfficeMojo using a couple of web
+scraping scripts. For additional details, as well as known issues, see
+more at
+&lt;a class="reference external" href="https://github.com/simonb83/DataScienceIntensive/tree/master/projects/box-office"&gt;https://github.com/simonb83/DataScienceIntensive/tree/master/projects/box-office&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="what-does-success-mean"&gt;
+&lt;h2&gt;What does success mean&lt;/h2&gt;
+&lt;p&gt;In reality we see that films can be successful in different ways
+depending on the metric we use.&lt;/p&gt;
+&lt;p&gt;If we look at box office takings for the opening weekend then, as
+expected, Sci-Fi, Action and Animated are the genres that typically
+dominate.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/box_office_image1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However if we also take budget into account, then it turns out that
+Horror films are particularly successful.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/box_office_image2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;When we look into why this might be, we see that on average Horror films
+have a budget one quarter of the size of that for Action, SciFi and
+Animated films, so it is much easier for them to make their money back.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/box_office_image3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;When we look further into budgets we see that they have increased
+steadily since the 1980s in both nominal and adjusted terms.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image4" src="https://simonb83.github.io/images/box_office_image4.png" /&gt;&lt;/p&gt;
+&lt;p&gt;At the same time, the average opening weekend takings seem to have been
+on a slight downward trend since 2000.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image5" src="https://simonb83.github.io/images/box_office_image5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This could be because the total number of films released has almost
+doubled since 2000, pushing down the box office average.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image6" src="https://simonb83.github.io/images/box_office_image6.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In terms of total takings, the vast majority of releases make less than
+$25 million in their opening weekend.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image7" src="https://simonb83.github.io/images/box_office_image7.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Whilst ‘blockbusters’ continue&amp;nbsp; to break box office records on a regular
+basis.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image8" src="https://simonb83.github.io/images/box_office_image8.png" /&gt;&lt;/p&gt;
+&lt;p&gt;On average, films drop by about 40% in Box Office takings between their
+opening and second weekends.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image9" src="https://simonb83.github.io/images/box_office_image9.png" /&gt;&lt;/p&gt;
+&lt;p&gt;That said, there are films that actually increase their box office
+takings in their second weekend, although these are typically from more
+obscure genres.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image10" src="https://simonb83.github.io/images/box_office_image10.png" /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="batman-vs-superman"&gt;
+&lt;h2&gt;Batman vs Superman&lt;/h2&gt;
+&lt;p&gt;Now we look at the Batman vs Superman film in more detail and compare
+with two specific films:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Avengers: Civil War&lt;/li&gt;
+&lt;li&gt;Batman: Dark Knight Rises&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We also use a general group consisting of 89 Sci-Fi and Action/Adventure
+films, with budget &amp;gt; 100 million USD, released since 2010.Batman vs.
+Superman performed very well in its opening weekend.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image11" src="https://simonb83.github.io/images/box_office_image11.png" /&gt;&lt;/p&gt;
+&lt;p&gt;It was also within the top 10 films with a highest grossing opening
+weekend based on our comparison group:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image12" src="https://simonb83.github.io/images/box_office_image12.png" /&gt;&lt;/p&gt;
+&lt;p&gt;However, by the second weekend it did a lot worse than its peers,
+dropping nearly 70% vs. an average drop of 50% for similar films.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image13" src="https://simonb83.github.io/images/box_office_image13.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we look at a couple of very simple scenarios for how well BvS
+could have performed in its second weekend, had it not dropped more than
+average vs. its peer group.&lt;/p&gt;
+&lt;p&gt;We find that it could have made an additional $12-30 million in its
+second weekend had it performed similar to comparative films.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image14" src="https://simonb83.github.io/images/box_office_image14.png" /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="exploratory-analysis"></category><category term="visualization"></category><category term="data-science"></category></entry></feed>

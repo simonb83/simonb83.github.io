@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/deep-learning.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-10-03T18:19:00-05:00</updated><entry><title>Newbie training errors</title><link href="https://simonb83.github.io/newbie-training-errors.html" rel="alternate"></link><published>2016-10-03T18:19:00-05:00</published><updated>2016-10-03T18:19:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-10-03:newbie-training-errors.html</id><summary type="html">&lt;p&gt;During a recent personal project I was working with Deep Learning models, and in particular trying to fine tune a CNN (AlexNet) in Caffe. At first I was getting some pretty strange, and frustrating, learning curves.&lt;/p&gt;
+&lt;p&gt;It turned out that my error was that I was that I was running a script to augment my images prior to training, but forgetting to randomize the resulting dataset.&lt;/p&gt;
+&lt;p&gt;Luckily, once I corrected this, everything started nicely converging.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image1" src="https://simonb83.github.io/images/training_fail_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image2" src="https://simonb83.github.io/images/training_fail_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image3" src="https://simonb83.github.io/images/training_fail_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image4" src="https://simonb83.github.io/images/training_fail_4.png" /&gt;&lt;/p&gt;
+</summary><category term="deep-learning"></category><category term="machine-learning"></category><category term="neural-network"></category></entry></feed>
