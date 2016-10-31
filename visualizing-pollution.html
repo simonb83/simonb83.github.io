@@ -1,0 +1,363 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/foundation.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/alt-fonts.css" />
+
+
+		<script src="https://simonb83.github.io/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+		<link href="https://simonb83.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Simon Bedford Atom Feed" />
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="https://simonb83.github.io">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+							<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+							<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+							<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+							<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+							<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+							<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="https://simonb83.github.io/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+								<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+								<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+								<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+								<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+								<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+								<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="https://simonb83.github.io/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Visualizing Pollution in Mexico City</h2>
+	<p>Mexico City, where I currently live, is well-known for its poor air quality and high levels of pollution.</p>
+<p>As for any very large city, one of the key challenges is the sheer number of cars on the road. Indeed one <a href="http://www.excelsior.com.mx/comunidad/2016/03/16/1081206">recent report</a> indicates that there are now more than 5.5 million vehicles in daily circulation within the metropolitan area, with 250,000 new vehicles added anually.</p>
+<p>One of the measures that has been taken by the authorities, introduced in 1989, tries to reduce both traffic as well as associated pollution through a program called 'Hoy No Circula' (literally 'Does Not Circulate Today') whereby vehicles are prohibited from public circulation on a revolving basis dependent on the last digit of their license plates.</p>
+<p>In practice, the digits are grouped into pairs so that on one day cars with license plates ending in 1 &amp; 2 are prohibited, on another day 3 &amp; 4 and so on.</p>
+<p>The main thing that dictates whether or not your vehicle is subject to the Hoy No Circula regulations is the outcome of mandatory emissions testing which must be carried out twice a year. Based on the test results, you are given a 'hologram' designation of 0, 1 or 2 (so called because after every test a holographic sticker is fixed to the inside of your windscreen), and cars obtaining a '0' are exempt from the program.</p>
+<p>(Brand new cars start out with an automatic '00' rating which is also exempt from Hoy No Circula, and additionally these cars do not require emissions-testing for the first 2 years of their life)</p>
+<p>Ever since moving to Mexico in 2008, I have been lucky enough to be relatively unaffacted by these restictions, aside from the twice-yearly nightmare of trying to get my car tested (a story best kept for a different day).</p>
+<p>However, in March of this year, the authorities announced that there would be extraordinary measures taken due to particularly bad and dangerous pollution levels whereby all cars, indpendent of their hologram, would by subject to the Hoy No Circula program for one day a week and one saturday every month.</p>
+<p>At first it was slightly irritating to have to get used to the rules, however necessary they were, but in the end I think many people were surprised at how quickly they adapted.</p>
+<p>More relevantly I also got to thinking about some of the underlying questions such as how bad pollution was to warrant these emergency measures, and whether or not the additional restrictions had any impact?</p>
+<p>Recently I have been wanting to practice techniques in Data Visualization, such as experimenting with different types of charts and story-telling with data, and this seemed like a perfect opportunity.</p>
+<p>Fortunately Mexico has made some quite impressive advances in recent years with regards to open data, at least in certain areas, and so it was pretty easy to get hold of some data to play with.</p>
+<p>Before going any further a quick disclaimer: this is merely an exercise in data visualization and I certainly don't claim to be evaluating the effectiveness of these measures in any scientific way.</p>
+<h3>How many cars?</h3>
+<p>A good place to start seems to be looking at the number of vehicles on the road, and how this has evolved over time. For this I was able to obtain data from the National Statistics Office on the number of registered vehicles in each federal entity.</p>
+<p>On the chart below I plot the total number registered vehicles in the area comprising the <a href="https://es.wikipedia.org/wiki/Zona_Metropolitana_del_Valle_de_M%C3%A9xico">metropolitan zone of the valley of mexico</a>, split by vehicle type:</p>
+<p><img alt="alt vehicle_growth" src="/images/pol1_num_vehicles-min.png" /></p>
+<p>As expected, cars are the most common type of registered vehicle, and the number has grown four-fold since 1980 to nearly 8 million in 2014. It is also telling how growth in cars has accelerated in the past 10 years.</p>
+<p>Between 1980 and 2005, the number of registered cars grew about 2.4% annually but between 2005 and 2014, annual growth was 10.2%!</p>
+<p>To put it another way, on average 100,000 cars were added every year between 1980 and 2005, compared to 300,000 new cars per year in the last 9 years.</p>
+<p>From the graph above it is hard to see what is going on with public transport, so below is a plot of the category on its own:</p>
+<p><img alt="alt vehicle_growth" src="/images/pol1_public_transport-min.png" /></p>
+<p>The number of public transport vehicles has also grown, more than doubling from just under 20,000 in 1980 to around 46,000 in 2014.</p>
+<p>Clearly there is something strange going on between 2000 and 2010, but if we take the data at face value, it is clear that public transport growth has lagged behind that of private vehicles, and since 2005 has grown at only 4% per year.</p>
+<p>There are many other interesting questions that could be explored for how transport has changed over the years, however this post is meant to be about pollution, so I will move on for the time being.</p>
+<p>Suffice it to say that the data backs up the report I mentioned earlier, and cars are clearly a big and growing problem for the city.</p>
+<h3>A Baseline for Pollution</h3>
+<p>The body responsible for measuring pollution in Mexico City is part of the Environment Agency and conveniently they make all of their data readily available on their website.</p>
+<p>In general there are many different metrics used for measuring air quality, but in the end I decided to focus on the Ozone levels as there was a lot of emphasis placed on these during the environmental 'contingency' earlier this year.</p>
+<p>The first step is to get some sort of a baseline for the pollution levels prior to 2016. Here is a plot of the daily average Ozone levels across the city in 2015:</p>
+<p><img alt="alt avg_2015_ozone_levels" src="/images/pol1_daily_avg_pollution_2015-min.png" /></p>
+<p>The daily data is pretty noisy, but you can still see some evidence of seasonality with October through December being, on average, slightly lower months and April and May slightly higher.</p>
+<p>However this is just the average reading which is quite heavily influenced by lower measurements at nighttime, and so to get a better sense of the overall picture, here is the daily maximum on the same axes:</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_daily_max_pollution_2015-min.png" /></p>
+<p>As with the average, the maximum Ozone measurements display a slight seasonal trend, and you can also see a pretty large gap between the average and maximum readings.</p>
+<p>The next question I looked at was how pollution levels behave throughout the course of a day:</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_hourly_2015-min.png" /></p>
+<p>Although there is quite a lot going on in this picture, I think there are a couple of interesting takeways:</p>
+<ol>
+<li>The overall pattern throughout the course of a day is similar year-round, and not that unexpected, with low Ozone levels early in the morning / late at night and higher levels during the daytime</li>
+<li>One interesting difference between months is that the Ozone levels seem to reach their peak at slightly different times of the day:<ul>
+<li><em>April - August</em>: 2pm</li>
+<li><em>February, March &amp; September - November</em>: 3pm</li>
+<li><em>January, December</em>: 4pm</li>
+</ul>
+</li>
+</ol>
+<h3>So why the additional restrictions?</h3>
+<p>Given that the decision to take the emergency measures was made in March, it seems natural to think that pollution levels must have been a lot worse during the first few months of this year compared to previous years.</p>
+<p>To look into this I compared the Ozone measurements for January - March 2015 and 2016 from a number of perspectives</p>
+<p>The first perspective involves looking at average readings from across the city.</p>
+<p>In practice, the agency responsible for pollution monitoring has a number of measuring stations placed across the city. In my analysis I only included those stations that were in use in both 2015 and 2016, resulting in a total of 33 stations.</p>
+<p>Here is a chart that looks at how the average reading for each station changed from 2015 to 2016:</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q1_compare-min.png" /></p>
+<p>It is immediately clear that for all but 4 of the measuring stations, the first quarter readings were worse on average in 2016 compared to 2015.</p>
+<p>However, once again these are averages that are heavily influenced by large portions of the day where the readings are low, and furthermore do not take into account any measure of good or bad readings.</p>
+<p>Along with the raw data, the Environment Agency also publishes a scale of what constitutes a good or bad reading, and for Ozone the scale looks like this:</p>
+<table>
+    <tr>
+        <th style="text-align:left">Category</th>
+        <th>Ozone (ppb</th>
+    </tr>
+    <tr>
+        <td>Good</td>
+        <td>0 - 70</td>
+    </tr>
+    <tr>
+        <td>Regular</td>
+        <td>71 - 95</td>
+    </tr>
+    <tr>
+        <td>Bad</td>
+        <td>96 -154</td>
+    </tr>
+    <tr>
+        <td>Very Bad</td>
+        <td>155 - 204</td>
+    </tr>
+    <tr>
+        <td>Extremely Bad</td>
+        <td>> 204</td>
+    </tr>
+</table>
+
+<p>Using these categories, another way to compare 2015 and 2016 could be to look at the number of days where the maximum measurement across the city was outside acceptable limits.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q1_compare_2-min.png" /></p>
+<p>On the face of it, 2016 doesn't seem much worse than 2015. How about instead looking at the number of times per day that readings are bad or worse based on all measurements across the city?</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q1_compare_3-min.png" /></p>
+<p>From this chart it is clearer that there were more dangerous Ozone readings in 2016 compared to 2015: the bars are generally both darker and taller.</p>
+<p>In fact, in March there were three days in a row with more than 80 bad or worse Ozone measurements across the city.</p>
+<h3>What Happened During the Contingency?</h3>
+<p>As I mentioned earlier, the additional measures required all cars to participate in the Hoy No Circula program, independent of their hologram.</p>
+<p>However during the contingency on some days the pollution levels were judged to be so bad that the restrictions were effectively doubled for those days, that is to say that four rather than just two license plate digits were included.</p>
+<p>The first thing to look at is the number of restrictions per day during the contingency period.</p>
+<p>Here the data comes from a website (<a href="http://www.hoy-no-circula.com.mx/">www.hoy-no-circula.com.mx</a>) which provides daily information on the driving restrictions. I used a web scraper to go through all of the days from the first 6 months of this year and extract information on those days where restrictions applied to cars with Hologram 0 or 00.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_restrictions-min.png" /></p>
+<p>You can see that the additional restrictions started on the 4th of April, with breaks only on Sundays until the end of June. In total there were 6 days of double restrictions.</p>
+<p>The next thing I looked at is whether Ozone levels were any better or worse in 2016 compared to 2015 during this contingency period.</p>
+<p>I used the same types of graphics as in the section above looking at the first 3 months of the year.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q2_compare-min.png" /></p>
+<p>Looking at the station averages, the picture is worse than for Jan-March, with all but two measuring stations registering an average reading worse in 2016 than 2015.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q2_compare_2-min.png" /></p>
+<p>Here both 2015 and 2016 look pretty bad, and there is not much between them.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q2_compare_3-min.png" /></p>
+<p>This is probably the most persuasive picture and you can see quite clearly that there were many more bad or worse readings across Mexico City in 2016 compared to 2015, particularly in April and May.</p>
+<h3>What about the weather?</h3>
+<p>Pollution levels are about more than just cars on the road, and it is well known that weather behaviour has a strong influence too.</p>
+<p>I did not go into much detail here, however the Environmental Agency does publish weather measurements taken across the city, and I wanted to at least look at the relationship between some weather variables and Ozone levels.</p>
+<p>Below are scatter plots looking at how Ozone readings vary with Pressure, Relative Humidity, Temperature and Wind Speed.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_weather-min.png" /></p>
+<p>The relationships between these weather variables and Ozone readings are clearly complex, although lower Ozone levels seem to be associated with lower temperatures and higher relative humidity.</p>
+<p>I also looked at the behaviour of these weather variables in the first half of 2015 and 2016. Most notably, 2016 seems to have exhibited lower atmospheric pressure than 2015, and also slightly lower relative humidity, particularly between March and June</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_weather_2-min.png" /></p>
+<h3>2016 Year-to-date</h3>
+<p>The 'contingency' ended on the 30th of June, and as of writing we are now just two months away from the end of the year. So how has the year been as whole vs. 2015, and what have the past few months looked like in terms of Ozone levels?</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_2015_v_2016-min.png" /></p>
+<p>The average levels were noticably higher in 2016 during the first half of the year, particularly between April and June, but since then, the levels have more closely mirrored 2015.</p>
+<p>However, this is not to say that dangerous levels of Ozone have disappeared. Although the overall number of bad or worse readings has decreased since June, there have been a significant number of days with multiple high measurements across the city, and the overall picture continues to look worse than last year.</p>
+<p><img alt="alt max_2015_ozone_levels" src="/images/pol1_q3_compare_1-min.png" /></p>
+<h3>Conclusion</h3>
+<p>We have seen that on many levels the Ozone pollution levels have been worse this year compared to last, even with the additional driving restrictions, and who knows how much worse the peak months could have been had the contingency not been enacted.</p>
+<p>Perhaps more worryingly, we have also seen that even in months with lower overall Ozone levels, there are still a substantial number of days with multiple measurements outside of acceptable limits.</p>
+<p>The question therefore seems to be not whether the additional driving restrictions were effective, but what more can be done year-round to help reduce dangerous levels of pollutants across the city.</p>
+<p><strong><em>Notes</em></strong></p>
+<p>More details of the data sources and accompanying code can be found on <a href="https://github.com/simonb83/mexico-pollution">GitHub</a>.</p>
+	<hr/>
+	<h6>Written by <a href="https://simonb83.github.io/author/simon-bedford.html">Simon Bedford</a> in <a href="https://simonb83.github.io/category/data-science.html">Data Science</a> on Sun 30 October 2016. Tags: <a href="https://simonb83.github.io/tag/data-science.html">data-science</a>, <a href="https://simonb83.github.io/tag/visualization.html">visualization</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/maths.html" class="tag-1">maths</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/visualization.html" class="tag-2">visualization</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-1">deep-learning</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-4">neural-network</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-1">customer-experience</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/data-science.html" class="tag-1">data-science</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="https://simonb83.github.io/theme/js/jquery.js"></script>
+		<script src="https://simonb83.github.io/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+	</body>
+</html>

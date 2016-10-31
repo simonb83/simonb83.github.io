@@ -450,7 +450,7 @@ how should different algorithms' performance be evaluated?&lt;/p&gt;
 &lt;/ol&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 
-&lt;p&gt;The code for the final CNN-based model along with a full report and presentation can be found on &lt;a href="https://github.com/simonb83/food_classification/tree/draft"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code for the final CNN-based model along with a full report and presentation can be found on &lt;a href="https://github.com/simonb83/food_classification"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;An excellent introduction to Convolutional Neural Networks for Computer Vision is the Stanford &lt;a href="http://cs231n.stanford.edu/"&gt;CS231n&lt;/a&gt; course.&lt;/p&gt;
 &lt;p&gt;The network visualizations were created using the &lt;a href="https://github.com/yosinski/deep-visualization-toolbox"&gt;Deep Visualization Toolbox&lt;/a&gt;.&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
