@@ -1,0 +1,39 @@
+.map { height: 420px; width: 90%; }
+.map-dynamic { height: 500px; width: 90%; }
+
+div.cartodb-legend.choropleth{
+	padding: 8px;
+	position: absolute;
+	left: 10px;
+	bottom: 20px;
+	width: 250px;
+}
+
+div.cartodb-legend-stack{
+	position: absolute;
+	left: 60px;
+	bottom:10px;
+}
+
+.map-dynamic div.cartodb-timeslider{
+	width: 200px;
+	bottom: 3px !important;
+	left: 0px !important;
+}
+
+.map-dynamic div.cartodb-timeslider li.time p{
+	width: 60px !important;
+	color: black;
+}
+
+.map-dynamic div.cartodb-timeslider li.last div.slider-wrapper{
+	width: 170px !important;
+}
+
+.map-dynamic div.cartodb-timeslider .slider{
+	width: 95% !important;
+}
+
+img[alt=pollution_legend]{
+	width:300px;
+}
