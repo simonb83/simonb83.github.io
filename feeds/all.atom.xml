@@ -1,5 +1,641 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-11-12T12:00:00-06:00</updated><entry><title>Visualizing Pollution in Mexico City - Part II</title><link href="https://simonb83.github.io/visualizing-pollution-part-2.html" rel="alternate"></link><published>2016-11-12T12:00:00-06:00</published><updated>2016-11-12T12:00:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-11-11:visualizing-pollution-part-2.html</id><summary type="html">&lt;p&gt;A few weeks ago I posted &lt;a href="/visualizing-pollution.html"&gt;some visualizations of pollution levels in Mexico City&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2016-11-28T15:20:00-06:00</updated><entry><title>Recurring Neural Networks and Star Trek</title><link href="https://simonb83.github.io/rnns-star-trek.html" rel="alternate"></link><published>2016-11-28T15:20:00-06:00</published><updated>2016-11-28T15:20:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-11-28:rnns-star-trek.html</id><summary type="html">&lt;p&gt;Earlier this year I wrote about &lt;a href="/machine-learning-food-classification.html"&gt;Convolutional Neural Networks (CNNs) and their applications to image classification&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As I discussed, CNNs are very powerful for image classification, giving better-than-human results in some cases, however they do not provide a singular solution to any given problem.&lt;/p&gt;
+&lt;p&gt;One limitation of CNNs is that they have no notion of time or sequences, that is to say that each prediction is totally independent of any previous predictions.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="simple_network" src="/images/rnn1_simple_network.png" /&gt;&lt;/p&gt;
+&lt;p&gt;In the diagram above, each input gives an output independent of the other inputs; one could change the order of the inputs and expect to obtain the same output.&lt;/p&gt;
+&lt;p&gt;However there are many types of problems for which we may wish to apply machine learning and neural network-based models, but where we need the ability to process and recognize time-dependent sequences.&lt;/p&gt;
+&lt;p&gt;One such example is language translation where you might try and process sentences one word at a time, and where the translation of a particular word will depend on the words that came before.&lt;/p&gt;
+&lt;p&gt;Similarly, if you want to build a model to describe a scene in an image word-by-word, then you would want the ability to take previous words into account as the model generates the description.&lt;/p&gt;
+&lt;p&gt;In fact, these sorts of sequential models are useful for many different problems in Natural Language Processing, as language is inherently sequential and highly context-dependent.&lt;/p&gt;
+&lt;p&gt;In this post I will focus on a particular application called Character Level Language modeling where the aim is to build a model capable of generating text one character at a time.&lt;/p&gt;
+&lt;p&gt;The approach used is based on supervised learning, and as such we need a training dataset. For this exercise I decided to use the complete scripts of Star Trek: The Next Generation.&lt;/p&gt;
+&lt;p&gt;As with the post on CNNs, I will try and keep the explanations relatively non-technical while still getting across the key ideas. If you just want to see the output, you can skip straight to the &lt;a href="part_3"&gt;results&lt;/a&gt; section.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="#part_1"&gt;Brief Introduction to Recurring Neural Networks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#part_2"&gt;Baseline Results Using Markov Chain Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#part_3"&gt;Star Trek Script Generation Using RNNs&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="part_1"&gt;1. Brief Introduction to Recurring Neural Networks&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Fully Connected Neural Networks&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let's start with a quick reminder of what fully-connected neural networks look like.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt neuron_2" src="/images/capstone_neuron_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The picture above depicts a single 'neuron' which at its core is nothing more than a function which:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Receives input &lt;strong&gt;&lt;em&gt;X&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Calculate the linear transform &lt;strong&gt;&lt;em&gt;wX + b&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Passes the result through an activation function, &lt;strong&gt;&lt;em&gt;&amp;sum;&lt;/em&gt;&lt;/strong&gt;, in order to produce the output of the neuron&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The idea of the activation function is to add complexity to the model and ensure that neurons do not 'fire' (produce output) all of the time, but only some of the time based on certain conditions.&lt;/p&gt;
+&lt;p&gt;The activation functions used in practice often look like these:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="activation_functions" src="/images/capstone_activation.png" /&gt;&lt;/p&gt;
+&lt;p&gt;A fully-connected neural network is created by combining many of these neurons into layers, and connecting the layers together in such a way that in each layer (except the input and output layers) every neuron is connected to every other neuron in the preceding and following layers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recurring Neural Networks&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If we were to use the neuron above for processing a sequence of inputs, $ x_1, x_2, x_3,... $, it is clear that the model cannot take into account any notion of order or context, as at each step the output is dependent only upon the current input  $ x_t $ and the internal parameters.&lt;/p&gt;
+&lt;div class="math"&gt;$$ Output_t = f(x_t) $$&lt;/div&gt;
+&lt;p&gt;What we need instead is a model that take into account both the current input  $ x_t $ as well as all of the previous inputs up until that point:&lt;/p&gt;
+&lt;div class="math"&gt;$$ Output_t = f(x_1, x_2,..., x_{t - 1}, x_t) $$&lt;/div&gt;
+&lt;p&gt;Recurring Neural Networks (RNNs) provide exactly this type of model. The simplest RNN is based on the following set-up:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="rnn_neuron_1" src="/images/rnn1_rnn_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Here the model has an internal state $ h_t $ which is updated at each time step according to a recurrence relation:&lt;/p&gt;
+&lt;div class="math"&gt;$$ h_t = f(h_{t - 1}, x_t) $$&lt;/div&gt;
+&lt;p&gt;That is to say that the hidden state at time t is a function of the previous hidden state at time t-1 along with the input $ x_t $, with $ h_{t - 1} $ and $ x_t $ being combined using learnable parameters $ W_{hh} $ and $ W_{xh} $.&lt;/p&gt;
+&lt;p&gt;The result of this combination is then passed through an activation function to generate an output.&lt;/p&gt;
+&lt;p&gt;In a vanilla Recurring Neural Network, $ tanh $ is used for the activation function, and the hidden state is calculated by:&lt;/p&gt;
+&lt;div class="math"&gt;$$ h_t = tanh( W_{hh} .  h_{t-1} + W_{xh} . x_t) $$&lt;/div&gt;
+&lt;p&gt;The prediction at time t, $ y_t $, can then be calculated from the current hidden state using a separate set of parameters:&lt;/p&gt;
+&lt;div class="math"&gt;$$ y_t = W_{yh} . h_t $$&lt;/div&gt;
+&lt;p&gt;The hidden state h, serves to maintain the 'history' of all of the inputs, as at each step the value of h is a function of all of the inputs up until that point.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Simple Example&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To try and illustrate how this can work in practice, I will use a slightly contrived example, but hopefully it will help to demonstrate how we can take advantage of the history of inputs via the hidden state.&lt;/p&gt;
+&lt;p&gt;Suppose we wish to construct a very simple timer that activates after 10 steps in time.&lt;/p&gt;
+&lt;p&gt;The function will receive 1s as input, representing single steps in time, and suppose it 'activates' once its output becomes greater than 0.5.&lt;/p&gt;
+&lt;p&gt;We can model this using the following simplified RNN unit:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="rnn_neuron_2" src="/images/rnn1_rnn_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Note that this is exactly the same as in the definition of the RNN from above, setting $ W_{hh} = 1 $, $ W_{xh} = 0.1 $, and using a step function instead of $ tanh $ as the activation function.&lt;/p&gt;
+&lt;p&gt;Setting h to initially be 0, look at what happens to the hidden state and output as each step is processed:&lt;/p&gt;
+&lt;table id="rnn_example"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Step&lt;/th&gt;
+        &lt;th&gt;Input&lt;/th&gt;
+        &lt;th&gt;Hidden State&lt;/th&gt;
+        &lt;th&gt;Output&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;-&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td&gt;-&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.10&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;2&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.20&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.30&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;4&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.40&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.50&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;6&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.60&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;7&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.70&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;8&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;0.80&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;By incorporating all of the history of the inputs into the output of the model, it is possible to obtain this time or sequence-dependent behaviour.&lt;/p&gt;
+&lt;p&gt;(Note: in practice, due to computational restraints, it is not normally possible to process all of the input in one go, and 'mini batches' of input are typically used. Thus the value of the hidden state will be based on all of the history of the current mini-batch up until that point, rather than the history of the whole sequence.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;LSTM&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I have just described what is really the simplest type of RNN unit used in practice. One of the problems with this model is that is has difficulty learning long-term dependencies within sequences.&lt;/p&gt;
+&lt;p&gt;Fortunately there are other types of Recurrent Neural Network units that are a bit more complicated to describe, but that end up being more powerful models. One such unit is called a Long Short Term Memory unit, or LSTM.&lt;/p&gt;
+&lt;p&gt;In principle, the idea is the same, whereby at each step we are just applying a recurrence relation, albeit a more complex one. Without going too much into the mathematical details, the basic setup is the following.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="lstm_1" src="/images/rnn1_lstm_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Whereas in a simple RNN we were maintaining and updating a hidden state $ h_t $ at every step, in an LSTM we keep track of two variables: the hidden state $ h_t $ along with an internal cell state $ c_t $.&lt;/p&gt;
+&lt;p&gt;The cell state works a bit like an internal memory that can 'remember' or 'forget' things as needed.&lt;/p&gt;
+&lt;p&gt;The first step is to decide how much of the previous cell state to forget. In order to do this, the LSTM looks at the incoming value $ x_t $, along with previous hidden state $ h_{t-1} $ and outputs a number between 0 and 1, where 0 means completely forget and 1 means completely remember.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="lstm_2" src="/images/rnn1_lstm_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The second step is to decide how much of the input to keep. Once again, the LSTM looks at the incoming value $ x_t $ and the previous hidden state $ h_{t-1} $ and decides which bits of information to keep, scaled by a certain factor.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="lstm_3" src="/images/rnn1_lstm_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;We are now in a position to update the cell's memory, or internal state, $ c_t $:&lt;/p&gt;
+&lt;div class="italic"&gt;New Cell State = Remembered Previous State + Kept Input&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;img alt="lstm_4" src="/images/rnn1_lstm_4.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we decide how much of the new cell state we want to output, which is based on the recently updated cell state scaled by a particular factor. The scaling factor is again based on the incoming value $ x_t $ and the previous hidden state $ h_{t-1} $.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="lstm_5" src="/images/rnn1_lstm_5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;If you're feeling a bit confused at this point, don't worry. There's a lot going on and it took me quite a long time to really get my head around this model.&lt;/p&gt;
+&lt;p&gt;The LSTM can be summarized more simply:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;There is an internal cell state, or memory, c&lt;/li&gt;
+&lt;li&gt;At each time step, the cell state is updated:&lt;ul&gt;
+&lt;li&gt;Part of the old cell state is 'forgotten'&lt;/li&gt;
+&lt;li&gt;Part of the new input is 'kept'&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The output of the cell is based on some of the internal state scaled in a certain way (i.e. only parts of the cell state become output)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="part_2"&gt;2. Baseline Results Using Markov Chain Models&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Problem Summary&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Before moving on, I want to be a bit clearer about what it is that we hope to achieve. I mentioned earlier that the aim is to build a Character Level Language model, capable of generating text.&lt;/p&gt;
+&lt;p&gt;In more simple terms, this means that we want to build a model based on individual characters, for example individual letters, spaces, punctuation marks etc., that outputs a prediction for the next character based upon the current character.&lt;/p&gt;
+&lt;p&gt;For example, if we were to start with a capital C, we might want the model to proceed as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="rnn_neuron_2" src="/images/rnn1_markov_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Data&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The data comes as a single 12 MB text file, containing formatted scripts complete with indentations, newlines, scene descriptions, stage directions etc.&lt;/p&gt;
+&lt;p&gt;As such, we would also hope that the model is capable of generating text that obeys the same formatting style:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; 7    ANGLE EMPHASIZING PICARD AND DATA
+ As Picard turns to Data:
+                PICARD
+        You will agree, Data, that
+        Starfleet&amp;#39;s instructions are
+        difficult?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+&lt;strong&gt;Markov Chain Models&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It is worth noting that different types of language generation algorithms have been around for a long time, and a quite common one is based on mathematical models called Markov Chains.&lt;/p&gt;
+&lt;p&gt;A Markov Chain is a probabalistic model which has the key property that the future is based only on the present.&lt;/p&gt;
+&lt;p&gt;For example, if you were to use a Markov Chain to model some sequence $ x_1, x_2, x_3,...,x_n $, then at any given moment $ i $, the next step $ x_{i + 1} $ is dependent only upon the current state $ x_i $.&lt;/p&gt;
+&lt;p&gt;For example, a simple dice-based board game such as Snakes &amp;amp; Ladders is an example of a Markov Chain:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It is probabilistic - your next position is based on the random outcome of a throw of the dice&lt;/li&gt;
+&lt;li&gt;Your next position is only dependent on your current position; how you got to where you are now does not make any difference&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Markov Chain Models in Practice&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Building and using a Markov Chain for generating text is actually quite simple. For example, suppose that we start with some simple training text like:&lt;/p&gt;
+&lt;p&gt;"Captain Picard and the Enterprise"&lt;/p&gt;
+&lt;p&gt;All that is required for building a character-level model is to step through the text one character at a time and create a table of all of the pairs of characters that precede one another.&lt;/p&gt;
+&lt;p&gt;For example, for the first few characters:&lt;/p&gt;
+&lt;p&gt;'' &amp;rarr; 'C'&lt;/p&gt;
+&lt;p&gt;'C' &amp;rarr; 'a'&lt;/p&gt;
+&lt;p&gt;'a' &amp;rarr; 'p'&lt;/p&gt;
+&lt;p&gt;We end up with the following table:&lt;/p&gt;
+&lt;table id="markov_freqs"&gt;
+    &lt;tr&gt;
+        &lt;th class="col1"&gt;Preceding&lt;/td&gt;
+        &lt;th class="col2"&gt;Following&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;''&lt;/td&gt;
+        &lt;td class='col2'&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;P&lt;/td&gt;
+        &lt;td class='col2'&gt;['i']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;i&lt;/td&gt;
+        &lt;td class='col2'&gt;['n', 'c', 's']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;E&lt;/td&gt;
+        &lt;td class='col2'&gt;['n']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;t&lt;/td&gt;
+        &lt;td class='col2'&gt;['a', 'h', 'e']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;C&lt;/td&gt;
+        &lt;td class='col2'&gt;['a']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;s&lt;/td&gt;
+        &lt;td class='col2'&gt;['e']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt; &lt;/td&gt;
+        &lt;td class='col2'&gt;['P', 'a', 't', 'E']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;c&lt;/td&gt;
+        &lt;td class='col2'&gt;['a']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;r&lt;/td&gt;
+        &lt;td class='col2'&gt;['d', 'p', 'i']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;h&lt;/td&gt;
+        &lt;td class='col2'&gt;['e']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;p&lt;/td&gt;
+        &lt;td class='col2'&gt;['t', 'r']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;e&lt;/td&gt;
+        &lt;td class='col2'&gt;C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;d&lt;/td&gt;
+        &lt;td class='col2'&gt;[' ', ' ']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;n&lt;/td&gt;
+        &lt;td class='col2'&gt;[' ', 'd', 't']&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td class='col1'&gt;a&lt;/td&gt;
+        &lt;td class='col2'&gt;['p', 'i', 'r', 'n']&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Generating new text is as simple as starting with a particular letter, and then using the table to identify what the next character should be at each stage. If there are multiple options we simply pick one at random.&lt;/p&gt;
+&lt;p&gt;For example, starting with the letter C, one possible output could be:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Can anteCain En teCa
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+It is also possible to do this using pairs of characters (i.e. 'Ca' &amp;rarr; 'pt', 'ap' &amp;rarr; 'ta' etc.), triplets of characters or even complete words.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some Results&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To see how well Markov Chains perform in practice, here are some results based on training the model on the complete Star Trek TNG scripts, using single characters, pairs, triplets, 4-grams and 5-grams.&lt;/p&gt;
+&lt;p&gt;In each of the following models, I attempted to generate 2,000 characters of text based upon the constructed character transition tables.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Single Character Model&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;STAR TREK: vero rintove is.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+For the single-character model, at first the output was nearly all blank spaces. This is because, due to the script formatting, there are a lot of tabs and newlines, and so as soon as the model generates a some sort of white-space, it will almos certainly continue to follow this with more blank space.&lt;/p&gt;
+&lt;p&gt;In the end I had to feed in an initial bit of text, called a 'seed' (in this case 'STAR TREK'), in order to generate anything at all, but even here it only managed a few nonsensical characters before returning only blank space.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pairs of Characters&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        RIKERTION Bould
+to the ENTINUED: (OPTICASTARD
+        Yest ashas aways fathe the ded ing to
+                                    taptand stor
+        We&amp;#39;s flicare effew am crent bel loordents.
+Borgantion afteraly, airal.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Once you start using pairs of characters, the model can output text without needing a seed, however most of it just looks like nonsense.&lt;/p&gt;
+&lt;p&gt;The model does seem to start to replicate some of the formatting, such as multiple tabs and newlines, and in some cases there are the briefest hints of Star Trek, such as &lt;em&gt;RIKERTION&lt;/em&gt;, or in other cases &lt;em&gt;DATA&lt;/em&gt; and &lt;em&gt;Borgantion&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Triplets of Characters&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;         CONTINUED: (2)
+Picard is gazing)
+        Here is walk me to various
+ands through than assador
+        alling attentitly
+        If the recommitting all right problement in he&amp;#39;s not the
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+By the time you get to using triplets of characters, most of the words are recognizably English, even if most of the sentences don't make any sense.&lt;/p&gt;
+&lt;p&gt;The formatting overall is much more script-like, and you even start to get things like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;MING STATION - ACT THREE         STAR TREK: &amp;quot;Birthrough a feelian emember One?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;which could almost be out of a Star Trek episode.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4-Grams&lt;/strong&gt; (four characters in a row)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;40   INT. REPORTER ROOM
+Similar containly
+        me. I will not serve ident made vine of his look of your has claim, Worf?
+Worf REACTS.
+            DATA&amp;#39;S VOICE
+        immediately that just station as both for Wesley which wears agony others at the cape (o.s.)
+        find here -- your name?
+Radue could did the doesn&amp;#39;t happened... so now a heavy...
+                RIKER
+                RIKER
+            (to Kareer...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Using 4-grams, things look even better, with line-numbers (in no particular order), and perhaps even some Klingon (&lt;em&gt;K'MTAR&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5-Grams&lt;/strong&gt; (five characters in a row)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                STAR TREK: &amp;quot;The Pegasus&amp;quot; REV. 7/17/92 - ACT FIVE                        KAMIE                USS ENTERPRISE - TRANSPORTER EFFECT stars
+still accumulated the
+window operation&amp;#39;s birth...
+
+       36.
+47   OMITTED
+
+39A
+39B  ON ALBERT, the faction... she&amp;#39;s heard so much a device. Finally nods. Picard leans closer... It won&amp;#39;t belonged to get them.
+
+No answer would
+        narrow-minder of Honor&amp;quot; - REV. 01/26/93 - ACT THREE                          23.
+
+14   INT. MAIN BRIDGE
+
+The computer
+        claimed this place.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Sequences of 5-characters was the most complex Markov Chain model I built, and I think it is pretty amazing how much complexity such a simple model can generate.&lt;/p&gt;
+&lt;p&gt;Even though the sequences of words don't really mean anything, the model is capable of generating pretty-well formatted output, it includes a title, numerous line numbers etc. &lt;/p&gt;
+&lt;p&gt;Given that such a simple and easy-to-build model can perform this well, we would need an RNN-based model to do significantly better given the increased complexity and required computational power.&lt;/p&gt;
+&lt;h3 id="part_3"&gt;3. Star Trek Script Generation Using RNNs&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Training Setup&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In order to train an RNN using the Star Trek data, I used Torch along with a &lt;a href="https://github.com/jcjohnson/torch-rnn"&gt;library&lt;/a&gt; created by Justin Johnson from Stanford University, running on an Amazon Web Services GPU g2.2x Large instance.&lt;/p&gt;
+&lt;p&gt;I experimented with a number of network parameters, including trying both simple RNN as well as LSTM units. The best results were based on a network with the following setup:&lt;/p&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Basic unit:&lt;/td&gt;
+        &lt;td&gt;LSTM&lt;/td&gt;
+        &lt;td&gt;See overview above.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Number of layers:&lt;/td&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td&gt;This is the depth of the network, meaning there were three layers stacked on top of each other.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;RNN Size:&lt;/td&gt;
+        &lt;td&gt;256&lt;/td&gt;
+        &lt;td&gt;This is the number of hidden units in each layer of the network.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Sequence Length:&lt;/td&gt;
+        &lt;td&gt;200&lt;/td&gt;
+        &lt;td&gt;The size of the sequence used during training; as I mentioned earlier it is not feasible to train on all of the text at the same time. Here the network is trained on sequences of 200 characters.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The remaining network parameters were based on defaults as described &lt;a href="https://github.com/jcjohnson/torch-rnn/blob/master/doc/flags.md#preprocessing"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Loss Curve&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As with any suprvised machine learning problem, we already have the 'answer' that the network should output in any given situation, in this case the next character in a sequence.&lt;/p&gt;
+&lt;p&gt;During training the idea is to adjust the internal network weights in such a way as to make the actual and desired output as close together as possible. In order to do this we use a loss function that captures how 'wrong' the network is, and so the goal during training is to minimize this loss.&lt;/p&gt;
+&lt;p&gt;It is quite common to visualize how the loss evolves over time during training in order to get an idea of how the network is behaving and evolving, whether it is heading in the right direction and whether or not it seems to be improving on its results or has reached some kind of plateau (convergence).&lt;/p&gt;
+&lt;p&gt;Below is such a visualization for the best network mentioned above. The red line represents the loss as calculated on the training data being used at each iteration. The blue line represents the loss as calculated on a separate set of data used exclusively for testing or validation purposes.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="rnn_neuron_1" src="/images/rnn1_loss_curve.png" /&gt;&lt;/p&gt;
+&lt;p&gt;You can see that the training loss starts out relatively high and decreases pretty quickly within the first 5,000 iterations. Both the training and validation loss seem to have leveled out somewhere between iteration 5,000 and 10,000, and they only improve very slightly thereafter.&lt;/p&gt;
+&lt;p&gt;You can also see that the red and blue lines are pretty close together. This is a good thing as it is an indicator that the model is not overfitting too much on the training data and is able to generalize reasonably-well to the validation data.&lt;/p&gt;
+&lt;p&gt;The noise in the training loss is due to the fact that we are training the model using only subsets of input data, rather than all at the same time. You can imagine that for any given sequence of characters, the internal weights that minimize the output loss will probably not be the same set of weights that optimize the loss for any other sequence.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Generating Text&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So what happens when we generate some text using the RNN (LSTM) model?&lt;/p&gt;
+&lt;p&gt;Before looking at some examples, I need to mention another parameter we can control while sampling called the 'temperature', which is in the range $ 0 &amp;lt; temperature &amp;lt;= 1 $.&lt;/p&gt;
+&lt;p&gt;In effect the temperature controls how risky or varied the model is in predicting new characters. When the temperature is low, the model tends to make 'safer' but more boring predictions. At high temperatures, the model will take more chances and make more varied predictions, but is also more likely to make mistakes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Temperature = 1&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;49   ANOTHER ANGLE (OPTICAL)
+
+    The outing is enraged, served. Worf, Riker moving
+    over on a silent monitor in rage... he&amp;#39;s admired with
+    various memory program. Then on his computer connects.
+
+                    BEVERLY
+            And now! I don&amp;#39;t reveal it
+            off.
+
+                    WORF
+            Of course I small provide them.
+
+                    KYLE
+            You don&amp;#39;t remember it?
+
+                    GUECHREY
+            What is that? But that&amp;#39;s all we
+            do as fast...
+
+                    GEOWDER
+            Your tent? What&amp;#39;re has you?
+            I neededed get more returns to
+            travel.
+
+                    DATA
+            The descepants will give no
+            routine incident. And that Ferengi
+            are over enough to assist in
+            Four, shuttlecraft.
+
+    Reactions. He walks off from the art of a compartment.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+At the highest temperature we get some pretty well formatted text, but you can see that there are some spelling mistakes: GUECHREY, neededed, descepants.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Temperature = 0.1&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                    PICARD
+                (to com)
+            Computer, report to the ship and
+            are a little second three three
+            hours.
+
+                    PICARD
+                (to com)
+            The computer readings are all
+            there is a second on the ship.
+
+                    PICARD
+            I do not know what the contract
+            to the ship is a little series.
+
+                    PICARD
+                (to com)
+            The ship is a possible container
+            of the ship and the ship is a
+            sense of the ship and as a second
+            second second officers are all
+            there is a second officer to the
+            Enterprise to the Enterprise.
+
+                    PICARD
+                (to com)
+            Computer, locate the ship and the
+            Enterprise is the ship and the
+            Enterprise is the ship and the
+            Enterprise is the ship and the
+            Enterprise is the ship and all
+            the ship is a little second three
+            hundred thousand three hundred
+            thousand three hundred thousand
+            that the contract with the ship
+            and the ship is a second on the
+            Enterprise.
+
+                    PICARD
+                (to com)
+            The ship is a little distance of
+            the ship and the ship is a little
+            distance to the ship and the ship
+            is a little band of a second on
+            the Enterprise.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Here the model is making the safest possible predictions, and it ends up almost exclusively generating dialogue by Captain Picard (sometimes there is some Commander Riker dialogue too). It also repeats itself a lot, as if stuck in some kind of loop.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Temperature = 0.75&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;21   INT. NEEDED GEORDI (OPTICAL)
+
+    as he heads toward them and DROPPING SOUNDS.
+
+                    DATA
+            Sir, that is not advantaged at
+            several days onboard to bodily
+            human are weak. We have learned
+            a stature of the past... literard
+            on the Stargazer&amp;#39;s power range,
+            the Enterprise is a personal
+            board and transported. You lost
+            them estimate a logs as far and
+            deck enough as she fights.
+
+                    RIKER
+            Unless the band of generators with
+            me in it. Only the power took a
+            living graviton development.
+
+                    WORF
+            Return to your legs?
+
+                    PICARD
+                (faster historical)
+            I don&amp;#39;t think you would participate
+            himself.
+
+                    PICARD
+            What he were so quite clear?
+
+                    RIKER
+            I can&amp;#39;t point this bad former --
+            much decision.
+
+    Kyle shines from his words and the shuttle at his
+    head.
+
+      STAR TREK: &amp;quot;Data&amp;#39;s Day&amp;quot; - REV. 10/15/90 - ACT TWO      27.
+
+33A  CONTINUED:
+
+                    PICARD
+            I&amp;#39;m sure this is that the report
+            knows what comes.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+A pretty good sweet-spot seems to be somewhere around Temperature of 0.75, where we get quite varied output, with very few spelling mistakes.&lt;/p&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Despite the fact that the model is a long way off generating a full script, or even any meaningful dialogue, I find the results to be absolutely amazing.&lt;/p&gt;
+&lt;p&gt;Remember that this is a single character model that works one letter at a time, and does not know anything about words, punctuation or script-writing rules. And yet, not only does it generate proper English words, but it also has learned a number of quite complex rules.&lt;/p&gt;
+&lt;p&gt;For a start all of the lines have almost perfect indentation and line-length:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Original Script:&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                PICARD
+        You will agree, Data, that
+        Starfleet&amp;#39;s instructions are
+        difficult?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+&lt;em&gt;Generated Output:&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                PICARD
+        Begin and it has already also
+        get a long...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Furthermore, it has figured out that episode names have a particular format, including a name (enclosed in quotation marks), a date and an act:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Original Script:&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;      STAR TREK: &amp;quot;Haven&amp;quot; - 7/13/87 - ACT THREE
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+&lt;em&gt;Generated Output:&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    STAR TREK: &amp;quot;The Shroud&amp;quot; - 2/1/88 - ACT FIVE
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+It includes dialogue and scene notes and correctly opens and closes brackets:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                BEVERLY
+            (moves quickly to Riker)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br /&gt;
+Yes, the model is a lot more complex than the Markov Chain-based models I introduced earlier, but the results are also far superior.&lt;/p&gt;
+&lt;p&gt;The single-character markov chain model was only able to generate a little bit of gibberish followed by blank spaces, and even the 5-gram Markov Chain model did not produce anything as accurate as the RNN.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Notes&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;A big thanks to Andrej Karpathy for his &lt;a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/"&gt;blog post&lt;/a&gt; which inspired me to look at RNNs as single-character language models.&lt;/p&gt;
+&lt;p&gt;I also found &lt;a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/"&gt;Christopher Olah's blog post on LSTMs&lt;/a&gt; to be one of the clearer explanations out there.&lt;/p&gt;
+&lt;p&gt;Accompanying code is on &lt;a href="https://github.com/simonb83/rnn_star_trek"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="data-science"></category><category term="machine-learning"></category><category term="neural-network"></category></entry><entry><title>Visualizing Pollution in Mexico City - Part II</title><link href="https://simonb83.github.io/visualizing-pollution-part-2.html" rel="alternate"></link><published>2016-11-12T12:00:00-06:00</published><updated>2016-11-12T12:00:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-11-11:visualizing-pollution-part-2.html</id><summary type="html">&lt;p&gt;A few weeks ago I posted &lt;a href="/visualizing-pollution.html"&gt;some visualizations of pollution levels in Mexico City&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Since then, I discovered a really cool mapping library called &lt;a href="https://carto.com/"&gt;Cartodb&lt;/a&gt;, which also allows you to put together temporal animations, and I decided to test them out on some of the pollution data I had collected.&lt;/p&gt;
 &lt;h4&gt;Methodology&lt;/h4&gt;
 &lt;p&gt;Here I look at the best and worst weeks for Ozone levels so far in 2016, with worst being defined as the week with the highest total number of bad or worse Ozone measurements, and best being the week with the lowest average measurement.&lt;/p&gt;
@@ -24,7 +660,7 @@
 &lt;p&gt;&lt;img alt="pollution_legend" src="/images/pol2_legend.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The difference is very clear, and even during the peak part of the day, the ozone measurments never really get into orange or red territory.&lt;/p&gt;
 &lt;p&gt;In this week the 'worst' hour is at 14:00 PM, and even here the picture of the city looks so much better.&lt;/p&gt;
-&lt;div id="map-2" class="map"&gt;&lt;/div&gt;</summary><category term="data-science"></category><category term="visualization"></category></entry><entry><title>Election Reaction</title><link href="https://simonb83.github.io/election-reaction.html" rel="alternate"></link><published>2016-11-11T11:20:00-06:00</published><updated>2016-11-11T11:20:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-11-09:election-reaction.html</id><summary type="html">&lt;p&gt;I would not normally write about politics, but right now I feel compelled to write something.&lt;/p&gt;
+&lt;div id="map-2" class="map"&gt;&lt;/div&gt;</summary><category term="data-science"></category><category term="visualization"></category></entry><entry><title>On Politics</title><link href="https://simonb83.github.io/election-reaction.html" rel="alternate"></link><published>2016-11-11T11:20:00-06:00</published><updated>2016-11-11T11:20:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2016-11-09:election-reaction.html</id><summary type="html">&lt;p&gt;I would not normally write about politics, but right now I feel compelled to write something.&lt;/p&gt;
 &lt;p&gt;It is the morning of the 9th of November, and the world has awoken to the news that Donald Trump has been elected president of the USA. For many people, this is one of their worst nightmares come true.&lt;/p&gt;
 &lt;p&gt;This seems like a fitting end to a seemingly terrible year in public decision-making, coming only a few months after the Brexit vote that engendered a similar immediate aftermath of anger and fear along with post-hoc rationalization and explanation.&lt;/p&gt;
 &lt;p&gt;This blog post is my immediate reaction to this election outcome, and also the reaction I wish I had had on the morning after Brexit. &lt;/p&gt;
