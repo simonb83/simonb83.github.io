@@ -1,0 +1,5 @@
+.map { height: 420px; width: 90%; }
+.map-dynamic { height: 600px; width: 90%; }
+
+img[alt=popular_bike_routes] { width: 650px; margin:auto; display:block;}
+img[alt=magical_transports_by_area], img[alt=female_usage_by_area] { width: 550px; margin:auto; display:block;}
