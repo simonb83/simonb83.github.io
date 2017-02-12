@@ -1,0 +1,418 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/foundation.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/alt-fonts.css" />
+
+		<link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" type="text/css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/css/ecobici.css" type="text/css" />
+
+		<script src="https://simonb83.github.io/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+		<link href="https://simonb83.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Simon Bedford Atom Feed" />
+
+<script>var _gaq=[['_setAccount','UA-25264611-8'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="https://simonb83.github.io">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+							<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+							<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+							<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+							<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+							<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+							<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+							<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+									<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="https://simonb83.github.io/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+								<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+								<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+								<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+								<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+								<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+								<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+								<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="https://simonb83.github.io/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>38 Millones de Viajes en Ecobici</h2>
+	<p>Esta publicación está inspirada en el trabajo fantástico de Todd Schneider de enero del 2016: <a href="http://toddwschneider.com/posts/a-tale-of-twenty-two-million-citi-bikes-analyzing-the-nyc-bike-share-system/">A Tale of Twenty-Two Million Citi Bike Rides: Analyzing the NYC Bike Share System</a>.</p>
+<p>Aprendí una gran cantidad estudiando el trabajo de Todd, y me inspiró  a intentar un análisis similar del sistema de bicicletas públicas en la Ciudad de México, que se llama 'Ecobici'.</p>
+<p>No solo me fascinaba ver de manera detallada cómo se usan las bicicletas en el día a día,  pero también me dio gusto tener la oportunidad de aprender a usar herramientas y técnicas nuevas. </p>
+<p>Algunos de mis análisis son replicaciones casi idénticas del trabajo de Todd usando los datos de Ecobici, aunque son mi propia implementación en Python en vez de R. Por esto estoy increíblemente agradecido con Todd por el haber hecho su trabajo tan públicamente disponible.</p>
+<p>Esta publicación está dividida en las siguientes secciones:</p>
+<ol>
+<li><a href="#section1">Un día en la vida de Ecobici</a></li>
+<li><a href="#section2">Los datos y el uso de las bicicletas</a></li>
+<li><a href="#section3">¿Dónde están las usuarias?</a></li>
+<li><a href="#section4">Estimaciones de la velocidad</a></li>
+<li><a href="#section5">Transportes mágicos de bicicletas</a></li>
+<li><a href="#section6">Datos anónimos</a></li>
+<li><a href="#section7">¿Se puede predicir la duración de un viaje?</a></li>
+</ol>
+<h3><span id="section1">1. Un día en la vida de Ecobici</span></h3>
+<p>En cuanto ví la animación de Todd de Nueva York, supe que era algo que yo quería tratar de replicar, no solo porque se veía padre, pero también porque yo creo que da un verdadero sentido de la escala del sistema.</p>
+<p>El enfoque es muy similar: cada punto azul representa un viaje en bicicleta usando las instrucciones de Google Maps para ciclistas.
+Obviamente no se puede asumir que la gente necesariamente va a seguir esa ruta, y en muchos casos es muy probable que no irían directo de una estación a otra, sin embargo es un buen comienzo para obtener un sentido de los patrones en los viajes.</p>
+<p>La fecha en cuestión es el miércoles 6 de Abril, la cual es el 3er día más ocupado en la historia de Ecobici; este fue seleccionado porque los dos días más ocupados fueron en el 2015 y quería usar una fecha más reciente para poder tomar en cuenta las construcciones y obras más recientes. </p>
+<p>En total hubo 36,711 viajes ese día, pero para reducir la cantidad de información requerida para la visualización elimine todos los viajes que comenzaron y acabaron en la misma locación, y me enfoque específicamente en viajes en las partes más centrales y al norte de la ciudad (de Roma Sur hacia arriba, lo cual incluye 274 de 452 estaciones) resultando en un total de 26,271 viajes.</p>
+<div id="ecobici_day_in_life" class="map-dynamic"></div>
+
+<p><br />
+Es bastante hipnotizante ver los puntos azules hacer su camino a través del mapa y ya se puede ver algunas concentraciones de bicicletas (por la brilleza del azul), en particular en la calle principal (Reforma) cortando de manera diagonal la mitad superior del mapa.</p>
+<p>Podemos ir un paso más allá y ver cuales calles salen más frecuentemente dentro de las rutas de Google Maps, basado en el número de viajes que usan ese calle.</p>
+<p><h5 align="center">Las calles más populares para viajes en Ecobici</h5> </p>
+<p><img alt="popular_bike_routes" src="/images/ecobici_popular_routes.png" /></p>
+<p>Las calles rojas y gruesas son aquellas que tienen 500 viajes o más. Los puntos anaranjados son estaciones de Ecobici.</p>
+<p>Los estrechos grandes de Reforma, División del Norte y Patriotismo, al igual que una sección al Sur de Felix Cuevas, están claramente marcadas. </p>
+<p>No es sorprendente ver que estas calles aparecieron tan frecuentemente, ya que son calles claves que conectan diferentes partes de la ciudad, y al mismo tiempo tiene una buena cobertura de carriles para bicicletas.</p>
+<p>Una cosa que se me hizo interesante fue ver, como en un solo día, los viajes en bicicleta eran muy probables de cubrir casi todas las calles dentro del area de Ecobici. ¡Al simplemente trazar cada paso, acabamos con un mapa bastante completo de la ciudad!</p>
+<h3><span id="section2">2. Los datos y el uso de las bicicletas</span></h3>
+<p>El sistema de “Ecobici” comenzó en el 2010, y desde entonces ha crecido de manera significativa en términos de uso. Abajo se encuentra una gráfica demostrando el número total de viajes en bicicleta por año: </p>
+<p><img alt="trips_per_year" src="/images/ecobici_esp_number_of_trips_per_year.png" /></p>
+<p>El punto de inflexión fue por ahí en el año 2013 cuando el uso de bicicletas explotó con dos y medio veces más viajes en bicicleta comparado con el año anterior. Hasta ahora, el 2015 ha tenido los más altos niveles de uso.</p>
+<p>El número de bicicletas en circulación también ha aumentado poco a poco, con bicicletas nuevas llegando en grandes cantidades cada par de años. </p>
+<p><img alt="bikes_per_year" src="/images/ecobici_esp_number_of_bikes_per_year.png" /></p>
+<p>Interesantemente, en el 2016 se añadieron 2,000 bicicletas, a pesar de que el número de paseos no haya incrementado.</p>
+<p>Con un incremento anual de al menos un 15% entre el 2013 y el 2015, puede ser que el operador de Ecobici estaba provisionando para un incremento similar en el 2016 que nunca se concretó. </p>
+<p>Alternativamente, podría ser que había una escasez en el 2015 y por lo tanto las nuevas adiciones fueron simplemente para alcanzar la demanda.</p>
+<p><strong>La Escala de Ecobici</strong></p>
+<p>El sistema Ecobici funciona de forma similar a los ”ride-shares” existentes en otros países con estaciones fijos donde uno puede recoger y entregar bicicletas. A partir de hoy, hay un total de 452 estaciones de bicicletas alrededor de la ciudad, cubriendo un área de aproximadamente 55 kilómetros cuadrados. </p>
+<p>El sistema opera de Lunes a Domingo de 5AM a 12.30AM todos los días del año, aunque el servicio se ve reducido durante algunos días festivos. </p>
+<p>Al final de Diciembre 2016 había un total de 38,661,411 de viajes en Ecobicis.</p>
+<p><strong>Los Datos</strong></p>
+<p>Datos mensuales están disponibles para Ecobicis, incluyendo la información a continuación acerca de cada viaje:</p>
+<ul>
+<li>Fecha y hora del comienzo del viaje</li>
+<li>Fecha y hora del fin del viaje</li>
+<li>Estación de partida</li>
+<li>Estación de entrega</li>
+<li>Género del usuario</li>
+<li>Edad del usuario</li>
+<li>Identificador único de la bicicleta</li>
+</ul>
+<p>El número de viajes mensuales entre Enero del 2013 y Diciembre del 2016, se puede observar a continuación:</p>
+<p><img alt="monthly_trips" src="/images/ecobici_esp_monthly_bike_trips.png" /></p>
+<p>Se puede ver que el uso baja considerablemente cada año alrededor de Diciembre...probablemente por las vacaciones de Navidad. En Junio hay decaídas menores, lo cual coincide con el comienzo de la temporada de lluvias.</p>
+<p><strong>El Uso Promedio</strong></p>
+<p>El número de viajes en bicicleta es mucho más alto entre semana que durante el fin de semana. Los patrones de uso también varían a lo largo del día.</p>
+<p>Entre semana, hay picos claros a las 8AM y 6PM, muy probablemente representando gente viajando hacia y de regreso de su trabajo. También hay un incremento en actividad entre las 2 y 3 PM, lo cual coincide con la hora de la comida para los trabajadores de oficina.</p>
+<p>En los fines de semana, el incremento es más gradual, y la mayor parte de la actividad ocurre entre las 10 AM y las 17 PM.</p>
+<p><img alt="monthly_trips" src="/images/ecobici_esp_hourly_usage.png" /></p>
+<h3><span id="section3">3. ¿Dónde están las usuarias?</span></h3>
+<p>Las mujeres usan las Ecobicis mucho menos que los hombres, y la diferencia ha estado aumentando:</p>
+<p><img alt="trips_by_gender" src="/images/ecobici_esp_number_of_trips_per_year_by_gender.png" /></p>
+<p>Las mujeres que sí usan las Ecobicis tienden a ser más jóvenes, con el 73% teniendo 35 años o menos contra solo un 61% de usuarios masculinos.</p>
+<p><img alt="age_distribution_by_gender" src="/images/ecobici_esp_age_distribution_by_gender.png" /></p>
+<p>En promedio, las usuarias femeninas cuentan por un 26% de todos los viajes entre Enero del 2013 y Julio del 2016.</p>
+<p>Nos podemos hacer una idea de los patrones de uso de las mujeres durante el día comparando las proporciones de viajes iniciados por mujeres contra este porcentaje promedio.</p>
+<p>Se puede ver que las mujeres son más probables de usar Ecobicis los fines de semana, particularmente en horario diurno, y menos probables de pasear tarde en la noche o muy temprano en la mañana.</p>
+<p><img alt="age_distribution_by_gender" src="/images/ecobici_esp_hourly_usage_females.png" /></p>
+<p>También se puede analizar cómo el uso de Ecobici por las mujeres varía por región de la ciudad. Un posible método es calcular los porcentajes por género de los viajes comenzadas en las diferentes estaciones, sin embargo el problema con esto es que en muchos áreas las estaciones están muy cercas una de la otra, lo cual complica poder distinguir patrones con facilidad.</p>
+<p>Otra opción puede ser agrupar las estaciones por colonia, y ver la distribución de género por cada colonia; sin embargo hay varias colonias muy grandes dentro del rango de Ecobici, por lo tanto este enfoque no captura todo el detalle.</p>
+<p>Al final decidí dividir la ciudad en hexágonos, agrupando estaciones de Ecobici por hexágono. Cada uno tiene una anchura de 800m y cubre un área de aproximadamente 0.4 km cuadrados, resultando en un total de 112 hexágonos cubriendo las partes de la ciudad con estaciones de Ecobici. El número mediano de estaciones por hexágono es 4.</p>
+<p>A continuación hay un mapa demostrando los porcentajes de viajes iniciados por mujeres dentro de cada hexágono:</p>
+<p><img alt="female_usage_by_area" src="/images/ecobici_esp_female_usage_by_hexagon.png" /></p>
+<p>Se puede observar que el uso por mujeres está particularmente concentrada alrededor de la Colonia Roma y áreas de la Condesa, y el uso está por debajo del promedio dentro y alrededor del Centro y la Colonia Cuauhtemoc.</p>
+<h3><span id="section4">4. Estimaciones de la velocidad</span></h3>
+<p>No entraré a mucho detalle acerca de la velocidad de los viajes, sin embargo es interesante ver como la velocidad puede variar según edad y género.</p>
+<p>A pesar de que la velocidad no está incluida entre los datos brutos, se puede estimarlo usando el tiempo de comienzo y terminación del paseo, junto con los datos de rutas de Google Maps.</p>
+<p>La gráfica abajo plantea la velocidad promedia estimada por género y edad, tanto durante la semana como los fines de semana. </p>
+<p><img alt="ecobici_avg_speed" src="/images/ecobici_esp_avg_speed.png" /></p>
+<p>(Nota que el análisis de estas gráficas ignora todos los viajes con una duración menor a 60 segundos en total, y restringe la edad del usuario a 65 años o menos.)</p>
+<p>Lo primero que se puede ver es que, en promedio, los usuarios masculinos consistentemente van más rápido que las usuarias femeninas, y que en ambos sexos, los usuarios jóvenes van más rápido que los usuarios mayores (las dos cosas no son tan sorprendentes).</p>
+<p>También se puede ver que los viajes durante el fin de semana son más bien por el gusto de pasear en bici, con una velocidad en general más baja por aproximadamente 1-2 km por hora.</p>
+<p>Obviamente esto asume que el usuario sigue la ruta sugerida por Google y que no hace ninguna parada a lo largo del camino. </p>
+<h3><span id="section5">5. Transportes mágicos de bicicletas</span></h3>
+<p>Cuando se ejecuta un servicio como Ecobici, una cuestión logística interesante es cómo manejar la oferta y demanda de las bicicletas en cada estación. Inevitablemente, cuando los usuarios han ido de paseo, no todas las bicicletas acabaran en una locación ideal, y podría ser necesario que el operador tenga que transportar bicicletas de una estación a otra para equilibrar la oferta. </p>
+<p>Se puede ver como esto funciona con cierto detalle al analizar los viajes en bici que comienzan en una estación diferente a la que habían sido previamente entregadas. Todd llama a estos ‘transportes mágicos’.</p>
+<p>Aquí hay una gráfica de los transportes mágicos, visto como un porcentaje del total de los viajes por mes:   </p>
+<p><img alt="magical_transports_by_month" src="/images/ecobici_esp_magical_transports_by_month.png" /></p>
+<p>Entre el 2012 y 2014, la proporción fue más o menos constante entre 16 a 17%, y después se cayó fuertemente en el 2015, tal vez porque el número de bicicletas casi se dobló (desafortunadamente no tengo datos sobre cuando comenzaron a operar las diferentes estaciones, o si su capacidad haya cambiado durante el tiempo).</p>
+<p>Curiosamente, el porcentaje de transportes mágicos se ha incrementado de nuevo durante el 2016, incluso mientras el número de bicicletas ha continuado aumentar.</p>
+<p>Podemos analizar cuáles son las regiones de la ciudad que tienen una proporción mayor de transportes mágicos, basado en la estación de entrega del viaje:</p>
+<p><img alt="magical_transports_by_area" src="/images/ecobici_esp_magical_transport_by_hexagon.png" /></p>
+<p>Parece que los viajes acabando alrededor del Centro y Polanco y también los que terminan en el lado este de la zona Ecobici resultan en más altos niveles de transportes mágicos. </p>
+<p>La necesidad de mover bicicletas de un lugar al otro tiene diferentes patrones a lo largo del día depende de donde termina el viaje. Por ejemplo, para los viajes que terminan en el Centro Histórico los niveles altos de transportes mágicos se extienden a lo largo del día, mientras en el sur están más concentrados en las horas tempranas de la mañana.</p>
+<p><img alt="magical_transports_by_hour" src="/images/ecobici_esp_magical_transport_by_hour.png" /></p>
+<p>Por final, podemos analizar las distancias promedias del transporte mágico de bicicletas.</p>
+<p><img alt="magical_transports_distances" src="/images/ecobici_esp_magical_transport_distances.png" /></p>
+<p>Parece que, en general, los transportes mágicos tienen una distancia promedia  entre 1 a 3km., aunque hay puntos aislados de bicicletas siendo transportadas casi de un lado al otro de la zona Ecobici.</p>
+<p>Hay una cosa que cabe mencionar sobre los transportes mágicos, lo cual es que puede haber otras razones por las cuales las bicicletas se encuentran en una locación diferente de donde fue entregada, y no siempre será para equilibrar la capacidad. </p>
+<p>Por ejemplo, si una bicicleta es retirada de la circulación por razones de mantenimiento o reparaciones (actualmente aproximadamente un 1% de bicicletas al día), de ninguna manera está garantizado que será regresada a la estación original de donde salió.</p>
+<h3><span id="section6">6. Datos anónimos</span></h3>
+<p>Otra cosa que Todd analiza para los “NYC Citibikes” son los datos anónimos, medidos por la proporción de viajes que son únicamente identificables.</p>
+<p>En este caso, cuando hablamos de “anónimo”, no estamos hablando de la presencia de nombres u otros identificadores en los datos, pero del concepto de anonimato que viene de ser parte de una multitud.</p>
+<p>En práctica esto quiere decir que si hay muchos paseos que comparten exactamente las mismas características, y aunque lograras identificar a uno de los usuarios, sería difícil obtener mayor información sobre su viaje en particular.</p>
+<p>Sin embargo, para viajes “únicos”, uno puede obtener información completa fácilmente, incluyendo cosas como locaciones de entrega lo cual te puede decir algo acerca de donde estas personas viven, trabajan, etc.</p>
+<p>Resulta que con tan solo unos pocos variables como:</p>
+<ul>
+<li>Edad del usuario</li>
+<li>Sexo del usuario</li>
+<li>Identificación de la estación de partida</li>
+<li>Hora de inicio</li>
+</ul>
+<p>una gran proporción de los viajes son únicamente identificables.</p>
+<p>Por ejemplo, el 1o de Enero del 2016, solo hubo un paseo a las 8AM de una usuaria femenina de 34 años que comenzó en la estación 182.</p>
+<p>Abajo hay una gráfica de los porcentajes de viajes únicamente identificables por género y edad.</p>
+<p><img alt="unique_trips" src="/images/ecobici_esp_unique_trips.png" /></p>
+<p>Como se esperaba, la proporción es más alta para mujeres (hay menos usuarias en total), y también más alto para usuarios mayores (la distribución de edad de usuarios se va aplanando en lo que va incrementando la edad).</p>
+<h3><span id="section7">7. ¿Se puede predicir la duración de un viaje?</span></h3>
+<p>Como una pregunta final, me pregunté si era posible predecir la duración de un viaje en particular con los datos disponibles.</p>
+<p>Desde un punto de vista operativo esto podría ser muy útil para planear y manejar la disponibilidad de bicicletas.</p>
+<p>Recuerda que los datos que tenemos disponibles son:</p>
+<ul>
+<li>Género</li>
+<li>Edad en años</li>
+<li>Hora y fecha de inicio y terminación del viaje</li>
+<li>Estación de partida y entrega</li>
+</ul>
+<p>aunque no es apropiado incluir la información acerca de la hora y locación de terminación, ya que el objetivo es predecir la duración por adelantado.</p>
+<p>La duración del paseo no se dé explícitamente, pero se puede calcular con facilidad usando “timestamps” para el tiempo de comienzo y de terminación.</p>
+<p><strong>Regresión lineal</strong></p>
+<p>Dado lo que sabemos acerca del impacto de género y edad en la velocidad estimada de los viajes, un enfoque simple podría ser tratar esto como un problema de regresión lineal usando estos dos variables.</p>
+<p>Para obtener una idea del éxito que esto podría tener, he graficado la duración del paseo contra la edad del usuario para una muestra aleatoria de 10,000 viajes:</p>
+<p><img alt="duration_v_age" src="/images/ecobici_esp_duration_v_age.png" /></p>
+<p>Es claro que no hay una relación lineal, y también se puede ver que en cada edad hay un gran rango de duraciones en los viajes.</p>
+<p>Como el próximo paso, podríamos intentar añadir características adicionales para analizar la duración de los viajes para segmentos mucho más específicos. Por ejemplo, abajo se grafica la distribución de las duraciones para las usuarias femeninas de 25 años, entre semana, partiendo a las 9 AM de 3 estaciones que están cerca una de la otra en Polanco:</p>
+<p><img alt="subset_distribution" src="/images/ecobici_esp_subset_distribution.png" /></p>
+<p>Hasta para esta subcategoría muy específica, todavía se encuentra un gran rango de duraciones de paseo, y por lo tanto, al parecer sería difícil crear un modelo preciso con los datos disponibles.</p>
+<p><strong>Clasificación en “rangos”</strong></p>
+<p>Incluso si intentamos resolverlo a través de clasificación en lugar de regresión, continuaría siendo difícil crear un modelo lo suficientemente preciso.</p>
+<p>Por ejemplo, tomando el ejemplo de arriba y usando intervalos de 10 minutos, hay al menos tres posibles clases, y no hay más variables para ayudar a diferenciar entre ellas.</p>
+<p>Si usamos intervalos más pequeños, por ejemplo de 5 minutos, entonces el problema sería aún más dificil; con plazos de tiempo más largos de 20 ó 30 minutos, no obtenemos nada ya que sabemos que la gran mayoría de los viajes duran menos de media hora.</p>
+<p>Para demostrar esto, intenté entrenar un “random forest” (1,000 estimadores) con una muestra aleatoría de 1,000,000 de viajes y usando aproximadamente 120 características consistiendo de:</p>
+<ul>
+<li>Género</li>
+<li>Edad</li>
+<li>Indicador de entre semana vs. fin de semana</li>
+<li>Hora de partida</li>
+<li>Mes</li>
+<li>Ubicación de estación de inicio (agrupado por hexágono)</li>
+</ul>
+<p>El mejor resultado que obtuve, después de optimizar los parámetros con "cross-validation", fue una precisión menor al 50%.</p>
+<p>Podría ser posible obtener una mejoría pequeña en la precisión, por ejemplo con optimización adicional o usando un modelo capaz de capturar más complejidad, sin embargo no creo que los datos disponibles sean suficientes para crear un modelo predictivo útil.</p>
+<p>Si por otro lado uno tuviera acceso a las historias de viajes de los usuarios individuales, entonces probablemente sería más posible crear un modelo más preciso.</p>
+<h3>Conclusión</h3>
+<p>Cuando empecé este mini-proyecto, pensé que sería relativamente fácil hacer algo similar al análisis de Todd de Nueva York dado a que tenía su codigo para estudiar.</p>
+<p>Al final tomó más tiempo de lo que esperaba, en parte porque tuve que aprender herramientas y técnicas nuevas (por ejemplo POSTGIS y el uso de 'queries' geográficas), pero también porque se me hizo fácil perderme al explorar los datos y buscar otras historias interesantes que contar.</p>
+<p>Inclusive ahora siento que apenas he tocado la superficie de la los datos, y hay mucho más que me gustaría explorar.</p>
+<p>En particular sería interesante ver la distribución temporal de la partida de los viajes por estación, por ejemplo para preguntar cuál es la probabilidad que una bicicleta (o más) será tomada de una estación en particular dentro de un plazo de tiempo específico.</p>
+<p>Uno de los elementos que disfrute en particular mientras estaba escribiendo este post fue meterme más a la parte de mapear. Hubo un momento en particular cuando estaba trazando las instrucciones de Google Maps sobre una página en blanco por primera vez, y de repente un mapa casi completo de la ciudad apareció con todas las calles, glorietas, parques, etc.</p>
+<p>¡Se me hizo muy padre!</p>
+<p>Como siempre, mi código acompañante (por si a alguien más se le haga útil) está en <a href="https://github.com/simonb83/ecobici">GitHub</a>.</p>
+	<hr/>
+	<h6>Written by <a href="https://simonb83.github.io/author/simon-bedford.html">Simon Bedford</a> in <a href="https://simonb83.github.io/category/data-science.html">Data Science</a> on Wed 08 February 2017. Tags: <a href="https://simonb83.github.io/tag/data-science.html">data-science</a>, <a href="https://simonb83.github.io/tag/visualization.html">visualization</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/other.html">Other</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/python.html" class="tag-4">python</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/politics.html" class="tag-4">politics</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-1">10ideas</a></li>
+									<li><a href="/tag/maths.html" class="tag-2">maths</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-2">customer-experience</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/coding.html" class="tag-2">coding</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-2">deep-learning</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-2">neural-network</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/visualization.html" class="tag-1">visualization</a></li>
+									<li><a href="/tag/data-science.html" class="tag-1">data-science</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+											<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="https://simonb83.github.io/theme/js/jquery.js"></script>
+		<script src="https://simonb83.github.io/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+		<script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+		<script src="https://simonb83.github.io/js/ecobici_map.js"></script>
+
+	</body>
+</html>
