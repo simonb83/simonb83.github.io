@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/data-science.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2017-02-08T19:30:00-06:00</updated><entry><title>38 Millones de Viajes en Ecobici</title><link href="https://simonb83.github.io/38-millones-de-viajes-ecobici.html" rel="alternate"></link><published>2017-02-08T19:30:00-06:00</published><updated>2017-02-08T19:30:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-02-08:38-millones-de-viajes-ecobici.html</id><summary type="html">&lt;p&gt;Esta publicación está inspirada en el trabajo fantástico de Todd Schneider de enero del 2016: &lt;a href="http://toddwschneider.com/posts/a-tale-of-twenty-two-million-citi-bikes-analyzing-the-nyc-bike-share-system/"&gt;A Tale of Twenty-Two Million Citi Bike Rides: Analyzing the NYC Bike Share System&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Aprendí una gran cantidad estudiando el trabajo de Todd, y me inspiró  a intentar un análisis similar del sistema de bicicletas públicas en la Ciudad de México, que se llama 'Ecobici'.&lt;/p&gt;
-&lt;p&gt;No solo me fascinaba ver de manera detallada cómo se usan las bicicletas en el día a día,  pero también me dio gusto tener la oportunidad de aprender a usar herramientas y técnicas nuevas. &lt;/p&gt;
-&lt;p&gt;Algunos de mis análisis son replicaciones casi idénticas del trabajo de Todd usando los datos de Ecobici, aunque son mi propia implementación en Python en vez de R. Por esto estoy increíblemente agradecido con Todd por el haber hecho su trabajo tan públicamente disponible.&lt;/p&gt;
+&lt;p&gt;No solo me fascinaba ver de manera detallada cómo se usan las bicicletas día a día,  pero también me dio gusto tener la oportunidad de aprender a usar herramientas y técnicas nuevas. &lt;/p&gt;
+&lt;p&gt;Algunos de mis análisis son replicas casi idénticas del trabajo de Todd usando los datos de Ecobici, aunque son mi propia implementación en Python en vez de R. Por eso estoy increíblemente agradecido con Todd por el haber hecho su trabajo tan públicamente disponible.&lt;/p&gt;
 &lt;p&gt;Esta publicación está dividida en las siguientes secciones:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="#section1"&gt;Un día en la vida de Ecobici&lt;/a&gt;&lt;/li&gt;
@@ -16,19 +16,19 @@
 &lt;h3&gt;&lt;span id="section1"&gt;1. Un día en la vida de Ecobici&lt;/span&gt;&lt;/h3&gt;
 &lt;p&gt;En cuanto ví la animación de Todd de Nueva York, supe que era algo que yo quería tratar de replicar, no solo porque se veía padre, pero también porque yo creo que da un verdadero sentido de la escala del sistema.&lt;/p&gt;
 &lt;p&gt;El enfoque es muy similar: cada punto azul representa un viaje en bicicleta usando las instrucciones de Google Maps para ciclistas.
-Obviamente no se puede asumir que la gente necesariamente va a seguir esa ruta, y en muchos casos es muy probable que no irían directo de una estación a otra, sin embargo es un buen comienzo para obtener un sentido de los patrones en los viajes.&lt;/p&gt;
+Obviamente no se puede asumir que la gente necesariamente va a seguir esa ruta, y en muchos casos es muy probable que no irían directamente de una estación a otra, sin embargo es un buen comienzo para obtener un sentido de los patrones en los viajes.&lt;/p&gt;
 &lt;p&gt;La fecha en cuestión es el miércoles 6 de Abril, la cual es el 3er día más ocupado en la historia de Ecobici; este fue seleccionado porque los dos días más ocupados fueron en el 2015 y quería usar una fecha más reciente para poder tomar en cuenta las construcciones y obras más recientes. &lt;/p&gt;
 &lt;p&gt;En total hubo 36,711 viajes ese día, pero para reducir la cantidad de información requerida para la visualización elimine todos los viajes que comenzaron y acabaron en la misma locación, y me enfoque específicamente en viajes en las partes más centrales y al norte de la ciudad (de Roma Sur hacia arriba, lo cual incluye 274 de 452 estaciones) resultando en un total de 26,271 viajes.&lt;/p&gt;
 &lt;div id="ecobici_day_in_life" class="map-dynamic"&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
-Es bastante hipnotizante ver los puntos azules hacer su camino a través del mapa y ya se puede ver algunas concentraciones de bicicletas (por la brilleza del azul), en particular en la calle principal (Reforma) cortando de manera diagonal la mitad superior del mapa.&lt;/p&gt;
+Es bastante hipnotizante ver los puntos azules hacer su camino a través del mapa y ya se puede ver algunas concentraciones de bicicletas (por el brillo del azul), en particular en la calle principal (Reforma) cortando de manera diagonal la mitad superior del mapa.&lt;/p&gt;
 &lt;p&gt;Podemos ir un paso más allá y ver cuales calles salen más frecuentemente dentro de las rutas de Google Maps, basado en el número de viajes que usan ese calle.&lt;/p&gt;
 &lt;p&gt;&lt;h5 align="center"&gt;Las calles más populares para viajes en Ecobici&lt;/h5&gt; &lt;/p&gt;
 &lt;p&gt;&lt;img alt="popular_bike_routes" src="/images/ecobici_popular_routes.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Las calles rojas y gruesas son aquellas que tienen 500 viajes o más. Los puntos anaranjados son estaciones de Ecobici.&lt;/p&gt;
 &lt;p&gt;Los estrechos grandes de Reforma, División del Norte y Patriotismo, al igual que una sección al Sur de Felix Cuevas, están claramente marcadas. &lt;/p&gt;
-&lt;p&gt;No es sorprendente ver que estas calles aparecieron tan frecuentemente, ya que son calles claves que conectan diferentes partes de la ciudad, y al mismo tiempo tiene una buena cobertura de carriles para bicicletas.&lt;/p&gt;
+&lt;p&gt;No es sorprendente ver que estas calles aparecieron tan frecuentemente, ya que son calles claves que conectan diferentes partes de la ciudad, y al mismo tiempo tienen una buena cobertura de carriles para bicicletas.&lt;/p&gt;
 &lt;p&gt;Una cosa que se me hizo interesante fue ver, como en un solo día, los viajes en bicicleta eran muy probables de cubrir casi todas las calles dentro del area de Ecobici. ¡Al simplemente trazar cada paso, acabamos con un mapa bastante completo de la ciudad!&lt;/p&gt;
 &lt;h3&gt;&lt;span id="section2"&gt;2. Los datos y el uso de las bicicletas&lt;/span&gt;&lt;/h3&gt;
 &lt;p&gt;El sistema de “Ecobici” comenzó en el 2010, y desde entonces ha crecido de manera significativa en términos de uso. Abajo se encuentra una gráfica demostrando el número total de viajes en bicicleta por año: &lt;/p&gt;
@@ -36,7 +36,7 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;El punto de inflexión fue por ahí en el año 2013 cuando el uso de bicicletas explotó con dos y medio veces más viajes en bicicleta comparado con el año anterior. Hasta ahora, el 2015 ha tenido los más altos niveles de uso.&lt;/p&gt;
 &lt;p&gt;El número de bicicletas en circulación también ha aumentado poco a poco, con bicicletas nuevas llegando en grandes cantidades cada par de años. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="bikes_per_year" src="/images/ecobici_esp_number_of_bikes_per_year.png" /&gt;&lt;/p&gt;
-&lt;p&gt;Interesantemente, en el 2016 se añadieron 2,000 bicicletas, a pesar de que el número de paseos no haya incrementado.&lt;/p&gt;
+&lt;p&gt;Interesantemente, en el 2016 se añadieron 2,000 bicicletas, a pesar de que el número de paseos no había incrementado.&lt;/p&gt;
 &lt;p&gt;Con un incremento anual de al menos un 15% entre el 2013 y el 2015, puede ser que el operador de Ecobici estaba provisionando para un incremento similar en el 2016 que nunca se concretó. &lt;/p&gt;
 &lt;p&gt;Alternativamente, podría ser que había una escasez en el 2015 y por lo tanto las nuevas adiciones fueron simplemente para alcanzar la demanda.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;La Escala de Ecobici&lt;/strong&gt;&lt;/p&gt;
@@ -47,7 +47,7 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;Datos mensuales están disponibles para Ecobicis, incluyendo la información a continuación acerca de cada viaje:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Fecha y hora del comienzo del viaje&lt;/li&gt;
-&lt;li&gt;Fecha y hora del fin del viaje&lt;/li&gt;
+&lt;li&gt;Fecha y hora de la terminación del viaje&lt;/li&gt;
 &lt;li&gt;Estación de partida&lt;/li&gt;
 &lt;li&gt;Estación de entrega&lt;/li&gt;
 &lt;li&gt;Género del usuario&lt;/li&gt;
@@ -63,7 +63,7 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;En los fines de semana, el incremento es más gradual, y la mayor parte de la actividad ocurre entre las 10 AM y las 17 PM.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="monthly_trips" src="/images/ecobici_esp_hourly_usage.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;span id="section3"&gt;3. ¿Dónde están las usuarias?&lt;/span&gt;&lt;/h3&gt;
-&lt;p&gt;Las mujeres usan las Ecobicis mucho menos que los hombres, y la diferencia ha estado aumentando:&lt;/p&gt;
+&lt;p&gt;Las mujeres usan las Ecobicis mucho menos que los hombres, y la diferencia ha ido en aumento:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="trips_by_gender" src="/images/ecobici_esp_number_of_trips_per_year_by_gender.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Las mujeres que sí usan las Ecobicis tienden a ser más jóvenes, con el 73% teniendo 35 años o menos contra solo un 61% de usuarios masculinos.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="age_distribution_by_gender" src="/images/ecobici_esp_age_distribution_by_gender.png" /&gt;&lt;/p&gt;
@@ -71,15 +71,15 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;Nos podemos hacer una idea de los patrones de uso de las mujeres durante el día comparando las proporciones de viajes iniciados por mujeres contra este porcentaje promedio.&lt;/p&gt;
 &lt;p&gt;Se puede ver que las mujeres son más probables de usar Ecobicis los fines de semana, particularmente en horario diurno, y menos probables de pasear tarde en la noche o muy temprano en la mañana.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="age_distribution_by_gender" src="/images/ecobici_esp_hourly_usage_females.png" /&gt;&lt;/p&gt;
-&lt;p&gt;También se puede analizar cómo el uso de Ecobici por las mujeres varía por región de la ciudad. Un posible método es calcular los porcentajes por género de los viajes comenzadas en las diferentes estaciones, sin embargo el problema con esto es que en muchos áreas las estaciones están muy cercas una de la otra, lo cual complica poder distinguir patrones con facilidad.&lt;/p&gt;
-&lt;p&gt;Otra opción puede ser agrupar las estaciones por colonia, y ver la distribución de género por cada colonia; sin embargo hay varias colonias muy grandes dentro del rango de Ecobici, por lo tanto este enfoque no captura todo el detalle.&lt;/p&gt;
+&lt;p&gt;También se puede analizar cómo el uso de Ecobici por mujeres varía por región de la ciudad. Un posible método es calcular los porcentajes por género de los viajes comenzadas en las diferentes estaciones, sin embargo el problema con esto es que en muchos áreas las estaciones están muy cercas una de la otra, lo cual complica poder distinguir patrones con facilidad.&lt;/p&gt;
+&lt;p&gt;Otra opción puede ser agrupar las estaciones por colonia, y ver la distribución de género por cada colonia; sin embargo hay varias colonias muy grandes dentro del rango de Ecobici, por lo tanto este enfoque no captura todos los detalles.&lt;/p&gt;
 &lt;p&gt;Al final decidí dividir la ciudad en hexágonos, agrupando estaciones de Ecobici por hexágono. Cada uno tiene una anchura de 800m y cubre un área de aproximadamente 0.4 km cuadrados, resultando en un total de 112 hexágonos cubriendo las partes de la ciudad con estaciones de Ecobici. El número mediano de estaciones por hexágono es 4.&lt;/p&gt;
 &lt;p&gt;A continuación hay un mapa demostrando los porcentajes de viajes iniciados por mujeres dentro de cada hexágono:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="female_usage_by_area" src="/images/ecobici_esp_female_usage_by_hexagon.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Se puede observar que el uso por mujeres está particularmente concentrada alrededor de la Colonia Roma y áreas de la Condesa, y el uso está por debajo del promedio dentro y alrededor del Centro y la Colonia Cuauhtemoc.&lt;/p&gt;
 &lt;h3&gt;&lt;span id="section4"&gt;4. Estimaciones de la velocidad&lt;/span&gt;&lt;/h3&gt;
 &lt;p&gt;No entraré a mucho detalle acerca de la velocidad de los viajes, sin embargo es interesante ver como la velocidad puede variar según edad y género.&lt;/p&gt;
-&lt;p&gt;A pesar de que la velocidad no está incluida entre los datos brutos, se puede estimarlo usando el tiempo de comienzo y terminación del paseo, junto con los datos de rutas de Google Maps.&lt;/p&gt;
+&lt;p&gt;A pesar de que la velocidad no está incluida entre los datos brutos, se puede estimar usando el tiempo de comienzo y terminación del paseo, junto con los datos de rutas de Google Maps.&lt;/p&gt;
 &lt;p&gt;La gráfica abajo plantea la velocidad promedia estimada por género y edad, tanto durante la semana como los fines de semana. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="ecobici_avg_speed" src="/images/ecobici_esp_avg_speed.png" /&gt;&lt;/p&gt;
 &lt;p&gt;(Nota que el análisis de estas gráficas ignora todos los viajes con una duración menor a 60 segundos en total, y restringe la edad del usuario a 65 años o menos.)&lt;/p&gt;
@@ -91,14 +91,14 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;Se puede ver como esto funciona con cierto detalle al analizar los viajes en bici que comienzan en una estación diferente a la que habían sido previamente entregadas. Todd llama a estos ‘transportes mágicos’.&lt;/p&gt;
 &lt;p&gt;Aquí hay una gráfica de los transportes mágicos, visto como un porcentaje del total de los viajes por mes:   &lt;/p&gt;
 &lt;p&gt;&lt;img alt="magical_transports_by_month" src="/images/ecobici_esp_magical_transports_by_month.png" /&gt;&lt;/p&gt;
-&lt;p&gt;Entre el 2012 y 2014, la proporción fue más o menos constante entre 16 a 17%, y después se cayó fuertemente en el 2015, tal vez porque el número de bicicletas casi se dobló (desafortunadamente no tengo datos sobre cuando comenzaron a operar las diferentes estaciones, o si su capacidad haya cambiado durante el tiempo).&lt;/p&gt;
-&lt;p&gt;Curiosamente, el porcentaje de transportes mágicos se ha incrementado de nuevo durante el 2016, incluso mientras el número de bicicletas ha continuado aumentar.&lt;/p&gt;
+&lt;p&gt;Entre el 2012 y 2014, la proporción fue más o menos constante entre 16 a 17%, y después se cayó fuertemente en el 2015, tal vez porque el número de bicicletas casi se duplico (desafortunadamente no tengo datos sobre cuando comenzaron a operar las diferentes estaciones, o si su capacidad haya cambiado durante el tiempo).&lt;/p&gt;
+&lt;p&gt;Curiosamente, el porcentaje de transportes mágicos ha incrementado de nuevo durante el 2016, incluso mientras el número de bicicletas ha continuado aumentar.&lt;/p&gt;
 &lt;p&gt;Podemos analizar cuáles son las regiones de la ciudad que tienen una proporción mayor de transportes mágicos, basado en la estación de entrega del viaje:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="magical_transports_by_area" src="/images/ecobici_esp_magical_transport_by_hexagon.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Parece que los viajes acabando alrededor del Centro y Polanco y también los que terminan en el lado este de la zona Ecobici resultan en más altos niveles de transportes mágicos. &lt;/p&gt;
-&lt;p&gt;La necesidad de mover bicicletas de un lugar al otro tiene diferentes patrones a lo largo del día depende de donde termina el viaje. Por ejemplo, para los viajes que terminan en el Centro Histórico los niveles altos de transportes mágicos se extienden a lo largo del día, mientras en el sur están más concentrados en las horas tempranas de la mañana.&lt;/p&gt;
+&lt;p&gt;La necesidad de mover bicicletas de un lugar al otro tiene diferentes patrones a lo largo del día depende de donde termina el viaje. Por ejemplo, para los viajes que terminan en el Centro Histórico los niveles altos de transportes mágicos se extienden a lo largo del día, mientras que en el sur están más concentrados en las horas tempranas de la mañana.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="magical_transports_by_hour" src="/images/ecobici_esp_magical_transport_by_hour.png" /&gt;&lt;/p&gt;
-&lt;p&gt;Por final, podemos analizar las distancias promedias del transporte mágico de bicicletas.&lt;/p&gt;
+&lt;p&gt;Por último, podemos analizar las distancias promedias del transporte mágico de bicicletas.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="magical_transports_distances" src="/images/ecobici_esp_magical_transport_distances.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Parece que, en general, los transportes mágicos tienen una distancia promedia  entre 1 a 3km., aunque hay puntos aislados de bicicletas siendo transportadas casi de un lado al otro de la zona Ecobici.&lt;/p&gt;
 &lt;p&gt;Hay una cosa que cabe mencionar sobre los transportes mágicos, lo cual es que puede haber otras razones por las cuales las bicicletas se encuentran en una locación diferente de donde fue entregada, y no siempre será para equilibrar la capacidad. &lt;/p&gt;
@@ -157,10 +157,10 @@ Es bastante hipnotizante ver los puntos azules hacer su camino a través del map
 &lt;p&gt;Podría ser posible obtener una mejoría pequeña en la precisión, por ejemplo con optimización adicional o usando un modelo capaz de capturar más complejidad, sin embargo no creo que los datos disponibles sean suficientes para crear un modelo predictivo útil.&lt;/p&gt;
 &lt;p&gt;Si por otro lado uno tuviera acceso a las historias de viajes de los usuarios individuales, entonces probablemente sería más posible crear un modelo más preciso.&lt;/p&gt;
 &lt;h3&gt;Conclusión&lt;/h3&gt;
-&lt;p&gt;Cuando empecé este mini-proyecto, pensé que sería relativamente fácil hacer algo similar al análisis de Todd de Nueva York dado a que tenía su codigo para estudiar.&lt;/p&gt;
+&lt;p&gt;Cuando empecé este mini-proyecto, pensé que sería relativamente fácil hacer algo similar al análisis de Todd de Nueva York dado que tenía su codigo para estudiar.&lt;/p&gt;
 &lt;p&gt;Al final tomó más tiempo de lo que esperaba, en parte porque tuve que aprender herramientas y técnicas nuevas (por ejemplo POSTGIS y el uso de 'queries' geográficas), pero también porque se me hizo fácil perderme al explorar los datos y buscar otras historias interesantes que contar.&lt;/p&gt;
 &lt;p&gt;Inclusive ahora siento que apenas he tocado la superficie de la los datos, y hay mucho más que me gustaría explorar.&lt;/p&gt;
-&lt;p&gt;En particular sería interesante ver la distribución temporal de la partida de los viajes por estación, por ejemplo para preguntar cuál es la probabilidad que una bicicleta (o más) será tomada de una estación en particular dentro de un plazo de tiempo específico.&lt;/p&gt;
+&lt;p&gt;En particular sería interesante ver la distribución temporal de la partida de los viajes por estación, por ejemplo para preguntar cuál es la probabilidad de que una bicicleta (o más) será tomada de una estación en particular dentro de un plazo de tiempo específico.&lt;/p&gt;
 &lt;p&gt;Uno de los elementos que disfrute en particular mientras estaba escribiendo este post fue meterme más a la parte de mapear. Hubo un momento en particular cuando estaba trazando las instrucciones de Google Maps sobre una página en blanco por primera vez, y de repente un mapa casi completo de la ciudad apareció con todas las calles, glorietas, parques, etc.&lt;/p&gt;
 &lt;p&gt;¡Se me hizo muy padre!&lt;/p&gt;
 &lt;p&gt;Como siempre, mi código acompañante (por si a alguien más se le haga útil) está en &lt;a href="https://github.com/simonb83/ecobici"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</summary><category term="data-science"></category><category term="visualization"></category></entry><entry><title>38 Million Ecobici Trips in Mexico City</title><link href="https://simonb83.github.io/38-million-ecobici-trips-mexico-city.html" rel="alternate"></link><published>2017-01-29T19:30:00-06:00</published><updated>2017-01-29T19:30:00-06:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-01-29:38-million-ecobici-trips-mexico-city.html</id><summary type="html">&lt;p&gt;This post is very much inspired by Todd Schneider's fantastic work from early 2016: &lt;a href="http://toddwschneider.com/posts/a-tale-of-twenty-two-million-citi-bikes-analyzing-the-nyc-bike-share-system/"&gt;A Tale of Twenty-Two Million Citi Bike Rides: Analyzing the NYC Bike Share System&lt;/a&gt;.&lt;/p&gt;
