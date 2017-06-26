@@ -1,0 +1,393 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/foundation.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/alt-fonts.css" />
+
+
+		<script src="https://simonb83.github.io/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+		<link href="https://simonb83.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Simon Bedford Atom Feed" />
+
+<script>var _gaq=[['_setAccount','UA-25264611-8'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="https://simonb83.github.io">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+							<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+							<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+							<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+							<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+							<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+							<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+							<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2017/06/index.html">June 2017 (1)</a></li>
+									<li><a href="/posts/2017/03/index.html">March 2017 (1)</a></li>
+									<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+									<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="https://simonb83.github.io/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+								<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+								<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+								<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+								<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+								<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+								<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+								<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="https://simonb83.github.io/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Applying NLP Methods to Tracking Refugees.</h2>
+	<p>This is my first post in about 3 months, in large part because work got pretty crazy, but also because I have been spending a lot of my spare time on a <a href="http://datafordemocracy.org/">Data For Democracy</a> project focused on building a tool for tracking what are known as Internally Displaced Persons (IDPs).</p>
+<p><strong>Update:</strong> When I started writing this blog post back in May, we had just submitted our solution for consideration. Last week we received an email informing us that the Data For Democracy team had won first place, and that our solution would be implemented in some form by the IDMC team!!</p>
+<p>The impetus behind this particular project was a competition run by Unite Ideas, on behalf of the <a href="http://www.internal-displacement.org/">Internal Displacement Monitoring Center</a>, which is an independent, non-governmental organization dedicated to collecting and analyzing data about refugees and other people who have been ‘displaced’ from their homes.</p>
+<p>The challenge, as I understand it, is that with hundreds if not thousands of news articles and other reports being generated every day, it would require a significant amount of manpower to be able to read each one of these in order to populate the database of internal displacement events on an ongoing basis.</p>
+<p>This is (hopefully) where data science and machine learning can come to the rescue. The basic requirement was to create a tool that is capable of automatically “processing” news articles and other websites, and:</p>
+<ol>
+<li>Identifying whether or not they are about IDPs</li>
+<li>Classifying them into events due to Natural Disasters vs. Conflict or Violence</li>
+<li>Extracting key information such as the number of people affected, location, date etc.</li>
+<li>Providing tools for analysis and visualization of the data</li>
+</ol>
+<p>During the rest of this post I will talk a little bit about our solution and the different approaches to fact extraction as well as some reflections on my own personal experience of working on the project.</p>
+<h3>Brief Overview of the Solution</h3>
+<p>For those readers interested in the technical side of things, the solution we created consists of a Python back-end and NodeJS front end, interacting through a PostgreSQL database, all nicely wrapped-up in a Docker container.</p>
+<h4>Back-End</h4>
+<p>The back-end is basically a collection of modules that facilitate and support article processing, classification and information extraction. This all comes together in a ‘pipeline’ function that can be given a specifc URL, and then carries out the following steps:</p>
+<ol>
+<li>Try and figure out if the URL links to a PDF file or regular web page</li>
+<li>Access the URL and extract the content along with relevant metadata (e.g., publication date)</li>
+<li>Assess the article relevance (i.e. decide if the subject matter relates to IDPs)</li>
+<li>Further classify relevant articles into three types: Natural Disaster, Violence or Other</li>
+<li>Extract key facts about the event (more on this in a later section)</li>
+<li>Identify locations mentioned in the text and further obtain the specificy country name as well as latitude/longitude coordinates</li>
+<li>Save everything into a database for later analysis and visualization</li>
+</ol>
+<p>Some of the principles that we seem to have stuck to during this project, for better or worse, are to base ourselves around Python3, and to use 3rd party libraries wherever possible to speed things up and make our lives easier. Thus we have ended up with a pretty extensive ‘requirements.txt’ file, however some of the more notable libraries we used are:</p>
+<ul>
+<li><a href="http://newspaper.readthedocs.io/en/latest/">Newspaper</a> for parsing and extracting text and metadata from webpages </li>
+<li><a href="https://spacy.io/">Spacy</a>, <a href="https://github.com/chartbeat-labs/textacy">Textacy</a> and <a href="https://radimrehurek.com/gensim/">Gensim</a> for Natural Language Processing work such as tagging, tokenizing, Part-Of-Speech extraction etc.</li>
+<li>Good old <a href="http://scikit-learn.org/stable/">scikit-learn</a> for our (pretty basic) machine learning models</li>
+</ul>
+<p>We also took advantage of <a href="https://mapzen.com/">mapzen.com’s</a> Geocoding API which provides extensive and well-structured information for place names, including the underlying Country ISO code which was a key piece of data we needed to obtain.</p>
+<h4>Front-End</h4>
+<p>The front-end was started much later in the project, and so does not (yet) include all of the visualizations and other functionality we want to provide, however the idea is that this will be the access point for analysts and other users, where they should be able to:</p>
+<ul>
+<li>Filter events based on dates, locations and event type</li>
+<li>Create different types of visualizations of the number of displaced people / destroyed houses etc.</li>
+<li>Submit new URLs to the database for later processing</li>
+</ul>
+<h3>Report Extraction</h3>
+<p>Before getting into the nuts and bolts of the approach, it is worth explaining in a little more detail what is meant by a report.</p>
+<p>For those articles that are deemed to be about IDPs, the solution needs to be able to generate a summary of the type of event, where it happened, the number of people or houses impacted etc.</p>
+<p>For the purposes of this competition a report requires a number of facts to be present, including:</p>
+<ul>
+<li>The <strong><em>date</em></strong> of publication of the underlying article</li>
+<li>The <strong><em>location</em></strong> where the displacement event occurred</li>
+<li>The <strong><em>reporting term</em></strong> used in the article (i.e. Displaced, Evacuated, Destroyed Housing etc.)</li>
+<li>The <strong><em>reporting unit</em></strong> (i.e. People. Residents, Families, Households etc.)</li>
+<li>The <strong><em>displacement figure</em></strong>, that is the number of people or households affected</li>
+</ul>
+<h4>Initial Approach</h4>
+<p>When we started, there was no training data or other examples available, and so we began with a rules-based approach to fact-extraction, with the rules slowly being built up by manually reviewing performance on a small selection of articles and examining the fail cases in detail.</p>
+<p>A very simple and naïve rule could be to look for the occurrence of the right words within a sentence or paragraph. For example, you could look for co-occurrences of  “People” and “Displaced” in order to identify reports. </p>
+<p>If you are able to come up with an exhaustive list of the keywords, then this sort of approach should be able to correctly identify relevant articles (high recall), however it is also likely to find a lot of irrelevant articles too, that just happen to contain some of the keywords (i.e. low precision).</p>
+<p>Instead we tried to fashion a series of rules that don’t just look for keywords, but also attempt to ensure that they have the right grammatical or contextual relationship between them.</p>
+<p>Here the first step was to use Spacy to process articles and look at how the different terms are related to each other within sentences. A very useful tool is <a href="https://demos.explosion.ai/displacy/">displacy</a> which provides a nice online visualization of the syntactic structure of a text fragment:</p>
+<p><img alt="parse_tree" src="/images/idps_parse_tree.png" /></p>
+<p>Initial inspection seemed to indicate that <strong><em>Reporting Terms</em></strong> (<em>i.e. Displaced, Evacuated</em>) typically occur as verbs in a sentence and <strong><em>Reporting Units</em></strong> (<em>People, Houses etc.</em>) can either be their subject or object.</p>
+<p>Thus a very simple rule could be based on finding those sentences that have a word like People or Persons as the subject, and a word like Displaced or Flee as the verb.</p>
+<p>If a sentence seems to contain a report based on these rules, then we can start looking for other pieces of information such as numbers, dates and locations by using <em>Named Entity Recognition</em>.</p>
+<p>Spacy has pretty good Named Entity Recognition functionality, and also provides another useful <a href="https://demos.explosion.ai/displacy-ent/">online tool</a> for visualizing the different types of entities found within a sentence.</p>
+<p>For example, in the sentence below, the tool highlights relevant parts of text that are:</p>
+<ul>
+<li>Numeric (for identifying the number of people affected)</li>
+<li>Place names (for identifying the location of the event)</li>
+<li>Dates (for identifying when the evnt occurred)</li>
+</ul>
+<p><img alt="parse_tree" src="/images/idps_Named_entities.png" /></p>
+<p>It is worth noting that at this point we were approaching the problem in as general a way as possible, aiming to identify all possible references to displaced people in each sentence, paragraph and article, while also trying to build up a highly comprehensive list of relevant vocabulary, rules and keywords.</p>
+<h4>Machine Learning + Rules</h4>
+<p>Once we got close to the competition submission deadline, we discovered that in the tool would be evaluated in a much more constrained fashion than we had previously imagined. </p>
+<p>In particular, in order to test the fact extraction capabilities, we would be provided with a selection of sentences or sentence fragments and have to return the model output along certain dimensions.</p>
+<p>In some cases this amounted to basically being a classification exercise where we would need to choose between certain categories in terms of the <strong><em>reporting unit</em></strong> and <strong><em>reporting term</em></strong> from a list of pre-defined options.</p>
+<p>Meanwhile the quantity of people affected as well as the location continued to present a challenge, as the model would need to extract these directly from the text.  </p>
+<p>We had a small set of training data to work with consisting of about 130 tagged text excerpts, although this was pretty noisy, for example:</p>
+<ul>
+<li>Many sentences were ambiguous with both people and households being mentioned</li>
+<li>Multiple locations were often mentioned in the text</li>
+<li>Some excerpts were tagged with a location, despite no location being mentioned in the text</li>
+</ul>
+<p>However, we decided to go ahead and try and build a small machine learning-based model to help complement our initial rules-based approach.</p>
+<h4>Final Submitted Model</h4>
+<p>The final model included in the submission was based on a mixed approach combining the output of the handcrafted rules and machine learning models.</p>
+<p>For both the reporting unit &amp; term, we used a simple set of rules to combine the two approaches:</p>
+<ol>
+<li>If the classifier and rules output match =&gt; Done</li>
+<li>If the handcrafted rules do not find anything =&gt; Use the classifier output</li>
+<li>Otherwise =&gt; Use the rules output</li>
+</ol>
+<p>The <strong><em>Reporting Unit</em></strong> classifier was a Multinomial Naive Bayes model trained on features extracted using scikit-learn’s Word Vectorizer (single words).</p>
+<p>The <strong><em>Reporting Term</em></strong> classifier meanwhile combined two separate models:</p>
+<ul>
+<li>A Multinomial Naïve Bayes model trained using Word Vectorizer bi-grams</li>
+<li>A Linear SVC trained on a feature array extracted using a Word2Vec model (from Google)</li>
+</ul>
+<p>The F1-score improvement from combining the rules + classifiers was:</p>
+<table>
+    <tr>
+        <th></th>
+        <th>Rules</th>
+        <th>Classifier</th>
+        <th>Combined</th>
+    </tr>
+    <tr>
+        <td>Reporting Unit</td>
+        <td>0.73</td>
+        <td>0.88</td>
+        <td>0.93</td>
+    </tr>
+    <tr>
+        <td>Reporting Term</td>
+        <td>0.68</td>
+        <td>0.58</td>
+        <td>0.71</td>
+    </tr>
+</table>
+
+<p><strong>Note:</strong> Report Extraction was not the only area where we ended up using Machine Learning, and in fact the team leader, George Richardson, also created several classifiers for other parts of the process, specifically identifying relevant articles and classifying them into Natural Disaster vs. Conflict &amp; Violence.
+However, I was not particularly involved there and so have instead focused more on the models that I worked on.  </p>
+<h3>Future Work</h3>
+<p>When we submitted our solution we certainly didn’t feel it was complete and had already identified a number of improvements to work-on across the board, including:</p>
+<ol>
+<li>Making improvements to both URL and PDF parsing, especially dealing with URL retrieval errors and timeouts.</li>
+<li>Creating and implementing new visualizations and ways of aggregating and presenting the underlying data</li>
+<li>Making improvements to our Machine Learning models, in particular by obtaining more training data using some credit very kindly donated by the folks at <a href="http://www.crowdflower.com/">Crowdflower</a></li>
+<li>Starting to work on new metadata fields for articles and reports with the aim of being able to score the extracted content in terms of reliability and report accuracy.</li>
+</ol>
+<h3>Personal Reflections</h3>
+<p>When I started writing this post, I coincidentally also listened to a Partially Derivative podcast where Chris Albon talks about “Learning Everything Else”, i.e. the non-Data Science parts of being a Data Scientist.</p>
+<p>One of my motivations for getting involved in this particular project was the opportunity to learn about and work on Natural Language Processing techniques, and while I certainly got to do that, I also feel that I got as much if not more value from the “everything else”.</p>
+<p>For example this was my first experience of doing data science as part of a team, and it was a fantastic demonstration of how much more you can achieve by collaborating with other people. I learned a huge amount through those interactions, and I would never have been able to achieve so much if I’d had to do everything myself.</p>
+<p>It also turned out that our team was spread across the world with people in Seattle, Florida, England, Australia and Mexico, to name just a few of the locations. I therefore had to learn and get very comfortable with Slack as the only channel for communication as well as using Git and GitHub collaboratively.</p>
+<p>Finally, a significant proportion of what we had to do was more software engineering rather than pure Data Science. Ultimately we were trying to deliver a tool that could be useable in the real world, and hence spent a lot of time thinking about modules, pipelines and data models.</p>
+<p>This is not to say that I am now an expert software engineer, but I certainly feel the experience I gained in that regard was as useful as what I learned about Natural Language Processing.</p>
+<h4>Links</h4>
+<p><a href="https://github.com/Data4Democracy/internal-displacement/">Internal Displacement Github repo</a><br>
+<a href="https://data4democracy.github.io/internal-displacement/">Submitted solution website</a><br>
+<a href="http://reliefweb.int/report/world/data-democracy-wins-unite-ideas-idetect-data-challenge-monitor-worldwide-patterns">Winning Announcement</a><br>
+<a href="http://datafordemocracy.org/">Data For Democracy website</a></p>
+	<hr/>
+	<h6>Written by <a href="https://simonb83.github.io/author/simon-bedford.html">Simon Bedford</a> in <a href="https://simonb83.github.io/category/data-science.html">Data Science</a> on Tue 20 June 2017. Tags: <a href="https://simonb83.github.io/tag/data-science.html">data-science</a>, <a href="https://simonb83.github.io/tag/python.html">python</a>, <a href="https://simonb83.github.io/tag/machine-learning.html">machine-learning</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/other.html">Other</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/data-science.html" class="tag-1">data-science</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/matplotlib.html" class="tag-4">matplotlib</a></li>
+									<li><a href="/tag/visualization.html" class="tag-1">visualization</a></li>
+									<li><a href="/tag/maths.html" class="tag-2">maths</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-2">10ideas</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-2">deep-learning</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/coding.html" class="tag-3">coding</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/politics.html" class="tag-4">politics</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-3">neural-network</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/python.html" class="tag-2">python</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-2">customer-experience</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2017/06/index.html">June 2017 (1)</a></li>
+											<li><a href="/posts/2017/03/index.html">March 2017 (1)</a></li>
+											<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+											<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="https://simonb83.github.io/theme/js/jquery.js"></script>
+		<script src="https://simonb83.github.io/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+	</body>
+</html>
