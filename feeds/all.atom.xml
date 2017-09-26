@@ -1,5 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2017-06-20T17:00:00-05:00</updated><entry><title>Applying NLP Methods to Tracking Refugees.</title><link href="https://simonb83.github.io/nlp-internal-displacement.html" rel="alternate"></link><published>2017-06-20T17:00:00-05:00</published><updated>2017-06-20T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-06-20:nlp-internal-displacement.html</id><summary type="html">&lt;p&gt;This is my first post in about 3 months, in large part because work got pretty crazy, but also because I have been spending a lot of my spare time on a &lt;a href="http://datafordemocracy.org/"&gt;Data For Democracy&lt;/a&gt; project focused on building a tool for tracking what are known as Internally Displaced Persons (IDPs).&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2017-09-24T17:00:00-05:00</updated><entry><title>Tweets Sobre el Sismo en México - Draft</title><link href="https://simonb83.github.io/mexico-earthquake-tweets.html" rel="alternate"></link><published>2017-09-24T17:00:00-05:00</published><updated>2017-09-24T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-09-24:mexico-earthquake-tweets.html</id><summary type="html">&lt;p&gt;El martes 19 de septiembre, un sismo de 7.1 grados occurrío en México con graves impactos en la Ciudad de México y los estados de Morelos y Puebla.&lt;/p&gt;
+&lt;p&gt;Hasta hoy, en la CDMX, se reportan al menos 180 muertos, casi 40 edificios derrumbados, y cienes sino miles de edificios con daños graves, que implicarían tener que destruirlos.&lt;/p&gt;
+&lt;p&gt;Este fue el sismo con más grave impacto en México desde uno que, en una trágica coincidencia, ocurrío el mismo día 32 años antes en 1985.&lt;/p&gt;
+&lt;p&gt;Una gran diferencia entre lo ocurrido en 1985 y los útlimos días, es que la mayoría de la gente lo ha experimentado a través de los medios digitales, y en particular las redes sociales.&lt;/p&gt;
+&lt;p&gt;He hablado con personas sobre sus memorias de 1985, y en general un tema constante fue la dificultad en saber exactamente qué estaba pasando en diferentes partes de la ciudad. En contraste, en los últimos días, ha sido casi imposible no estar enterado en tiempo real de los eventos.&lt;/p&gt;
+&lt;h3&gt;Las Redes Sociales - ¿Una bendición o una maldición?&lt;/h3&gt;
+&lt;p&gt;En muchos aspectos las redes sociales y los apps de comunicación han sido claves para la reacción entre esta destastre, al menos en la CDMX.&lt;/p&gt;
+&lt;p&gt;En los primeros minutos después del temblor, las líneas telefónicas se saturaron o de plano no funcionarion, y para muchas personas el primer contacto con sus seres queridos y amigos fue por mensajes de WhatsApp o Facebook.&lt;/p&gt;
+&lt;p&gt;Después, una vez que la escala de daño y destrucción se hizo claro, la gente comenzo a meterse a Twitter y Facebook para enviar notificaciones acerca de los edificios y gente en peligro, y difundir mensajes sobre las necesidades de comida, medicina y herramientas.&lt;/p&gt;
+&lt;p&gt;Sin embargo, ha sido claro que el virtuosos impulso humano de ayudar no siempre tiene las mejores consecuencias. En algunos casos, mensajes sobre edificios caidos sin ayuda, que después resultaron ser falsos, se fueron virales y provocaron una afluencia de personas a las zonas mencionadas, causando trafico y caos en las calles.&lt;/p&gt;
+&lt;p&gt;De la misma forma, la gente seguía compartiendo noticias y peticiones de ayuda más de 24 horas después, cuando la situación ya era muy diferente, y seguramente desviando recursos valiosos de donde se necesitaban más.&lt;/p&gt;
+&lt;h3&gt;¿Cómo manejarnos mejor en las redes sociales?&lt;/h3&gt;
+&lt;p&gt;México es uno de los paises con más actividad sismica en el mundo. Es una lamentable realidad que en algun momento, ocurrirá otro terremoto igual o peor que el del pasado 19 de septiembre. No podemos predicir cuando, solo podemos tratar de estar más y mejor preparados cada vez.&lt;/p&gt;
+&lt;p&gt;En realidad los mensajes y tweets de los últimos días son una fuente de datos increible para entender mejor las reacciones de la gente ante desastres como esto. Podemos investigar preguntas como:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;¿Qué dice la gente en diferentes momentos después del evento?&lt;/li&gt;
+&lt;li&gt;¿Cuáles con las características de los mensajes virales?&lt;/li&gt;
+&lt;li&gt;¿Cómo evolucionan las peticiones de ayuda, viveres y herramientas por hora y día?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Con esta información, podemos comenzar a trabajar en construir mejores herramientas digitales para el futuro, por ejemplo para coordinar voluntarios y donaciones, y prevenir el flujo de información mala o anticuada.&lt;/p&gt;
+&lt;p&gt;Con este propósito, durante los últimos días, empeze a bajar todos los tweets enviados sobre el sismo entre el martes y el viernes en la tarde.&lt;/p&gt;
+&lt;p&gt;Los criterios para filtrarlos fue:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Tweets usando ciertas hashtags (e.j, #sismo, #SismoMexico2017, #ayudaCDMX)&lt;/li&gt;
+&lt;li&gt;Tweets enviados desde o a cuentas claves (ej. Cruz Roja, Protección Civil)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;La busqueda tardó casi cuatro días, y el resultado fue un archivo con 50 GB de datos conteniendo 7.3 millones de tweets (aunque esto incluye no solo los tweets sino los metadatos también).&lt;/p&gt;
+&lt;h2&gt;¿Qué podemos aprender de toda esta información?&lt;/h2&gt;
+&lt;h3&gt;1. La gente comenzó a tuitear minutos después del sismo.&lt;/h3&gt;
+&lt;p&gt;De hecho, en solo los 6 horas entre las 2pm y 8pm del martes 19 de septeimbre, se enviaron más de 1.6 millones de tweets, o 23% del totaL que reuperé a través de la busqueda.&lt;/p&gt;
+&lt;p&gt;Abajo se puede ver la distribución de tweets enviados por hora durante las 72 horas después del sismo:&lt;/p&gt;
+&lt;div class="title"&gt;Número de Tweets Enviados por Hora&lt;/div&gt;
+
+&lt;div id="tweets_per_hour_container"&gt;
+    &lt;svg id="tweets_per_hour"&gt;&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Nota:&lt;/strong&gt; Esto no significa que la gente dejo de tuitear el viernes sobre el sismo; puede ser que algunos nuevos hashtags ganaron popularidad.&lt;/p&gt;
+&lt;h3&gt;2. Se usaron los hashtags para dar más visibilidad a los tweets&lt;/h3&gt;
+&lt;p&gt;De los 7.3 millones de tweets, el 93% contenían algun hashtag (aunque esto no debe sorprender tanto ya que fue una criteria importante para construir la base).&lt;/p&gt;
+&lt;p&gt;Dentro de los top 10, los hashtags referentes a las ciudad de méxico fueron 3.5 veces más comunes que los de Puebla or Morelos.&lt;/p&gt;
+&lt;div class="title"&gt;Hashtags Más Comunes&lt;/div&gt;
+
+&lt;div id="wordcloud_hashtags"&gt;&lt;/div&gt;
+
+&lt;h3&gt;3. Entre los tweets más compartidos fueron avisos oficiales, peticiones de ayuda y temas sobre perros&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="tweet_1" src="/images/sismo_tweet_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_2" src="/images/sismo_tweet_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_3" src="/images/sismo_tweet_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_5" src="/images/sismo_tweet_5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_7" src="/images/sismo_tweet_7.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_8" src="/images/sismo_tweet_8.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;4. Se registraron tweets de todas partes del mundo, aunque la concentración más alta fue dentro de la ciudad de méxico&lt;/h3&gt;
+&lt;div id="map" data-source="data/tweets_simple.json"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Nota:&lt;/strong&gt; La mapa geográfica no es representativa de todos los tweets enviados; del total de 7.3 millones, solo 3,939 (0.05%) tienen metadatos geográficos&lt;/p&gt;
+&lt;h3&gt;5. Entre todos los tweets recopilados, las palabras más comunes fueron 'México', 'personas' y 'favor'&lt;/h3&gt;
+&lt;div id="wordcloud_all"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3&gt;6. Por mucho, la frase más popular fue "centro de acopio"&lt;/h3&gt;
+&lt;div class="title"&gt;Top 16 Bigramas Más Comunes Entre los Tweets&lt;/div&gt;
+
+&lt;div id="bigrams_container"&gt;
+    &lt;svg id="bigrams"&gt;&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Nota:&lt;/strong&gt;&lt;br&gt;
+Los bigramos son grupos de dos palabras. En este caso, antes de calcular las frecuencias, quitamos las palabras comunes (ej., el, esta, en ) y convertimos las palabras a su forma ráiz.&lt;/p&gt;
+&lt;h3&gt;7. Dentro de los tweets pidiendo ayuda, algunos de los objectivos fueron 'manos', 'planta', 'encontrar' y 'difundir'&lt;/h3&gt;
+&lt;div class="title"&gt;Palabras Más Comunes en Solicitud de Ayuda&lt;/div&gt;
+
+&lt;div id="wordcloud_retweets"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3&gt;8. Cuando se solicito voluntarios, los mensajes seguían siendo compartidos más de 20 horas después&lt;/h3&gt;
+&lt;p&gt;Como mencioné al principio, un problema, al menos anecdotalmente, fue la difundación de información anticuada.&lt;/p&gt;
+&lt;p&gt;Esto lo podemos analizar viendo el comportamiento de los re-tweets de mensajes como:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"Se solicitan más voluntarios en Xochimilco. Solicitamos herramienta de recambio en Amsterdam esq. Huichapan para continuar rescates."&lt;/p&gt;
+&lt;p&gt;"Necesitamos muchas manos en Viaducto y Monterrey, a una cuadra de parque delta, muchos ya se fueron. Denle RT. #Sismo #prayformexicocity"&lt;/p&gt;
+&lt;p&gt;"San Gregorio Xochimilco necesita ayuda. Hay gente bajo los escombros, se necesitan víveres y voluntarios #AyudaCDMX"&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;En total, estos tres mensajes resultaron en casi 34,000 re-tweets, y abajo podemos ver que aproximadamente 30% de ellos fueron más de 5 horas después del mensaje inicial.&lt;/p&gt;
+&lt;div class="title"&gt;Distribución de Retweets por Hora Después del Tweet Inicial&lt;/div&gt;
+
+&lt;div id="retweets_per_hour_container"&gt;
+    &lt;svg id="retweets_per_hour"&gt;&lt;/svg&gt;
+&lt;/div&gt;</summary><category term="data-science"></category><category term="visualization"></category><category term="python"></category></entry><entry><title>Applying NLP Methods to Tracking Refugees.</title><link href="https://simonb83.github.io/nlp-internal-displacement.html" rel="alternate"></link><published>2017-06-20T17:00:00-05:00</published><updated>2017-06-20T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-06-20:nlp-internal-displacement.html</id><summary type="html">&lt;p&gt;This is my first post in about 3 months, in large part because work got pretty crazy, but also because I have been spending a lot of my spare time on a &lt;a href="http://datafordemocracy.org/"&gt;Data For Democracy&lt;/a&gt; project focused on building a tool for tracking what are known as Internally Displaced Persons (IDPs).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update:&lt;/strong&gt; When I started writing this blog post back in May, we had just submitted our solution for consideration. Last week we received an email informing us that the Data For Democracy team had won first place, and that our solution would be implemented in some form by the IDMC team!!&lt;/p&gt;
 &lt;p&gt;The impetus behind this particular project was a competition run by Unite Ideas, on behalf of the &lt;a href="http://www.internal-displacement.org/"&gt;Internal Displacement Monitoring Center&lt;/a&gt;, which is an independent, non-governmental organization dedicated to collecting and analyzing data about refugees and other people who have been ‘displaced’ from their homes.&lt;/p&gt;
 &lt;p&gt;The challenge, as I understand it, is that with hundreds if not thousands of news articles and other reports being generated every day, it would require a significant amount of manpower to be able to read each one of these in order to populate the database of internal displacement events on an ongoing basis.&lt;/p&gt;

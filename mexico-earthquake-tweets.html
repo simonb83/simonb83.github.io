@@ -1,0 +1,355 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Simon Bedford</title>
+		<meta name="description" content="">
+		<meta name="author" content="Simon Bedford">
+
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/foundation.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/custom.css" />
+
+		<!-- GOOGLE WEB FONTS -->
+		<link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Sans+Mono|Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://simonb83.github.io/theme/css/alt-fonts.css" />
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" type="text/css" />
+		<link rel="stylesheet" href="https://simonb83.github.io/css/sismo.css" type="text/css" />
+
+		<script src="https://simonb83.github.io/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+		<link href="https://simonb83.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Simon Bedford Atom Feed" />
+
+<script>var _gaq=[['_setAccount','UA-25264611-8'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)}(document,'script'))</script>
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">Simon&nbsp;Bedford</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><a href="https://simonb83.github.io">Home</a></li>
+						<li><label>Categories</label></li>
+							<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+							<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+							<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+							<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+							<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+							<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+							<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+							<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+							<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+
+						<!-- <li><label>Links</label></li>
+							<li><a href="http://getpelican.com/">Pelican</a></li>
+							<li><a href="http://python.org/">Python.org</a></li>
+							<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+							<li><a href="#">You can modify those links in your config file</a></li>
+ -->
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2017/09/index.html">September 2017 (1)</a></li>
+									<li><a href="/posts/2017/06/index.html">June 2017 (1)</a></li>
+									<li><a href="/posts/2017/03/index.html">March 2017 (1)</a></li>
+									<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+									<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+
+						<li><label>Social</label></li>
+							<li><a href="http://github.com/simonb83">GitHub</a></li>
+							<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+							<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+					</ul>	
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="https://simonb83.github.io/">Simon Bedford</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<!-- <ul class="left">
+								<li ><a href="https://simonb83.github.io/category/books.html">Books</a></li>
+								<li ><a href="https://simonb83.github.io/category/coding.html">Coding</a></li>
+								<li ><a href="https://simonb83.github.io/category/customer-experience.html">Customer Experience</a></li>
+								<li class="active"><a href="https://simonb83.github.io/category/data-science.html">Data Science</a></li>
+								<li ><a href="https://simonb83.github.io/category/deep-learning.html">Deep Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/ideas.html">Ideas</a></li>
+								<li ><a href="https://simonb83.github.io/category/machine-learning.html">Machine Learning</a></li>
+								<li ><a href="https://simonb83.github.io/category/maths.html">Maths</a></li>
+								<li ><a href="https://simonb83.github.io/category/other.html">Other</a></li>
+								<li ><a href="https://simonb83.github.io/category/tech.html">Tech</a></li>
+						</ul> -->
+                        <ul class="right">                                                                                                                                           
+                                                                                                          
+····                                                                                                                                       
+                                     <li><a href="https://simonb83.github.io/pages/about.html">About</a></li>                                    
+                                                                                                                                          
+                                                                                                                                             
+                        </ul>  
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Tweets Sobre el Sismo en México - Draft</h2>
+	<p>El martes 19 de septiembre, un sismo de 7.1 grados occurrío en México con graves impactos en la Ciudad de México y los estados de Morelos y Puebla.</p>
+<p>Hasta hoy, en la CDMX, se reportan al menos 180 muertos, casi 40 edificios derrumbados, y cienes sino miles de edificios con daños graves, que implicarían tener que destruirlos.</p>
+<p>Este fue el sismo con más grave impacto en México desde uno que, en una trágica coincidencia, ocurrío el mismo día 32 años antes en 1985.</p>
+<p>Una gran diferencia entre lo ocurrido en 1985 y los útlimos días, es que la mayoría de la gente lo ha experimentado a través de los medios digitales, y en particular las redes sociales.</p>
+<p>He hablado con personas sobre sus memorias de 1985, y en general un tema constante fue la dificultad en saber exactamente qué estaba pasando en diferentes partes de la ciudad. En contraste, en los últimos días, ha sido casi imposible no estar enterado en tiempo real de los eventos.</p>
+<h3>Las Redes Sociales - ¿Una bendición o una maldición?</h3>
+<p>En muchos aspectos las redes sociales y los apps de comunicación han sido claves para la reacción entre esta destastre, al menos en la CDMX.</p>
+<p>En los primeros minutos después del temblor, las líneas telefónicas se saturaron o de plano no funcionarion, y para muchas personas el primer contacto con sus seres queridos y amigos fue por mensajes de WhatsApp o Facebook.</p>
+<p>Después, una vez que la escala de daño y destrucción se hizo claro, la gente comenzo a meterse a Twitter y Facebook para enviar notificaciones acerca de los edificios y gente en peligro, y difundir mensajes sobre las necesidades de comida, medicina y herramientas.</p>
+<p>Sin embargo, ha sido claro que el virtuosos impulso humano de ayudar no siempre tiene las mejores consecuencias. En algunos casos, mensajes sobre edificios caidos sin ayuda, que después resultaron ser falsos, se fueron virales y provocaron una afluencia de personas a las zonas mencionadas, causando trafico y caos en las calles.</p>
+<p>De la misma forma, la gente seguía compartiendo noticias y peticiones de ayuda más de 24 horas después, cuando la situación ya era muy diferente, y seguramente desviando recursos valiosos de donde se necesitaban más.</p>
+<h3>¿Cómo manejarnos mejor en las redes sociales?</h3>
+<p>México es uno de los paises con más actividad sismica en el mundo. Es una lamentable realidad que en algun momento, ocurrirá otro terremoto igual o peor que el del pasado 19 de septiembre. No podemos predicir cuando, solo podemos tratar de estar más y mejor preparados cada vez.</p>
+<p>En realidad los mensajes y tweets de los últimos días son una fuente de datos increible para entender mejor las reacciones de la gente ante desastres como esto. Podemos investigar preguntas como:</p>
+<ul>
+<li>¿Qué dice la gente en diferentes momentos después del evento?</li>
+<li>¿Cuáles con las características de los mensajes virales?</li>
+<li>¿Cómo evolucionan las peticiones de ayuda, viveres y herramientas por hora y día?</li>
+</ul>
+<p>Con esta información, podemos comenzar a trabajar en construir mejores herramientas digitales para el futuro, por ejemplo para coordinar voluntarios y donaciones, y prevenir el flujo de información mala o anticuada.</p>
+<p>Con este propósito, durante los últimos días, empeze a bajar todos los tweets enviados sobre el sismo entre el martes y el viernes en la tarde.</p>
+<p>Los criterios para filtrarlos fue:</p>
+<ol>
+<li>Tweets usando ciertas hashtags (e.j, #sismo, #SismoMexico2017, #ayudaCDMX)</li>
+<li>Tweets enviados desde o a cuentas claves (ej. Cruz Roja, Protección Civil)</li>
+</ol>
+<p>La busqueda tardó casi cuatro días, y el resultado fue un archivo con 50 GB de datos conteniendo 7.3 millones de tweets (aunque esto incluye no solo los tweets sino los metadatos también).</p>
+<h2>¿Qué podemos aprender de toda esta información?</h2>
+<h3>1. La gente comenzó a tuitear minutos después del sismo.</h3>
+<p>De hecho, en solo los 6 horas entre las 2pm y 8pm del martes 19 de septeimbre, se enviaron más de 1.6 millones de tweets, o 23% del totaL que reuperé a través de la busqueda.</p>
+<p>Abajo se puede ver la distribución de tweets enviados por hora durante las 72 horas después del sismo:</p>
+<div class="title">Número de Tweets Enviados por Hora</div>
+
+<div id="tweets_per_hour_container">
+    <svg id="tweets_per_hour"></svg>
+</div>
+
+<p><strong>Nota:</strong> Esto no significa que la gente dejo de tuitear el viernes sobre el sismo; puede ser que algunos nuevos hashtags ganaron popularidad.</p>
+<h3>2. Se usaron los hashtags para dar más visibilidad a los tweets</h3>
+<p>De los 7.3 millones de tweets, el 93% contenían algun hashtag (aunque esto no debe sorprender tanto ya que fue una criteria importante para construir la base).</p>
+<p>Dentro de los top 10, los hashtags referentes a las ciudad de méxico fueron 3.5 veces más comunes que los de Puebla or Morelos.</p>
+<div class="title">Hashtags Más Comunes</div>
+
+<div id="wordcloud_hashtags"></div>
+
+<h3>3. Entre los tweets más compartidos fueron avisos oficiales, peticiones de ayuda y temas sobre perros</h3>
+<p><img alt="tweet_1" src="/images/sismo_tweet_1.png" /></p>
+<p><img alt="tweet_2" src="/images/sismo_tweet_2.png" /></p>
+<p><img alt="tweet_3" src="/images/sismo_tweet_3.png" /></p>
+<p><img alt="tweet_5" src="/images/sismo_tweet_5.png" /></p>
+<p><img alt="tweet_7" src="/images/sismo_tweet_7.png" /></p>
+<p><img alt="tweet_8" src="/images/sismo_tweet_8.png" /></p>
+<h3>4. Se registraron tweets de todas partes del mundo, aunque la concentración más alta fue dentro de la ciudad de méxico</h3>
+<div id="map" data-source="data/tweets_simple.json"></div>
+
+<p><strong>Nota:</strong> La mapa geográfica no es representativa de todos los tweets enviados; del total de 7.3 millones, solo 3,939 (0.05%) tienen metadatos geográficos</p>
+<h3>5. Entre todos los tweets recopilados, las palabras más comunes fueron 'México', 'personas' y 'favor'</h3>
+<div id="wordcloud_all"></div>
+
+<p><br></p>
+<h3>6. Por mucho, la frase más popular fue "centro de acopio"</h3>
+<div class="title">Top 16 Bigramas Más Comunes Entre los Tweets</div>
+
+<div id="bigrams_container">
+    <svg id="bigrams"></svg>
+</div>
+
+<p><strong>Nota:</strong><br>
+Los bigramos son grupos de dos palabras. En este caso, antes de calcular las frecuencias, quitamos las palabras comunes (ej., el, esta, en ) y convertimos las palabras a su forma ráiz.</p>
+<h3>7. Dentro de los tweets pidiendo ayuda, algunos de los objectivos fueron 'manos', 'planta', 'encontrar' y 'difundir'</h3>
+<div class="title">Palabras Más Comunes en Solicitud de Ayuda</div>
+
+<div id="wordcloud_retweets"></div>
+
+<p><br></p>
+<h3>8. Cuando se solicito voluntarios, los mensajes seguían siendo compartidos más de 20 horas después</h3>
+<p>Como mencioné al principio, un problema, al menos anecdotalmente, fue la difundación de información anticuada.</p>
+<p>Esto lo podemos analizar viendo el comportamiento de los re-tweets de mensajes como:</p>
+<blockquote>
+<p>"Se solicitan más voluntarios en Xochimilco. Solicitamos herramienta de recambio en Amsterdam esq. Huichapan para continuar rescates."</p>
+<p>"Necesitamos muchas manos en Viaducto y Monterrey, a una cuadra de parque delta, muchos ya se fueron. Denle RT. #Sismo #prayformexicocity"</p>
+<p>"San Gregorio Xochimilco necesita ayuda. Hay gente bajo los escombros, se necesitan víveres y voluntarios #AyudaCDMX"</p>
+</blockquote>
+<p>En total, estos tres mensajes resultaron en casi 34,000 re-tweets, y abajo podemos ver que aproximadamente 30% de ellos fueron más de 5 horas después del mensaje inicial.</p>
+<div class="title">Distribución de Retweets por Hora Después del Tweet Inicial</div>
+
+<div id="retweets_per_hour_container">
+    <svg id="retweets_per_hour"></svg>
+</div>
+	<hr/>
+	<h6>Written by <a href="https://simonb83.github.io/author/simon-bedford.html">Simon Bedford</a> in <a href="https://simonb83.github.io/category/data-science.html">Data Science</a> on Sun 24 September 2017. Tags: <a href="https://simonb83.github.io/tag/data-science.html">data-science</a>, <a href="https://simonb83.github.io/tag/visualization.html">visualization</a>, <a href="https://simonb83.github.io/tag/python.html">python</a>, </h6>
+</article>
+
+<hr/>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<!-- <div class="panel">
+								<h5>Links</h5>
+								<ul class="side-nav">
+									<li><a href="http://getpelican.com/">Pelican</a></li>
+									<li><a href="http://python.org/">Python.org</a></li>
+									<li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+									<li><a href="#">You can modify those links in your config file</a></li>
+								</ul>
+							</div> -->
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="category/books.html">Books</a></li>
+										<li><a href="category/coding.html">Coding</a></li>
+										<li><a href="category/customer-experience.html">Customer Experience</a></li>
+										<li><a href="category/data-science.html">Data Science</a></li>
+										<li><a href="category/deep-learning.html">Deep Learning</a></li>
+										<li><a href="category/ideas.html">Ideas</a></li>
+										<li><a href="category/machine-learning.html">Machine Learning</a></li>
+										<li><a href="category/maths.html">Maths</a></li>
+										<li><a href="category/other.html">Other</a></li>
+										<li><a href="category/tech.html">Tech</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+									<li><a href="/tag/information-theory.html" class="tag-4">information-theory</a></li>
+									<li><a href="/tag/maths.html" class="tag-2">maths</a></li>
+									<li><a href="/tag/science.html" class="tag-4">science</a></li>
+									<li><a href="/tag/matplotlib.html" class="tag-4">matplotlib</a></li>
+									<li><a href="/tag/networks.html" class="tag-4">networks</a></li>
+									<li><a href="/tag/books.html" class="tag-4">books</a></li>
+									<li><a href="/tag/customer-experience.html" class="tag-2">customer-experience</a></li>
+									<li><a href="/tag/neural-network.html" class="tag-3">neural-network</a></li>
+									<li><a href="/tag/10ideas.html" class="tag-2">10ideas</a></li>
+									<li><a href="/tag/cooking.html" class="tag-4">cooking</a></li>
+									<li><a href="/tag/machine-learning.html" class="tag-1">machine-learning</a></li>
+									<li><a href="/tag/coding.html" class="tag-3">coding</a></li>
+									<li><a href="/tag/ai.html" class="tag-4">ai</a></li>
+									<li><a href="/tag/exploratory-analysis.html" class="tag-4">exploratory-analysis</a></li>
+									<li><a href="/tag/deep-learning.html" class="tag-2">deep-learning</a></li>
+									<li><a href="/tag/uncertainty.html" class="tag-4">uncertainty</a></li>
+									<li><a href="/tag/crypto-currencies.html" class="tag-4">crypto-currencies</a></li>
+									<li><a href="/tag/bitcoin.html" class="tag-4">bitcoin</a></li>
+									<li><a href="/tag/data-science.html" class="tag-1">data-science</a></li>
+									<li><a href="/tag/payments.html" class="tag-4">payments</a></li>
+									<li><a href="/tag/visualization.html" class="tag-1">visualization</a></li>
+									<li><a href="/tag/politics.html" class="tag-4">politics</a></li>
+									<li><a href="/tag/python.html" class="tag-2">python</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2017/09/index.html">September 2017 (1)</a></li>
+											<li><a href="/posts/2017/06/index.html">June 2017 (1)</a></li>
+											<li><a href="/posts/2017/03/index.html">March 2017 (1)</a></li>
+											<li><a href="/posts/2017/02/index.html">February 2017 (1)</a></li>
+											<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (4)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (1)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (2)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (6)</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Social</h5>
+								<ul class="side-nav">
+									<li><a href="http://github.com/simonb83">GitHub</a></li>
+									<li><a href="https://mx.linkedin.com/in/simonbedford">LinkedIn</a></li>
+									<li><a href="http://twitter.com/simonb83">Twitter</a></li>
+								</ul>
+							</div>
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="https://simonb83.github.io/theme/js/jquery.js"></script>
+		<script src="https://simonb83.github.io/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.2/d3.min.js"></script>
+		<script src="http://d3js.org/d3.hexbin.v0.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet-src.js"></script>
+		<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+		<script src="https://simonb83.github.io/js/sismo.js"></script>
+		<script src="https://simonb83.github.io/js/colorbrewer.js"></script>
+		<script src="https://simonb83.github.io/js/HexbinLayer.js"></script>
+		<script src="https://simonb83.github.io/js/wordcloud.js"></script>
+
+	</body>
+</html>
