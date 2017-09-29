@@ -1,5 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2017-09-24T17:00:00-05:00</updated><entry><title>Análisis de Tweets Sobre el Terremoto en México</title><link href="https://simonb83.github.io/mexico-earthquake-tweets.html" rel="alternate"></link><published>2017-09-24T17:00:00-05:00</published><updated>2017-09-24T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-09-24:mexico-earthquake-tweets.html</id><summary type="html">&lt;p&gt;El martes 19 de septiembre, un sismo de 7.1 grados occurrío en México con graves impactos en la Ciudad de México, los estados de Morelos y Puebla.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Simon Bedford</title><link href="https://simonb83.github.io/" rel="alternate"></link><link href="https://simonb83.github.io/feeds/all.atom.xml" rel="self"></link><id>https://simonb83.github.io/</id><updated>2017-09-27T17:00:00-05:00</updated><entry><title>An Analysis of Tweets About the Earthquake in Mexico</title><link href="https://simonb83.github.io/mexico-earthquake-tweets-en.html" rel="alternate"></link><published>2017-09-27T17:00:00-05:00</published><updated>2017-09-27T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-09-27:mexico-earthquake-tweets-en.html</id><summary type="html">&lt;p&gt;On Tuesday 19th September, a magnitude 7.1 earthquake hit Mexico, causing serious damage in and around Mexico City and Morelos and Puebla states.&lt;/p&gt;
+&lt;p&gt;In Mexico City, at the time of writing, there were reports of at least 180 dead and nearly 40 collapsed buildings, as well as hundreds or even thousands more structures with bad enough damage that will almost certainly mean that they have to be knocked down.&lt;/p&gt;
+&lt;p&gt;This was the worst earthquake to hit Mexico since one that, in a tragic coincidence, took place 32 years ago to-the-day in 1985.&lt;/p&gt;
+&lt;p&gt;One big difference between what happened in 1985 and the last few days has been that the vast majority of people have experienced recent events through digital media, and in particular social networks.&lt;/p&gt;
+&lt;p&gt;I have spoken with a number of people about their recollections of 1985, and pretty consistently they talk about how hard it was to know what was happening in different parts of the city. In contrast, during the past week it has been almost impossible not to be surrounded by 24-hour coverage of events.&lt;/p&gt;
+&lt;h3&gt;Social Networks - A blessing or a curse?&lt;/h3&gt;
+&lt;p&gt;In many ways social networks along with messaging apps have played a critical role in the reaction to and management of this disaster, at least in Mexico City.&lt;/p&gt;
+&lt;p&gt;During the immediate aftermarth of the earthquake, phone lines were either saturated or just not working, and for many people WhatsApp and Facebook provided the only option for getting-in-touch with loved ones and friends.&lt;/p&gt;
+&lt;p&gt;Later on, once the scale of damage and destruction became clear, people began to use Twitter and Facebook to send messages about people and buildings in danger or need-of-help, as well as to spread urgent requests for food, water and tools.&lt;/p&gt;
+&lt;p&gt;However, one thing that became clear was how even well-intentioned actions don't always result in the best outcome. In some cases, tweets about collapsed buildings with "nobody helping" turned out to be false, but not before seemingly going viral and provoking an influx of well-meaning people into the surrounding area, causing traffic and additional chaos in the streets.&lt;/p&gt;
+&lt;p&gt;Similarly, many people continued to share and retweet requests for help more than 24 hours after the original message, when the situation on the ground would have been very different, potentially diverting valuable resources from where they were most needed.&lt;/p&gt;
+&lt;h3&gt;How should we use social networks in these circumstances?&lt;/h3&gt;
+&lt;p&gt;Mexico is one of the countries with the highest levels of seismic activity in the world. It is, unfortunately, inevitable that there will be another earthquake at some point in the future that is as bad as or worse than the one a week ago. Although we can't predict when it will happen, we can work on being better prepared.&lt;/p&gt;
+&lt;p&gt;All of the social media messages from the past week could provide an invaluable source of data for better understanding how people react to natural disasters, and enable us to answer questions like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What sort of things are people saying at different points in time following the event?&lt;/li&gt;
+&lt;li&gt;What are the characteristics of messages that go viral?&lt;/li&gt;
+&lt;li&gt;How do requests for help, supplies and tools change aand evolve over time?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using this information we can begin to build better digital tools for use in future disasters, for example to coordinate volunteers and donations, or to prevent the spread of erroneous or outdated information.&lt;/p&gt;
+&lt;p&gt;With this in mind, last Thursday I started to download as many tweets as possible about last week's earthquake, specifically focusing on the first 72 hours up until Friday afternoon.&lt;/p&gt;
+&lt;p&gt;My specific criteria for the search were:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Tweets containing particular hastags (e.g, #sismo, #SismoMexico2017, #ayudaCDMX)&lt;/li&gt;
+&lt;li&gt;Tweets sent from or to key accounts(e.g, Red Cross, Civil Protection etc.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The search took almost 4 days and resulted in a 50GB file containing 7.3 million tweets along with all of their metadata.&lt;/p&gt;
+&lt;h2&gt;What can we learn from all of this data?&lt;/h2&gt;
+&lt;h3&gt;1. People took to Twitter just minutes after the earthquake occurred&lt;/h3&gt;
+&lt;p&gt;In fact, in just 6 hours between 2pm and 8pm on Tuesday 19th September, more than 1.6 million tweets were sent, which is 23% of all of the tweets returned by my search.&lt;/p&gt;
+&lt;p&gt;Below you can see the hourly distribution of all of the tweets:&lt;/p&gt;
+&lt;div class="title"&gt;Number of tweets sent per hour&lt;/div&gt;
+
+&lt;div id="tweets_per_hour_container"&gt;
+    &lt;svg id="tweets_per_hour"&gt;&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The drop in volume on Thursday and Friday doesn't neccessarily mean people stopped tweeting about the quake; for example these tweets won't contain tweets with new hashtags that surfaced around those days&lt;/p&gt;
+&lt;h3&gt;2. People used hashtags to give their tweets visibility&lt;/h3&gt;
+&lt;p&gt;Out of the 7.3 million tweets, 93% contained at least one hashtag (although this isn't so surprising given that a key criteria for the search was a list of hashtags)&lt;/p&gt;
+&lt;p&gt;Among the top 10 hashtags, those referring to Mexico City were 3.5 times more common that ones about Puebla or Morelos.&lt;/p&gt;
+&lt;div class="title"&gt;Top 10 Hashtags&lt;/div&gt;
+
+&lt;div id="wordcloud_hashtags"&gt;&lt;/div&gt;
+
+&lt;h3&gt;3. The most retweeted tweets included official updates, requests for help, and stories about dogs&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="tweet_1" src="/images/sismo_tweet_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_2" src="/images/sismo_tweet_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_3" src="/images/sismo_tweet_3.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_5" src="/images/sismo_tweet_5.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_7" src="/images/sismo_tweet_7.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tweet_8" src="/images/sismo_tweet_8.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;4. People from all around the world were tweeting although, unsurprisingly, the majority were concentrated in Mexico City&lt;/h3&gt;
+&lt;div id="map" data-source="data/tweets_simple.json"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The map isn't representative of all tweets; only 3,939 of the 7.3 million twets (0.05%) had geographic metadata&lt;/p&gt;
+&lt;h3&gt;5. The most commonly ocurring words were 'Mexico', 'people' and 'please'&lt;/h3&gt;
+&lt;div id="wordcloud_all"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3&gt;6. The phrase "collection center" was by far the most common two-word pairing&lt;/h3&gt;
+&lt;div class="title"&gt;16 most-common bigrams&lt;/div&gt;
+
+&lt;div id="bigrams_container"&gt;
+    &lt;svg id="bigrams"&gt;&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br&gt;
+Bigrams are pairs of words. In this case, prior to calculating frequencies, I removed stop words (i.e. the, and etc.) and converted words into their root form.&lt;/p&gt;
+&lt;h3&gt;7. When people tweeted requests for help, they were typically asking for volunteers, (electrical) generators, help finding someone and for people to share information&lt;/h3&gt;
+&lt;div class="title"&gt;Most common words in requests for help&lt;/div&gt;
+
+&lt;div id="wordcloud_retweets"&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3&gt;8. Tweets asking for volunteers continued to be shared more that 20 hours after the original message&lt;/h3&gt;
+&lt;p&gt;As I mentioned earlier on, one problem, at least anecdotally, was people sharing outdated information.&lt;/p&gt;
+&lt;p&gt;We can get more insight into this by looking at retweets of messages like:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"More volunteers are needed in Xochimilo. We need replacement tools in Amsterdam / Huichapan to continue with rescue work.""&lt;/p&gt;
+&lt;p&gt;"We need lots of help in Viadutco / Monterrey, one block from parque delta, a lot of people have already left. Please RT. #Sismo #prayformexicocity"&lt;/p&gt;
+&lt;p&gt;"San Gregorio Xochimilco needs help. There are people under the rubble, volunteers and supplies are needed #AyudaCDMX"&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In total, these three message were retweeted almost 34,000 times. In the chart below you can see that approximately 30% of the retweets ocurred more than 5 hours after the initial message.&lt;/p&gt;
+&lt;div class="title"&gt;Hourly distribution of retweets&lt;/div&gt;
+
+&lt;div id="retweets_per_hour_container"&gt;
+    &lt;svg id="retweets_per_hour"&gt;&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;These charts only scrape the surface of the insights we could obtain from this sort of data.&lt;/p&gt;
+&lt;p&gt;In particular, there are many natural language processing (NLP) tools we could use to analyze tweet sentiment, or to track in more detail the type of help requested at different points in time.&lt;/p&gt;
+&lt;p&gt;Nonetheless, its quite interesting to see the story of the earthquake told through tweets, from the intensity of tweeting activity in the initial hours, to the very human need to share 'lighter' things, such as all of the stories about rescue dogs. &lt;/p&gt;
+&lt;p&gt;One positive takeaway is the fact the the two most retweeted messages were a link to a Google tool for locating people, and a tweet trying to minimize fake news by reinforcing the point that earthquakes can't be predicted.&lt;/p&gt;
+&lt;p&gt;As a next step, I would focus on creating a tool for measuring the similarity between tweets in order to better identify false or out-of-date news in real-time.&lt;/p&gt;
+&lt;p&gt;This could be combined with a chatbot that can both keep track of newly emerging news, and also automatically respond to people sharing old information.&lt;/p&gt;
+&lt;div class="footnotes"&gt;
+&lt;strong&gt;Notes:&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;strong&gt;Search Criteria:&lt;/strong&gt;
+
+&lt;ol&gt;
+    &lt;li&gt;Complete list of hashtags used: ayudaCDMX, fuerzamexico, sismo, SismoMexico2017, Sismomexico2017, AyudaMéxico, AyudaMexico, FuerzaMexico, fuerzaCdMx, cdmxsismo, Morelos, Puebla, MorelosEstaDePie, PueblaSigueDePie, PueblaEstaDePie, mexicoestadepie, Sismo, Rebsamen, ERUM, RescatePrimero&lt;/li&gt;
+    &lt;li&gt;Complete list of acounts used: SismologicoMX, SPCCDMX, PcSegob, SEGOB_mx, SeGobCDMX, VoluntariosErum, topos, MetroCDMX, SSP_CDMX, PoliciaFedMx, CruzRoja_MX&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;strong&gt;Most Retweeted:&lt;/strong&gt;
+
+&lt;ol&gt;
+    &lt;li&gt;The examples are numbers 1, 2, 3, 5, 7 and 8 respectively&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;strong&gt;Bigrams analysis:&lt;/strong&gt;
+
+&lt;ol&gt;
+    &lt;li&gt;In order to analyze bigrams, I first eliminated common words (stop words), and converted each word to its root form using an nltk stemmer&lt;/li&gt;
+    &lt;li&gt;Prior to creating the chart, I attempted to convert stemmed words back to a more identifiable form ej., 'necesitar' en lugar de 'necesit'&lt;/li&gt;
+    &lt;li&gt;The chart doesn't include bigrams that are common names (e.g., Mexico City, Red Cross)
+    &lt;li&gt;I removed a couple of very similar / almost overlapping bigrams&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;strong&gt;Most common words in requests for help&lt;/strong&gt;
+
+&lt;ol&gt;
+    &lt;li&gt;I started with certain base words: "urge", "necesitamos", "solicitamos", "requiere"&lt;/li&gt;
+    &lt;li&gt;Then, using the list of bigrams, I counted the most common words following the base words&lt;/li&gt;
+    &lt;li&gt;I elminated the following words from the final list: "ayuda", "apoyo", "crear", "urge" and "siguiente" given that they don't add much value, and I wanted to understand the type of help people were asking for&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;/div&gt;</summary><category term="data-science"></category><category term="visualization"></category><category term="python"></category></entry><entry><title>Análisis de Tweets Sobre el Terremoto en México</title><link href="https://simonb83.github.io/mexico-earthquake-tweets.html" rel="alternate"></link><published>2017-09-24T17:00:00-05:00</published><updated>2017-09-24T17:00:00-05:00</updated><author><name>Simon Bedford</name></author><id>tag:simonb83.github.io,2017-09-24:mexico-earthquake-tweets.html</id><summary type="html">&lt;p&gt;El martes 19 de septiembre, un sismo de 7.1 grados occurrío en México con graves impactos en la Ciudad de México, los estados de Morelos y Puebla.&lt;/p&gt;
 &lt;p&gt;Hasta hoy, en la CDMX, se reportan al menos 180 muertos, casi 40 edificios derrumbados, y cienes sino miles de edificios con daños graves, que implicarían la necesidad de derrumbarlos.&lt;/p&gt;
 &lt;p&gt;Este fue el sismo con más grave impacto en México desde el que, en una trágica coincidencia, ocurrío el mismo día 32 años antes en 1985.&lt;/p&gt;
 &lt;p&gt;Una gran diferencia entre lo ocurrido en 1985 y los útlimos días, es que la mayoría de la gente lo ha experimentado a través de los medios digitales, y en particular las redes sociales.&lt;/p&gt;
